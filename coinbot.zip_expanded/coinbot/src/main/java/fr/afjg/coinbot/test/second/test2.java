@@ -16,6 +16,7 @@ public class test2 {
 		try {
 			Market market = bittrexService.getMarket();
 			System.out.println(market.toString());
+			System.out.println("des bisous test alain commit");
 		} catch (IOException e) {
 			// problème de connexion ou réceptions des informations
 			e.printStackTrace();
