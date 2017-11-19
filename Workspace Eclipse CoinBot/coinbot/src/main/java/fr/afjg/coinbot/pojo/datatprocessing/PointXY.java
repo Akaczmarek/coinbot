@@ -5,7 +5,10 @@ import java.sql.Timestamp;
 /**
  * for point in graphic function of time
  * @author GHISLAIN
+ * <br><br>
  *
+ *	X=time<br>
+ *	y=Value
  */
 public class PointXY {
 
