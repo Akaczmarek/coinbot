@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.intf;
+package fr.afjg.coinbot.api.intf;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.service.impl;
+package fr.afjg.coinbot.api.service.impl;
 
 import java.io.IOException;
 
@@ -6,11 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.afjg.coinbot.dao.impl.BittrexDaoImpl;
-import fr.afjg.coinbot.dao.intf.BittrexDaoIntf;
-import fr.afjg.coinbot.pojo.Market;
-import fr.afjg.coinbot.pojo.Result;
-import fr.afjg.coinbot.service.intf.BittrexGetMarketServiceIntf;
+import fr.afjg.coinbot.api.dao.impl.BittrexDaoImpl;
+import fr.afjg.coinbot.api.dao.intf.BittrexDaoIntf;
+import fr.afjg.coinbot.api.pojo.Market;
+import fr.afjg.coinbot.api.pojo.Result;
+import fr.afjg.coinbot.api.service.intf.BittrexGetMarketServiceIntf;
 
 public class BittrexGetMarketServiceImpl implements BittrexGetMarketServiceIntf {
 

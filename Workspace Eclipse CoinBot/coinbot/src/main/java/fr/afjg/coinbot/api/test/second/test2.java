@@ -1,12 +1,12 @@
-package fr.afjg.coinbot.test.second;
+package fr.afjg.coinbot.api.test.second;
 
 import java.io.IOException;
 
 import org.json.JSONException;
 
-import fr.afjg.coinbot.pojo.Market;
-import fr.afjg.coinbot.service.impl.BittrexGetMarketServiceImpl;
-import fr.afjg.coinbot.service.intf.BittrexGetMarketServiceIntf;
+import fr.afjg.coinbot.api.pojo.Market;
+import fr.afjg.coinbot.api.service.impl.BittrexGetMarketServiceImpl;
+import fr.afjg.coinbot.api.service.intf.BittrexGetMarketServiceIntf;
 
 public class test2 {
 

@@ -1,10 +1,10 @@
-package fr.afjg.coinbot.service.intf;
+package fr.afjg.coinbot.api.service.intf;
 
 import java.io.IOException;
 
 import org.json.JSONException;
 
-import fr.afjg.coinbot.pojo.Market;
+import fr.afjg.coinbot.api.pojo.Market;
 
 public interface BittrexGetMarketServiceIntf {
 	

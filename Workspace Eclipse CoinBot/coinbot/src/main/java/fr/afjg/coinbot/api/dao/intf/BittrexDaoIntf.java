@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.dao.intf;
+package fr.afjg.coinbot.api.dao.intf;
 
 import java.io.IOException;
 

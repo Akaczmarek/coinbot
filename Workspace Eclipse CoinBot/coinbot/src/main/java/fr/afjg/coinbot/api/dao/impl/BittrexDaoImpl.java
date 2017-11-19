@@ -1,9 +1,9 @@
-package fr.afjg.coinbot.dao.impl;
+package fr.afjg.coinbot.api.dao.impl;
 
 import java.io.IOException;
 
 import fr.afjg.coinbot.api.ConnexionApi;
-import fr.afjg.coinbot.dao.intf.BittrexDaoIntf;
+import fr.afjg.coinbot.api.dao.intf.BittrexDaoIntf;
 
 public class BittrexDaoImpl implements BittrexDaoIntf{
 	

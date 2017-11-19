@@ -1,9 +1,9 @@
-package fr.afjg.coinbot.impl;
+package fr.afjg.coinbot.api.impl;
 
 import java.io.IOException;
 
 import fr.afjg.coinbot.api.ConnexionApi;
-import fr.afjg.coinbot.intf.BittrexIntf;
+import fr.afjg.coinbot.api.intf.BittrexIntf;
 
 public class BittrexImpl implements BittrexIntf{
 	

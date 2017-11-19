@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.pojo;
+package fr.afjg.coinbot.api.pojo;
 
 public class Result {
 	
