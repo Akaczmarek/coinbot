@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import fr.afjg.coinbot.database.exceptions.CryptoVolumeException;
 
-public class StockPrices {
+public class StockPricesBTC {
 
 	private int idCrypto;
 	private String cryptoName;
@@ -14,7 +14,7 @@ public class StockPrices {
 	private double askBTC;
 	private double cryptoVolume;
 	
-	public StockPrices() {
+	public StockPricesBTC() {
 		
 	}
 

@@ -2,11 +2,11 @@ package fr.afjg.coinbot.dataprocessing.service.intf;
 
 import java.util.Set;
 
-import fr.afjg.coinbot.database.pojo.StockPrices;
+import fr.afjg.coinbot.database.pojo.StockPricesBTC;
 
 public interface DataProcessingService {
 
-	public Set<StockPrices> getDataByAmount(Integer Amount);
+	public Set<StockPricesBTC> getDataByAmount(Integer Amount);
 	
 }
 
