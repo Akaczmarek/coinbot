@@ -4,7 +4,7 @@ import java.util.Set;
 
 import fr.afjg.coinbot.dao.impl.datatprocessing.DataProcessingDaoImpl;
 import fr.afjg.coinbot.dao.intf.datatprocessing.DataProcessingDao;
-import fr.afjg.coinbot.pojo.database.CurrencyRateBTC;
+import fr.afjg.coinbot.pojo.database.CurrencyRate;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingService;
 
 public class DataProcessingServiceImpl implements DataProcessingService{
@@ -16,7 +16,7 @@ public class DataProcessingServiceImpl implements DataProcessingService{
 	}
 
 	@Override
-	public Set<CurrencyRateBTC> getDataByAmount(Integer Amount) {
+	public Set<CurrencyRate> getDataByAmount(Integer Amount) {
 		// TODO Auto-generated method stub
 		return DataProcessing.getDataByAmount(Amount);
 	}

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import fr.afjg.coinbot.pojo.database.CurrencyRateBTC;
+import fr.afjg.coinbot.pojo.database.CurrencyRate;
 
 /**
  * methods list for currency framing
@@ -15,7 +15,7 @@ import fr.afjg.coinbot.pojo.database.CurrencyRateBTC;
 public class DataProcessing {
 	
 	
-	public static List<CurrencyRateBTC> parseSetInList()
+	
 
 	/**
 	 * parseSPBidPt
@@ -26,13 +26,13 @@ public class DataProcessing {
 	 * 
 	 * 		{@code DataProcessing.parseSPBidPt(list)}
 	 */
-	public static List<PointXY> parseSPBidPt(List<CurrencyRateBTC> listStockPrices) {
+	public static List<PointXY> parseSPBidPt(List<CurrencyRate> listStockPrices) {
 		List<PointXY> PointsXY = new ArrayList<>();
-		Iterator<CurrencyRateBTC> ite = listStockPrices.iterator();
+		Iterator<CurrencyRate> ite = listStockPrices.iterator();
 
 		while (ite.hasNext()) {
-			CurrencyRateBTC price = ite.next();
-			PointsXY.add(new PointXY(price.getInfoTimeStamp(), price.getBidBTC()));
+			CurrencyRate price = ite.next();
+			PointsXY.add(new PointXY(price.getTimeRecord(), price.getBidBTC()));
 
 		}
 
