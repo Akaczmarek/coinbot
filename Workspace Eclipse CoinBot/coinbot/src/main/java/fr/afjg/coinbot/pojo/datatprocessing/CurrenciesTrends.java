@@ -4,11 +4,11 @@ import java.util.List;
 
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
 
-public class CurrenciesTrends implements Runnable{
-	
+public class CurrenciesTrends implements Runnable {
+
 	private DataProcessingServiceIntf DPService;
 	private List<CurrencyTrend> currenciesTrends;
-	
+
 	/*
 	 * private constructor
 	 */
@@ -32,7 +32,9 @@ public class CurrenciesTrends implements Runnable{
 	}
 
 	/*
-	 * Getters & Setters-------------------------------------------------------------------------------
+	 * Getters &
+	 * Setters----------------------------------------------------------------------
+	 * ---------
 	 */
 
 	public DataProcessingServiceIntf getDPService() {
@@ -50,29 +52,23 @@ public class CurrenciesTrends implements Runnable{
 	public void setCurrenciesTrends(List<CurrencyTrend> currenciesTrends) {
 		this.currenciesTrends = currenciesTrends;
 	}
-	
-	
+
 	/*
-	 * Methods-------------------------------------------------------------------------------
+	 * Methods----------------------------------------------------------------------
+	 * ---------
 	 * 
 	 */
-	
-	
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
-		//opération de lancement des threads de calcul des tendances
-		//CurrencyTrend
-		
+
+		// opération de lancement des threads de calcul des tendances
+		// CurrencyTrend
+
 		// exemple d'envoi
 		CurrencyTrend ct = new CurrencyTrend();
-		
-		
-		
+
 	}
 
-	
-	
-	
 }
