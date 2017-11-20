@@ -2,12 +2,12 @@ package fr.afjg.coinbot.dao.impl.api;
 
 import java.io.IOException;
 
-import fr.afjg.coinbot.api.ConnexionApi;
+import fr.afjg.coinbot.api.ConnexionPublic;
 import fr.afjg.coinbot.dao.intf.api.BittrexDaoIntf;
 
 public class BittrexDaoImpl implements BittrexDaoIntf{
 	
-	public ConnexionApi api;
+	public ConnexionPublic api;
 	
 	public BittrexDaoImpl() {
 		super();
@@ -16,15 +16,15 @@ public class BittrexDaoImpl implements BittrexDaoIntf{
 	public StringBuffer getMarket() throws IOException {
 		
 		String url = "https://bittrex.com/api/v1.1/public/getmarkets";
-		this.setApi(new ConnexionApi(url));
+		this.setApi(new ConnexionPublic(url));
 		return this.getApi().print_content();
 	}
 
-	public ConnexionApi getApi() {
+	public ConnexionPublic getApi() {
 		return api;
 	}
 
-	public void setApi(ConnexionApi api) {
+	public void setApi(ConnexionPublic api) {
 		this.api = api;
 	}
 	

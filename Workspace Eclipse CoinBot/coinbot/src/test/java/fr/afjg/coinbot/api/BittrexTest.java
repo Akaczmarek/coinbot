@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.test.api;
+package fr.afjg.coinbot.api;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import fr.afjg.coinbot.pojo.api.Market;
 import fr.afjg.coinbot.service.impl.api.BittrexGetMarketServiceImpl;
 import fr.afjg.coinbot.service.intf.api.BittrexGetMarketServiceIntf;
 
-public class test2 {
+public class BittrexTest {
 
 	public static void main(String[] args) {
 		
@@ -23,11 +23,7 @@ public class test2 {
 			// Problème lors du parse
 			e.printStackTrace();
 		}
-		
-	}
-	
-	
 
-	
+	}
 
 }

@@ -9,11 +9,11 @@ import java.security.cert.Certificate;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLPeerUnverifiedException;
 
-public class ConnexionApi {
+public class ConnexionPublic {
 
 	private HttpsURLConnection con;
 
-	public ConnexionApi(String httpsUrl) throws IOException {
+	public ConnexionPublic(String httpsUrl) throws IOException {
 		super();
 		URL url = new URL(httpsUrl);
 		this.setCon((HttpsURLConnection) url.openConnection());
