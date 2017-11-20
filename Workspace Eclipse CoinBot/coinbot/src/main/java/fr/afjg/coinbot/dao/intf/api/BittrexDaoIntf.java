@@ -6,4 +6,6 @@ public interface BittrexDaoIntf {
 	
 	public StringBuffer getMarket() throws IOException;
 	
+	public StringBuffer getMarketSummary(String market) throws IOException;
+	
 }

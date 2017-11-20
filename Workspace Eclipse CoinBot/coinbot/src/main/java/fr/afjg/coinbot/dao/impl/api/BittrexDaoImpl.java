@@ -19,6 +19,15 @@ public class BittrexDaoImpl implements BittrexDaoIntf{
 		this.setApi(new ConnexionPublic(url));
 		return this.getApi().print_content();
 	}
+	
+
+	
+	public StringBuffer getMarketSummary(String market) throws IOException {
+		
+		String url = "https://bittrex.com/api/v1.1/public/getmarketsummary?market=" +  market;
+		this.setApi(new ConnexionPublic(url));
+		return this.getApi().print_content();
+	}
 
 	public ConnexionPublic getApi() {
 		return api;
