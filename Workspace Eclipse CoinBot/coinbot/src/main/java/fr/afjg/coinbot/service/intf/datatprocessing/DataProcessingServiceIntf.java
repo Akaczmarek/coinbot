@@ -4,7 +4,7 @@ import java.util.Set;
 
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
 
-public interface DataProcessingService {
+public interface DataProcessingServiceIntf {
 
 	public Set<CurrencyRate> getDataByAmount(Integer Amount);
 	

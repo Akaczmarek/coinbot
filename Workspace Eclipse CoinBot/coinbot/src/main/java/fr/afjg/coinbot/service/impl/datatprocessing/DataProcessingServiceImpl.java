@@ -5,9 +5,9 @@ import java.util.Set;
 import fr.afjg.coinbot.dao.impl.datatprocessing.DataProcessingDaoImpl;
 import fr.afjg.coinbot.dao.intf.datatprocessing.DataProcessingDao;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
-import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingService;
+import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
 
-public class DataProcessingServiceImpl implements DataProcessingService{
+public class DataProcessingServiceImpl implements DataProcessingServiceIntf{
 	
 	DataProcessingDao DataProcessing;
 	
