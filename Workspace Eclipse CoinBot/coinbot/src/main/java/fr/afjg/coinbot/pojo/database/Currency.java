@@ -3,12 +3,15 @@ package fr.afjg.coinbot.pojo.database;
 public abstract class Currency {
 
 	private int idcurrency;
-	private String currencyName;
-	private String currencyCode;
-	private boolean currencyRef;
-	
+	private String name;
+	private String symbol;
+	private int rank;
+	private double volumeEUR;
+	private double volumeUSD;
+	private boolean refCurrency;
+
 	public Currency() {
-		
+
 	}
 
 	public int getIdcurrency() {
@@ -19,31 +22,52 @@ public abstract class Currency {
 		this.idcurrency = idcurrency;
 	}
 
-	public String getCurrencyName() {
-		return currencyName;
+	public String getName() {
+		return name;
 	}
 
-	public void setCurrencyName(String currencyName) {
-		this.currencyName = currencyName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getCurrencyCode() {
-		return currencyCode;
+	public String getSymbol() {
+		return symbol;
 	}
 
-	public void setCurrencyCode(String currencyCode) {
-		this.currencyCode = currencyCode;
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
 
-	public boolean isCurrencyRef() {
-		return currencyRef;
+	public int getRank() {
+		return rank;
 	}
 
-	public void setCurrencyRef(boolean currencyRef) {
-		this.currencyRef = currencyRef;
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
-	
-	
-	
-	
+
+	public double getVolumeEUR() {
+		return volumeEUR;
+	}
+
+	public void setVolumeEUR(double volumeEUR) {
+		this.volumeEUR = volumeEUR;
+	}
+
+	public double getVolumeUSD() {
+		return volumeUSD;
+	}
+
+	public void setVolumeUSD(double volumeUSD) {
+		this.volumeUSD = volumeUSD;
+	}
+
+	public boolean isRefCurrency() {
+		return refCurrency;
+	}
+
+	public void setRefCurrency(boolean refCurrency) {
+		this.refCurrency = refCurrency;
+	}
+
 }

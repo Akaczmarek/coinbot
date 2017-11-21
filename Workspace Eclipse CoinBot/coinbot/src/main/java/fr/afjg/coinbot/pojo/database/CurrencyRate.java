@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class CurrencyRate extends Currency{
 
+	private long idCurrencyRate;
 	private Timestamp timeRecord;
 	private double bidBTC;
 	private double askBTC;
@@ -11,7 +12,6 @@ public class CurrencyRate extends Currency{
 	private double askUSD;
 	private double bidEUR;
 	private double askEUR;
-	private double currencyVolume;
 	private CurrencyREF ref;
 	
 
@@ -19,9 +19,20 @@ public class CurrencyRate extends Currency{
 		ref= CurrencyREF.getInstance();
 	}
 	
+	
+	
 	/*
 	 * getters - Setters -------------------------------------------------------------
 	 */
+
+	
+	public long getIdCurrencyRate() {
+		return idCurrencyRate;
+	}
+
+	public void setIdCurrencyRate(long idCurrencyRate) {
+		this.idCurrencyRate = idCurrencyRate;
+	}
 
 	public Timestamp getTimeRecord() {
 		return timeRecord;
@@ -41,6 +52,10 @@ public class CurrencyRate extends Currency{
 
 	public double getAskBTC() {
 		return askBTC;
+	}
+
+	public void setAskBTC(double askBTC) {
+		this.askBTC = askBTC;
 	}
 
 	public double getBidUSD() {
@@ -75,18 +90,8 @@ public class CurrencyRate extends Currency{
 		this.askEUR = askEUR;
 	}
 
-	public void setAskBTC(double askBTC) {
-		this.askBTC = askBTC;
-	}
 
-	
-	public double getCurrencyVolume() {
-		return currencyVolume;
-	}
 
-	public void setCurrencyVolume(double currencyVolume) {
-		this.currencyVolume = currencyVolume;
-	}
 /*
  * Methods------------------------------------------------------------------	
  */
@@ -98,6 +103,7 @@ public class CurrencyRate extends Currency{
 		double refUSD = ref.getBidUSD();
 		this.setBidUSD(refUSD*bidBTC);
 	}
+	
 	public void calcAskUSD() {
 		double askBTC = this.getAskBTC();
 		double refUSD = ref.getAskUSD();
@@ -115,5 +121,6 @@ public class CurrencyRate extends Currency{
 		double refEUR = ref.getAskEUR();
 		this.setBidEUR(refEUR*askBTC);
 	}
+	
 
 }
