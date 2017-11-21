@@ -1,21 +1,18 @@
-package fr.afjg.coinbot.dao.impl.datatprocessing;
+package fr.afjg.coinbot.dao.impl.database;
 
 import java.util.Set;
 
 import fr.afjg.coinbot.dao.intf.database.CurrencyDaoIntf;
-import fr.afjg.coinbot.dao.intf.datatprocessing.DataProcessingDaoIntf;
 import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
 import fr.afjg.coinbot.pojo.datatprocessing.CurrencyTrend;
 
-public class DataProcessingDaoImpl implements DataProcessingDaoIntf{
+public class CurrencyDaoImpl implements CurrencyDaoIntf{
 
-	CurrencyDaoIntf currencyData;
-	
 	@Override
-	public Set<CurrencyRate> getCurrencyRateByAmount(Integer Amount, Currency currency) {
+	public Set<CurrencyRate> getCurrencyRateByAmount(Integer Amount, Currency currency){
 		// TODO Auto-generated method stub
-		return currencyData.getCurrencyRateByAmount(Amount, currency);
+		return null;
 	}
 
 	@Override
@@ -23,7 +20,6 @@ public class DataProcessingDaoImpl implements DataProcessingDaoIntf{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
 
 }

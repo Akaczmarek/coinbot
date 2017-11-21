@@ -1,18 +1,26 @@
 package fr.afjg.coinbot.pojo.datatprocessing;
 
-import java.util.List;
+import java.util.Set;
 
+import fr.afjg.coinbot.service.impl.datatprocessing.DataProcessingServiceImpl;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
 
 public class CurrenciesTrends implements Runnable {
 
 	private DataProcessingServiceIntf DPService;
-	private List<CurrencyTrend> currenciesTrends;
+	private Set<CurrencyTrend> currenciesTrends;
+	private final int NBTHREADSTREND;
 
+	
+	{
+		NBTHREADSTREND=5;
+	}
 	/*
 	 * private constructor
 	 */
 	private CurrenciesTrends() {
+
+		DPService = new DataProcessingServiceImpl();
 
 	}
 
@@ -34,7 +42,7 @@ public class CurrenciesTrends implements Runnable {
 	/*
 	 * Getters &
 	 * Setters----------------------------------------------------------------------
-	 * ---------
+
 	 */
 
 	public DataProcessingServiceIntf getDPService() {
@@ -45,19 +53,25 @@ public class CurrenciesTrends implements Runnable {
 		DPService = dPService;
 	}
 
-	public List<CurrencyTrend> getCurrenciesTrends() {
+	public Set<CurrencyTrend> getCurrenciesTrends() {
 		return currenciesTrends;
 	}
 
-	public void setCurrenciesTrends(List<CurrencyTrend> currenciesTrends) {
+	public void setCurrenciesTrends(Set<CurrencyTrend> currenciesTrends) {
 		this.currenciesTrends = currenciesTrends;
+	}
+	
+	public int getNBTHREADSTREND() {
+		return NBTHREADSTREND;
 	}
 
 	/*
 	 * Methods----------------------------------------------------------------------
-	 * ---------
+	 * 
 	 * 
 	 */
+
+
 
 	@Override
 	public void run() {
@@ -67,7 +81,39 @@ public class CurrenciesTrends implements Runnable {
 		// CurrencyTrend
 
 		// exemple d'envoi
-		CurrencyTrend ct = new CurrencyTrend();
+		
+		
+		//stage 1 : recovers data and loading list currencies
+		this.setCurrenciesTrends(DPService.getAllCurrenciesTrends());
+		
+		
+		
+		
+		
+		
+		int nbThreadsTrend=0;
+		while (true) {
+			
+			
+			
+			
+			CurrencyTrend ct = new CurrencyTrend();
+			
+			
+			
+			
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+
+		
+		
 
 	}
 

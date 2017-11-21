@@ -6,7 +6,7 @@ import java.util.Set;
 import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
 
-public class CurrencyTrend implements Runnable{
+public class CurrencyTrend extends Currency implements Runnable{
 	
 	private Set<CurrencyRate> currencyRates;
 	private double leadingDirect4hAverageBid;

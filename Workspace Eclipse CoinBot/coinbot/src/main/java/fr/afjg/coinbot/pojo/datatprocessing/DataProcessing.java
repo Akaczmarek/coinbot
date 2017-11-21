@@ -13,9 +13,6 @@ import fr.afjg.coinbot.pojo.database.CurrencyRate;
  *
  */
 public class DataProcessing {
-	
-	
-	
 
 	/**
 	 * parseSPBidPt
@@ -68,7 +65,5 @@ public class DataProcessing {
 		return splitList;
 
 	}
-	
-	
 
 }
