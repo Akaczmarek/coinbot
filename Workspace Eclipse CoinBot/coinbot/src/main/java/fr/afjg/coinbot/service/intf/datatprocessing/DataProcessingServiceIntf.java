@@ -9,7 +9,7 @@ import fr.afjg.coinbot.pojo.datatprocessing.CurrencyTrend;
 public interface DataProcessingServiceIntf {
 
 	public Set<CurrencyRate> getCurrencyRateByAmount(Integer Amount, Currency currency);
-	public Set<CurrencyTrend> getAllCurrenciesTrends();
+	public Set<CurrencyTrend> getAllLastCurrenciesTrends();
 	
 }
 

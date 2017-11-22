@@ -19,7 +19,7 @@ public class DataProcessingDaoImpl implements DataProcessingDaoIntf{
 	}
 
 	@Override
-	public Set<CurrencyTrend> getAllCurrenciesTrends() {
+	public Set<CurrencyTrend> getAllLastCurrenciesTrends() {
 		// TODO Auto-generated method stub
 		return null;
 	}
