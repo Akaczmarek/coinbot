@@ -130,6 +130,16 @@ public class CurrencyTrend extends Currency implements Runnable {
 		// procedure de calcul des tendances
 
 		// et incrémenter la liste currenciesTrends avec les nouvelles valeurs
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 

@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import fr.afjg.coinbot.pojo.database.Currency;
+import fr.afjg.coinbot.pojo.database.CurrencyRate;
 import fr.afjg.coinbot.service.impl.datatprocessing.DataProcessingServiceImpl;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
 
@@ -119,27 +120,26 @@ public class CurrenciesTrends implements Runnable {
 				
 				
 				
-				// Stage 3 : find the currency with oldest trend
+				// Stage 3 : find the currency with oldest trend (this is the first element of list after sort)
 				Collections.sort(cts,CurrencyTrend.CTTimestampComparator);
+				Currency CurrencyBeTreated = cts.get(0);
 				
 				
 				
-				
-				// stage 4 : transit information to currencyTrend
-				Iterator<CurrencyTrend> ite = this.getCurrenciesTrends().iterator();
+				// stage 4 : definition timestamp for requete historic rate currency
 				
 				Duration duration = Duration.ofDays(this.getDATARANGEINDAY());
-				Timestamp tst = new Timestamp(System.currentTimeMillis()- (duration.getSeconds()*1000));
+				Timestamp tst = new Timestamp(System.currentTimeMillis()- (duration.getSeconds()*1000));  // date we go back				
 				
 				
-
+				// Stage 5 : transmission information for object currencyTrend and create Object
+				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst, CurrencyBeTreated);
+				CurrencyTrend ct = new CurrencyTrend(crs);
+				
+				Thread thread = new Thread(ct);
+				thread.start();
 				
 			}
-			
-			
-			CurrencyTrend ct = new CurrencyTrend();
-			
-			
 			
 			
 			

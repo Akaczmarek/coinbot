@@ -1,5 +1,6 @@
 package fr.afjg.coinbot.dao.impl.datatprocessing;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import fr.afjg.coinbot.dao.intf.database.CurrencyDaoIntf;
@@ -13,9 +14,9 @@ public class DataProcessingDaoImpl implements DataProcessingDaoIntf{
 	CurrencyDaoIntf currencyData;
 	
 	@Override
-	public List<CurrencyRate> getCurrencyRateByAmount(Integer Amount, Currency currency) {
+	public List<CurrencyRate> getCurrencyRateByDurationAndCurrency(Timestamp timestamp, Currency currency) {
 		// TODO Auto-generated method stub
-		return currencyData.getCurrencyRateByAmount(Amount, currency);
+		return currencyData.getCurrencyRateByDurationAndCurrency(timestamp, currency);
 	}
 
 	@Override

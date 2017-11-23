@@ -1,5 +1,6 @@
 package fr.afjg.coinbot.service.impl.datatprocessing;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import fr.afjg.coinbot.dao.impl.datatprocessing.DataProcessingDaoImpl;
@@ -18,9 +19,9 @@ public class DataProcessingServiceImpl implements DataProcessingServiceIntf{
 	}
 
 	@Override
-	public List<CurrencyRate> getCurrencyRateByAmount(Integer Amount, Currency currency) {
+	public List<CurrencyRate> getCurrencyRateByDurationAndCurrency(Timestamp timestamp, Currency currency) {
 		// TODO Auto-generated method stub
-		return DataProcessing.getCurrencyRateByAmount(Amount, currency);
+		return DataProcessing.getCurrencyRateByDurationAndCurrency(timestamp, currency);
 	}
 
 	@Override
