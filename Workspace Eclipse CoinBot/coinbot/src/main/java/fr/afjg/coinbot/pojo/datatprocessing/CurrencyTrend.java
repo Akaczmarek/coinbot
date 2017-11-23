@@ -1,7 +1,7 @@
 package fr.afjg.coinbot.pojo.datatprocessing;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -132,8 +132,22 @@ public class CurrencyTrend extends Currency implements Runnable {
 		// et incrémenter la liste currenciesTrends avec les nouvelles valeurs
 		
 		
+		// stage 0 : variables initialization
+		
+		List<TrendRules> trList = TrendRules.list();
+		Collections.sort(trList, TrendRules.TRDurationComparator);
 		
 		
+		
+		//Stage 1 : boucler pour faire toutes les tendances
+
+		while (trList.size()!= 0 ) {
+			
+			
+			
+			
+			trList.remove(0);
+		}
 		
 		
 		
@@ -168,45 +182,27 @@ public class CurrencyTrend extends Currency implements Runnable {
 			long CTTimestamp2 = CT2.getTimeRecord().getTime() / 1000;
 
 			int result = ((int) (CTTimestamp1 - CTTimestamp2));
-
 			return result;
 		}
 	};
 
 	public static void main(String[] args) {
-		System.out.println(Long.MAX_VALUE);
-		CurrencyTrend ct1 = new CurrencyTrend();
-		CurrencyTrend ct2 = new CurrencyTrend();
-		CurrencyTrend ct3 = new CurrencyTrend();
-
-		ct1.setTimeRecord(new Timestamp(1479878830));
-		ct1.setName("ct1");
-		ct2.setTimeRecord(new Timestamp(1511414830));
-		ct2.setName("ct2");
-		ct3.setTimeRecord(new Timestamp(1411414830));
-		ct3.setName("ct3");
-
-		List<CurrencyTrend> cts = new ArrayList<>();
-
-		cts.add(ct1);
-		cts.add(ct2);
-		cts.add(ct3);
 		
-		System.out.println("---------------------------------------");
+
+
+		List<TrendRules> trList = TrendRules.list();
+		Collections.sort(trList, TrendRules.TRDurationComparator);
 		
-		for (CurrencyTrend currencyTrend : cts) {
-			System.out.println(currencyTrend.getName());
+		
+		
+		//Stage 1 : boucler pour faire toutes les tendances
+
+		while (trList.size()!= 0 ) {
+			
+			System.out.println(trList.get(0));
+			trList.remove(0);
 		}
 		
-		
-		Collections.sort(cts,CurrencyTrend.CTTimestampComparator);
-
-		
-		System.out.println("---------------------------------------");
-		
-		for (CurrencyTrend currencyTrend : cts) {
-			System.out.println(currencyTrend.getName());
-		}
 		
 	}
 

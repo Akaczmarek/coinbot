@@ -1,6 +1,7 @@
 package fr.afjg.coinbot.pojo.database;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 
 public class CurrencyRate extends Currency{
 
@@ -121,6 +122,21 @@ public class CurrencyRate extends Currency{
 		double refEUR = ref.getAskEUR();
 		this.setBidEUR(refEUR*askBTC);
 	}
+	
+	
+	public static Comparator<CurrencyRate> CRTimestampComparator = new Comparator<CurrencyRate>() {
+
+		@Override
+		public int compare(CurrencyRate cr1, CurrencyRate cr2) {
+			// TODO Auto-generated method stub
+			long CRTimestamp1 = cr1.getTimeRecord().getTime()/1000;
+			long CRTimestamp2 = cr2.getTimeRecord().getTime()/1000;
+			
+			int result = ((int)(CRTimestamp1-CRTimestamp2));
+			
+			return result;
+		}
+	};
 	
 
 }

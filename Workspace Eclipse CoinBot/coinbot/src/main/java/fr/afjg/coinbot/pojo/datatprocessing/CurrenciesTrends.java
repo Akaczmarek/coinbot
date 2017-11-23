@@ -13,6 +13,7 @@ import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
 import fr.afjg.coinbot.service.impl.datatprocessing.DataProcessingServiceImpl;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
+import fr.afjg.coinbot.util.DateTools;
 
 public class CurrenciesTrends implements Runnable {
 
@@ -20,11 +21,11 @@ public class CurrenciesTrends implements Runnable {
 	private List<CurrencyTrend> currenciesTrends;
 	private final int NBTHREADSTREND;
 	private int nbActifThreadsTrend;
-	private final int DATARANGEINDAY;
+	private final long DATARANGEINHOURS;
 
 	{
 		this.NBTHREADSTREND = 5; // parameter for optimization execution
-		this.DATARANGEINDAY = 30; // parameter coverage duration for trends
+		this.DATARANGEINHOURS = TrendRules.MaxTimeInHours(); // parameter coverage duration for trends in Hours
 		this.setNbActifThreadsTrend(0);
 	}
 
@@ -86,13 +87,14 @@ public class CurrenciesTrends implements Runnable {
 		this.nbActifThreadsTrend = nbActifThreadsTrend;
 	}
 
-	public int getDATARANGEINDAY() {
-		return DATARANGEINDAY;
+	public long getDATARANGEINHOURS() {
+		return DATARANGEINHOURS;
 	}
 
 	/*
 	 * Methods----------------------------------------------------------------------
 	 */
+
 
 	@Override
 	public void run() {
@@ -126,14 +128,15 @@ public class CurrenciesTrends implements Runnable {
 				
 				
 				
-				// stage 4 : definition timestamp for requete historic rate currency
+				// stage 4 : definition timestamp for request historic rate currency
 				
-				Duration duration = Duration.ofDays(this.getDATARANGEINDAY());
-				Timestamp tst = new Timestamp(System.currentTimeMillis()- (duration.getSeconds()*1000));  // date we go back				
+				Duration duration = Duration.ofHours(this.getDATARANGEINHOURS());
+				Timestamp tst = new Timestamp(System.currentTimeMillis()- (duration.getSeconds()*1000));  // date we go back
 				
 				
 				// Stage 5 : transmission information for object currencyTrend and create Object
 				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst, CurrencyBeTreated);
+				Collections.sort(crs, CurrencyRate.CRTimestampComparator);
 				CurrencyTrend ct = new CurrencyTrend(crs);
 				
 				Thread thread = new Thread(ct);
@@ -159,6 +162,14 @@ public class CurrenciesTrends implements Runnable {
 
 	public static void main(String[] args) {
 
+		
+		
+		Duration duration = Duration.ofDays(20);
+		Timestamp tst1 = new Timestamp(System.currentTimeMillis());
+		Timestamp tst = new Timestamp(System.currentTimeMillis()- (duration.getSeconds()*1000));
+		
+		System.out.println(DateTools.dateFormat("dd/MM/yy", DateTools.timestampConvertDate(tst1))+" -> "+DateTools.dateFormat("dd/MM/yy", DateTools.timestampConvertDate(tst)));
+		
 		TreeSet<String> t = new TreeSet<String>();
 		t.add("test 15");
 		t.add("dfd 2");
