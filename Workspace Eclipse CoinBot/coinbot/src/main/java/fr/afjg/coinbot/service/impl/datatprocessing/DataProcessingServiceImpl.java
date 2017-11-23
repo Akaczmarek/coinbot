@@ -1,6 +1,6 @@
 package fr.afjg.coinbot.service.impl.datatprocessing;
 
-import java.util.Set;
+import java.util.List;
 
 import fr.afjg.coinbot.dao.impl.datatprocessing.DataProcessingDaoImpl;
 import fr.afjg.coinbot.dao.intf.datatprocessing.DataProcessingDaoIntf;
@@ -18,13 +18,13 @@ public class DataProcessingServiceImpl implements DataProcessingServiceIntf{
 	}
 
 	@Override
-	public Set<CurrencyRate> getCurrencyRateByAmount(Integer Amount, Currency currency) {
+	public List<CurrencyRate> getCurrencyRateByAmount(Integer Amount, Currency currency) {
 		// TODO Auto-generated method stub
 		return DataProcessing.getCurrencyRateByAmount(Amount, currency);
 	}
 
 	@Override
-	public Set<CurrencyTrend> getAllLastCurrenciesTrends() {
+	public List<CurrencyTrend> getAllLastCurrenciesTrends() {
 		// TODO Auto-generated method stub
 		return null;
 	}

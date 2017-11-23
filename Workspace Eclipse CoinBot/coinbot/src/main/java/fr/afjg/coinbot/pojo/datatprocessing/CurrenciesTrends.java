@@ -5,16 +5,18 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.service.impl.datatprocessing.DataProcessingServiceImpl;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
 
 public class CurrenciesTrends implements Runnable {
 
 	private DataProcessingServiceIntf DPService;
-	private Set<CurrencyTrend> currenciesTrends;
+	private List<CurrencyTrend> currenciesTrends;
 	private final int NBTHREADSTREND;
 	private int nbActifThreadsTrend;
 	private final int DATARANGEINDAY;
@@ -63,11 +65,11 @@ public class CurrenciesTrends implements Runnable {
 		DPService = dPService;
 	}
 
-	public Set<CurrencyTrend> getCurrenciesTrends() {
+	public List<CurrencyTrend> getCurrenciesTrends() {
 		return currenciesTrends;
 	}
 
-	public void setCurrenciesTrends(Set<CurrencyTrend> currenciesTrends) {
+	public void setCurrenciesTrends(List<CurrencyTrend> currenciesTrends) {
 		this.currenciesTrends = currenciesTrends;
 	}
 
@@ -104,6 +106,8 @@ public class CurrenciesTrends implements Runnable {
 		//stage 1 : recovers data and loading list currencies
 		this.setCurrenciesTrends(DPService.getAllLastCurrenciesTrends());
 		
+		List<CurrencyTrend> cts = this.getCurrenciesTrends();
+		
 		
 		
 		
@@ -115,8 +119,10 @@ public class CurrenciesTrends implements Runnable {
 				
 				
 				
-				// Stage 3 : find the oldest trend
-				Collections.sort
+				// Stage 3 : find the currency with oldest trend
+				Collections.sort(cts,CurrencyTrend.CTTimestampComparator);
+				
+				
 				
 				
 				// stage 4 : transit information to currencyTrend
@@ -191,5 +197,7 @@ public class CurrenciesTrends implements Runnable {
 		
 
 	}
+
+
 
 }
