@@ -126,6 +126,7 @@ public class CurrenciesTrendsBot implements Runnable {
 		List<CurrencyTrend> cts = this.getCurrenciesTrends();
 
 		
+		
 		while (true) {
 
 			// Stage 2 : transmit trend calculation order at object CurrencyTrend
@@ -146,7 +147,10 @@ public class CurrenciesTrendsBot implements Runnable {
 				// Stage 5 : transmission information for object currencyTrend and create Object
 				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst, CurrencyBeTreated);
 				Collections.sort(crs, CurrencyRate.CRTimestampComparator);
-				CurrencyTrend ct = new CurrencyTrend(crs);
+				
+				List<TrendRule> trs = this.getTrendRule().getTrendRules();
+				
+				CurrencyTrend ct = new CurrencyTrend(crs, trs );
 
 				Thread thread = new Thread(ct);
 				thread.start();

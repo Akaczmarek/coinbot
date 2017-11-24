@@ -1,7 +1,5 @@
 package fr.afjg.coinbot.pojo.datatprocessing;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -75,7 +73,7 @@ public abstract class TrendRule {
 		
 		List<TrendRule> tr = this.getTrendRules();
 		
-		Collections.sort(tr, this.TRDurationComparator);
+		Collections.sort(tr, TrendRule.TRDurationComparator);
 
 		return this.convertDurationInHours(tr.get(0));
 	}
@@ -88,7 +86,7 @@ public abstract class TrendRule {
 		return result;
 	}
 
-	public Comparator<TrendRule> TRDurationComparator = new Comparator<TrendRule>() {
+	public final static Comparator<TrendRule> TRDurationComparator = new Comparator<TrendRule>() {
 
 		@Override
 		public int compare(TrendRule tr1, TrendRule tr2) {

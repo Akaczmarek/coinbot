@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Predicate;
 
 import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
@@ -14,6 +13,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 	private List<CurrencyRate> currencyRates;
 	private List<TrendCalculation> trendCalculs;
+	private List<TrendRule> trendRules;
 	private double noteCurrency;
 	private Timestamp timeRecord;
 	private CurrencyNote note;
@@ -22,8 +22,9 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 	}
 
-	public CurrencyTrend(List<CurrencyRate> currencyRates) {
-
+	public CurrencyTrend(List<CurrencyRate> currencyRates, List<TrendRule> trendRules) {
+		this.setCurrencyRates(currencyRates);
+		this.setTrendRules(trendRules);
 	}
 
 	// getters &
@@ -37,7 +38,22 @@ public class CurrencyTrend extends Currency implements Runnable {
 		this.currencyRates = currencyRates;
 	}
 
-	
+	public List<TrendCalculation> getTrendCalculs() {
+		return trendCalculs;
+	}
+
+	public void setTrendCalculs(List<TrendCalculation> trendCalculs) {
+		this.trendCalculs = trendCalculs;
+	}
+
+	public List<TrendRule> getTrendRules() {
+		return trendRules;
+	}
+
+	public void setTrendRules(List<TrendRule> trendRules) {
+		trendRules = trendRules;
+	}
+
 	public Timestamp getTimeRecord() {
 		return timeRecord;
 	}
@@ -79,53 +95,37 @@ public class CurrencyTrend extends Currency implements Runnable {
 		// procedure de calcul des tendances
 
 		// et incrémenter la liste currenciesTrends avec les nouvelles valeurs
-		
-		
+
 		// stage 0 : variables initialization
-		
-		List<TrendRulesBotEnum> trList = TrendRulesBotEnum.list();
-		Collections.sort(trList, TrendRulesBotEnum.TRDurationComparator);
-		
-		
-		
-		//Stage 1 : boucler pour faire toutes les tendances
+
+		List<TrendRule> trList = this.getTrendRules();
+		Collections.sort(trList, TrendRule.TRDurationComparator);
+
+		// Stage 1 : boucler pour faire toutes les tendances
 
 		for (TrendRulesBotEnum trendRules : trList) {
-			
-			List <CurrencyRate> transmittedList = new ArrayList<>(this.getCurrencyRates());
-			
+
+			List<CurrencyRate> transmittedList = new ArrayList<>(this.getCurrencyRates());
+
 			/*
-			Predicate<T>
-			transmittedList.removeIf(filter)
-			*/
-			
-			
-			
+			 * Predicate<T> transmittedList.removeIf(filter)
+			 */
+
 		}
-		
-		
-		
-		
-		
 
 	}
 
-	
-	
-
-	
 	public static Comparator<CurrencyTrend> CTNoteComparator = new Comparator<CurrencyTrend>() {
 
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 			// TODO Auto-generated method stub
-			int noteCT1 = (int)(CT1.getNoteCurrency()*1000);
-			int noteCT2 = (int)(CT2.getNoteCurrency()*1000);
-			return noteCT1 - noteCT2 ;
+			int noteCT1 = (int) (CT1.getNoteCurrency() * 1000);
+			int noteCT2 = (int) (CT2.getNoteCurrency() * 1000);
+			return noteCT1 - noteCT2;
 		}
 	};
-	
-	
+
 	public static Comparator<CurrencyTrend> CTTimestampComparator = new Comparator<CurrencyTrend>() {
 
 		@Override
@@ -140,24 +140,18 @@ public class CurrencyTrend extends Currency implements Runnable {
 	};
 
 	public static void main(String[] args) {
-		
-
 
 		List<TrendRulesBotEnum> trList = TrendRulesBotEnum.list();
 		Collections.sort(trList, TrendRulesBotEnum.TRDurationComparator);
-		
-		
-		
-		//Stage 1 : boucler pour faire toutes les tendances
 
-		while (trList.size()!= 0 ) {
-			
+		// Stage 1 : boucler pour faire toutes les tendances
+
+		while (trList.size() != 0) {
+
 			System.out.println(trList.get(0));
 			trList.remove(0);
 		}
-		
-		
-	}
 
+	}
 
 }
