@@ -83,14 +83,14 @@ public class CurrencyTrend extends Currency implements Runnable {
 		
 		// stage 0 : variables initialization
 		
-		List<TrendRules> trList = TrendRules.list();
-		Collections.sort(trList, TrendRules.TRDurationComparator);
+		List<TrendRulesBot> trList = TrendRulesBot.list();
+		Collections.sort(trList, TrendRulesBot.TRDurationComparator);
 		
 		
 		
 		//Stage 1 : boucler pour faire toutes les tendances
 
-		for (TrendRules trendRules : trList) {
+		for (TrendRulesBot trendRules : trList) {
 			
 			List <CurrencyRate> transmittedList = new ArrayList<>(this.getCurrencyRates());
 			
@@ -143,8 +143,8 @@ public class CurrencyTrend extends Currency implements Runnable {
 		
 
 
-		List<TrendRules> trList = TrendRules.list();
-		Collections.sort(trList, TrendRules.TRDurationComparator);
+		List<TrendRulesBot> trList = TrendRulesBot.list();
+		Collections.sort(trList, TrendRulesBot.TRDurationComparator);
 		
 		
 		

@@ -15,7 +15,7 @@ import fr.afjg.coinbot.service.impl.datatprocessing.DataProcessingServiceImpl;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
 import fr.afjg.coinbot.util.DateTools;
 
-public class CurrenciesTrends implements Runnable {
+public class CurrenciesTrendsBot implements Runnable {
 
 	private DataProcessingServiceIntf DPService;
 	private List<CurrencyTrend> currenciesTrends;
@@ -25,14 +25,14 @@ public class CurrenciesTrends implements Runnable {
 
 	{
 		this.NBTHREADSTREND = 5; // parameter for optimization execution
-		this.DATARANGEINHOURS = TrendRules.MaxTimeInHours(); // parameter coverage duration for trends in Hours
+		this.DATARANGEINHOURS = TrendRulesBot.MaxTimeInHours(); // parameter coverage duration for trends in Hours
 		this.setNbActifThreadsTrend(0);
 	}
 
 	/*
 	 * private constructor
 	 */
-	private CurrenciesTrends() {
+	private CurrenciesTrendsBot() {
 
 		DPService = new DataProcessingServiceImpl();
 
@@ -43,13 +43,13 @@ public class CurrenciesTrends implements Runnable {
 		/*
 		 * Instance unique non préinitialisée
 		 */
-		private final static CurrenciesTrends instance = new CurrenciesTrends();
+		private final static CurrenciesTrendsBot instance = new CurrenciesTrendsBot();
 	}
 
 	/*
 	 * Point d'accès pour l'instance unique du singleton
 	 */
-	public static CurrenciesTrends getInstance() {
+	public static CurrenciesTrendsBot getInstance() {
 		return SingletonHolder.instance;
 	}
 

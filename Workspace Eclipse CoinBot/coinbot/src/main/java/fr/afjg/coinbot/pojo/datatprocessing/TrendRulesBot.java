@@ -9,7 +9,7 @@ import java.util.List;
 /*
  * give the rules of trend duration and multiplier
  */
-public enum TrendRules {
+public enum TrendRulesBot {
 
 	H4(0, 4, 5), D1(1, 0, 3), D1H12(1, 12, 2), D10(10, 0, 3), D30(30, 0, 2);
 
@@ -17,7 +17,7 @@ public enum TrendRules {
 	private int numberHours;
 	private int multiplier;
 
-	private TrendRules(int numberDays, int numberHours, int multiplier) {
+	private TrendRulesBot(int numberDays, int numberHours, int multiplier) {
 		// TODO Auto-generated constructor stub
 		this.setNumberDays(numberDays);
 		this.setNumberHours(numberHours);
@@ -50,9 +50,9 @@ public enum TrendRules {
 
 	// methods -------------------------------------------------------------------------------
 	
-	public static List<TrendRules> list () {
+	public static List<TrendRulesBot> list () {
 		
-		List<TrendRules> list = new ArrayList<>(Arrays.asList(TrendRules.values()));
+		List<TrendRulesBot> list = new ArrayList<>(Arrays.asList(TrendRulesBot.values()));
 		
 		return list;
 		
@@ -61,27 +61,27 @@ public enum TrendRules {
 	
 	public static long MaxTimeInHours() {
 		
-		List<TrendRules> trs =TrendRules.list();
+		List<TrendRulesBot> trs =TrendRulesBot.list();
 		
-		Collections.sort(trs,TrendRules.TRDurationComparator);
+		Collections.sort(trs,TrendRulesBot.TRDurationComparator);
 
-		return TrendRules.convertDurationInHours(trs.get(0));
+		return TrendRulesBot.convertDurationInHours(trs.get(0));
 	}
 
 
-	public static long convertDurationInHours(TrendRules tr) {
+	public static long convertDurationInHours(TrendRulesBot tr) {
 		long result = (tr.getNumberDays() * 24) + tr.getNumberHours();
 		return result;
 	}
 
-	public static Comparator<TrendRules> TRDurationComparator = new Comparator<TrendRules>() {
+	public static Comparator<TrendRulesBot> TRDurationComparator = new Comparator<TrendRulesBot>() {
 
 		@Override
-		public int compare(TrendRules tr1, TrendRules tr2) {
+		public int compare(TrendRulesBot tr1, TrendRulesBot tr2) {
 			// TODO Auto-generated method stub
 
-			int TRduration1 = (int) TrendRules.convertDurationInHours(tr1);
-			int TRduration2 = (int) TrendRules.convertDurationInHours(tr2);
+			int TRduration1 = (int) TrendRulesBot.convertDurationInHours(tr1);
+			int TRduration2 = (int) TrendRulesBot.convertDurationInHours(tr2);
 
 			return TRduration2 - TRduration1;
 		}
