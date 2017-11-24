@@ -103,7 +103,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 		// Stage 1 : boucler pour faire toutes les tendances
 
-		for (TrendRulesBotEnum trendRules : trList) {
+		for (TrendRule trendRules : trList) {
 
 			List<CurrencyRate> transmittedList = new ArrayList<>(this.getCurrencyRates());
 
