@@ -1,10 +1,11 @@
 package fr.afjg.coinbot.pojo.datatprocessing;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
@@ -12,12 +13,7 @@ import fr.afjg.coinbot.pojo.database.CurrencyRate;
 public class CurrencyTrend extends Currency implements Runnable {
 
 	private List<CurrencyRate> currencyRates;
-	private double leadingDirect4hAverageBid;
-	private double ordOrigin4hAverageBid;
-	private double leadingDirect4hCeilingBid;
-	private double ordOrigin4hCeilingBid;
-	private double leadingDirect4hSuppBid;
-	private double ordOrigin4hSuppBid;
+	private List<TrendCalculation> trendCalculs;
 	private double noteCurrency;
 	private Timestamp timeRecord;
 	private CurrencyNote note;
@@ -41,54 +37,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 		this.currencyRates = currencyRates;
 	}
 
-	public double getLeadingDirect4hAverageBid() {
-		return leadingDirect4hAverageBid;
-	}
-
-	public void setLeadingDirect4hAverageBid(double leadingDirect4hAverageBid) {
-		this.leadingDirect4hAverageBid = leadingDirect4hAverageBid;
-	}
-
-	public double getOrdOrigin4hAverageBid() {
-		return ordOrigin4hAverageBid;
-	}
-
-	public void setOrdOrigin4hAverageBid(double ordOrigin4hAverageBid) {
-		this.ordOrigin4hAverageBid = ordOrigin4hAverageBid;
-	}
-
-	public double getLeadingDirect4hCeilingBid() {
-		return leadingDirect4hCeilingBid;
-	}
-
-	public void setLeadingDirect4hCeilingBid(double leadingDirect4hCeilingBid) {
-		this.leadingDirect4hCeilingBid = leadingDirect4hCeilingBid;
-	}
-
-	public double getOrdOrigin4hCeilingBid() {
-		return ordOrigin4hCeilingBid;
-	}
-
-	public void setOrdOrigin4hCeilingBid(double ordOrigin4hCeilingBid) {
-		this.ordOrigin4hCeilingBid = ordOrigin4hCeilingBid;
-	}
-
-	public double getLeadingDirect4hSuppBid() {
-		return leadingDirect4hSuppBid;
-	}
-
-	public void setLeadingDirect4hSuppBid(double leadingDirect4hSuppBid) {
-		this.leadingDirect4hSuppBid = leadingDirect4hSuppBid;
-	}
-
-	public double getOrdOrigin4hSuppBid() {
-		return ordOrigin4hSuppBid;
-	}
-
-	public void setOrdOrigin4hSuppBid(double ordOrigin4hSuppBid) {
-		this.ordOrigin4hSuppBid = ordOrigin4hSuppBid;
-	}
-
+	
 	public Timestamp getTimeRecord() {
 		return timeRecord;
 	}
@@ -141,14 +90,18 @@ public class CurrencyTrend extends Currency implements Runnable {
 		
 		//Stage 1 : boucler pour faire toutes les tendances
 
-		while (trList.size()!= 0 ) {
+		for (TrendRules trendRules : trList) {
+			
+			List <CurrencyRate> transmittedList = new ArrayList<>(this.getCurrencyRates());
+			
+			/*
+			Predicate<T>
+			transmittedList.removeIf(filter)
+			*/
 			
 			
 			
-			
-			trList.remove(0);
 		}
-		
 		
 		
 		
