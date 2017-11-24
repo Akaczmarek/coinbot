@@ -19,13 +19,19 @@ public class CurrenciesTrendsBot implements Runnable {
 
 	private DataProcessingServiceIntf DPService;
 	private List<CurrencyTrend> currenciesTrends;
+	private TrendRule trendRule;
 	private final int NBTHREADSTREND;
 	private int nbActifThreadsTrend;
 	private final long DATARANGEINHOURS;
 
 	{
-		this.NBTHREADSTREND = 5; // parameter for optimization execution
-		this.DATARANGEINHOURS = TrendRulesBotEnum.MaxTimeInHours(); // parameter coverage duration for trends in Hours
+		this.NBTHREADSTREND = 5; // parameter for optimization execution  (allocation number threads)
+		
+		this.setTrendRule(new TrendRulesBot());
+		((TrendRulesBot)this.getTrendRule()).loadTrendRulesBotEnum();		//loading trend rules
+		
+		this.DATARANGEINHOURS = this.getTrendRule().MaxTimeInHours(); 		// parameter coverage duration for trends in Hours
+
 		this.setNbActifThreadsTrend(0);
 	}
 
@@ -75,6 +81,14 @@ public class CurrenciesTrendsBot implements Runnable {
 		this.currenciesTrends = currenciesTrends;
 	}
 
+	public TrendRule getTrendRule() {
+		return trendRule;
+	}
+
+	public void setTrendRule(TrendRule trendRule) {
+		this.trendRule = trendRule;
+	}
+
 	public int getNBTHREADSTREND() {
 		return NBTHREADSTREND;
 	}
@@ -95,7 +109,6 @@ public class CurrenciesTrendsBot implements Runnable {
 	 * Methods----------------------------------------------------------------------
 	 */
 
-
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -104,48 +117,42 @@ public class CurrenciesTrendsBot implements Runnable {
 		// CurrencyTrend
 
 		// exemple d'envoi
+
+		// Stage 0 : variables initialization
 		
-		
-		//stage 1 : recovers data and loading list currencies
-		this.setCurrenciesTrends(DPService.getAllLastCurrenciesTrends());
-		
+		// stage 1 : recovers data and loading list currencies
+		this.setCurrenciesTrends(DPService.getAllLastCurrenciesTrends());	//loading list of all currencies
+
 		List<CurrencyTrend> cts = this.getCurrenciesTrends();
-		
-		
-		
+
 		
 		while (true) {
-			
-			//Stage 2 : transmit trend calculation order at object CurrencyTrend
-			
+
+			// Stage 2 : transmit trend calculation order at object CurrencyTrend
+
 			while (this.getNbActifThreadsTrend() < this.getNBTHREADSTREND()) {
-				
-				
-				
-				// Stage 3 : find the currency with oldest trend (this is the first element of list after sort)
-				Collections.sort(cts,CurrencyTrend.CTTimestampComparator);
+
+				// Stage 3 : find the currency with oldest trend (this is the first element of
+				// list after sort)
+				Collections.sort(cts, CurrencyTrend.CTTimestampComparator);
 				Currency CurrencyBeTreated = cts.get(0);
-				
-				
-				
+
 				// stage 4 : definition timestamp for request historic rate currency
-				
+
 				Duration duration = Duration.ofHours(this.getDATARANGEINHOURS());
-				Timestamp tst = new Timestamp(System.currentTimeMillis()- (duration.getSeconds()*1000));  // date we go back
-				
-				
+				Timestamp tst = new Timestamp(System.currentTimeMillis() - (duration.getSeconds() * 1000)); // date we
+																											// go back
+
 				// Stage 5 : transmission information for object currencyTrend and create Object
 				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst, CurrencyBeTreated);
 				Collections.sort(crs, CurrencyRate.CRTimestampComparator);
 				CurrencyTrend ct = new CurrencyTrend(crs);
-				
+
 				Thread thread = new Thread(ct);
 				thread.start();
-				
+
 			}
-			
-			
-			
+
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -153,62 +160,17 @@ public class CurrenciesTrendsBot implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		
-
-		
-		
 
 	}
 
 	public static void main(String[] args) {
-
 		
+		TrendRulesBot tr =  new TrendRulesBot();
+		tr.loadTrendRulesBotEnum();
 		
-		Duration duration = Duration.ofDays(20);
-		Timestamp tst1 = new Timestamp(System.currentTimeMillis());
-		Timestamp tst = new Timestamp(System.currentTimeMillis()- (duration.getSeconds()*1000));
-		
-		System.out.println(DateTools.dateFormat("dd/MM/yy", DateTools.timestampConvertDate(tst1))+" -> "+DateTools.dateFormat("dd/MM/yy", DateTools.timestampConvertDate(tst)));
-		
-		TreeSet<String> t = new TreeSet<String>();
-		t.add("test 15");
-		t.add("dfd 2");
-		t.add("ersfd 20");
-		t.add("asdt 10");
-
-		Iterator<String> it = t.iterator();
-
-		while (it.hasNext()) {
-			System.out.println(it.next());
-		}
-		
-		System.out.println("-----------------------------------------");
-		
-
-		Set<String> set = new TreeSet<>(new Comparator<String>() {
-
-			@Override
-			public int compare(String o1, String o2) {
-				// TODO Auto-generated method stub
-				return o2.compareTo(o1);
-			}
-		});
-		
-		set.add("test 15");
-		set.add("dfd 2");
-		set.add("ersfd 20");
-		set.add("asdt 10");
-		
-		Iterator<String> it1 = set.iterator();
-
-		while (it1.hasNext()) {
-			System.out.println(it1.next());
-		}
-		
+		System.out.println(tr.MaxTimeInHours());
 		
 
 	}
-
-
 
 }
