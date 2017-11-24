@@ -25,7 +25,7 @@ public class CurrenciesTrendsBot implements Runnable {
 
 	{
 		this.NBTHREADSTREND = 5; // parameter for optimization execution
-		this.DATARANGEINHOURS = TrendRulesBot.MaxTimeInHours(); // parameter coverage duration for trends in Hours
+		this.DATARANGEINHOURS = TrendRulesBotEnum.MaxTimeInHours(); // parameter coverage duration for trends in Hours
 		this.setNbActifThreadsTrend(0);
 	}
 
