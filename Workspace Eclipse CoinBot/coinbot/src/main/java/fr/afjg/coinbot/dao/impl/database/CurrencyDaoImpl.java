@@ -16,15 +16,18 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 	@Override
 	public List<CurrencyRate> getCurrencyRateByDurationAndCurrency(Timestamp timestamp, Currency currency){
 		// TODO Auto-generated method stub
+		
+		// for start test***************************************************
 		List<CurrencyRate> list = new ArrayList<>();
 		
-		for (int i=0; i<30000; i++) {
+		for (int i=0; i<43200; i++) {
 			CurrencyRate cr =  new CurrencyRate();
-			cr.setTimeRecord(new Timestamp(1511485217000L + i*10000));
+			cr.setTimeRecord(new Timestamp(1508112017000L + i*60000));
 			cr.setBidBTC(i);
 			list.add(cr);
 		}
-		
+		System.out.println("currency rate envoyé -------------------------------------------");
+		// end test***************************************************
 		
 		return list;
 	}

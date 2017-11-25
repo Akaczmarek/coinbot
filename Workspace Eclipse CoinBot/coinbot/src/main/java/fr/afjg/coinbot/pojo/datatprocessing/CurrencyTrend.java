@@ -50,7 +50,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 	}
 
 
-
 	public List<TrendRule> getTrendRules() {
 		return trendRules;
 	}
@@ -88,18 +87,17 @@ public class CurrencyTrend extends Currency implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-
-		// procedure de calcul des tendances
-
-		// et incrémenter la liste currenciesTrends avec les nouvelles valeurs
-
+		System.out.println("calcul lancé  --------------------------------------------");
 		// stage 0 : variables initialization
 
-		List<TrendRule> trList = this.getTrendRules();
-		Collections.sort(trList, TrendRule.TRDurationComparator);
+		List<TrendRule> trList = this.getTrendRules();				// we get the trend rules in list
+		Collections.sort(trList, TrendRule.TRDurationComparator);	//we sort the list, according to the duration of the trend
 
-		// Stage 1 : boucler pour faire toutes les tendances
+		// Stage 1 : buckle to make all the trends
+		
+System.out.println("taille tableau currencuyrate : " + this.getCurrencyRates().size()+"-----------------------------------");
 
+int i = 0;
 		for (TrendRule trendRule : trList) {
 
 			List<CurrencyRate> transmittedListToCalcul = new ArrayList<>(this.getCurrencyRates());
@@ -108,14 +106,22 @@ public class CurrencyTrend extends Currency implements Runnable {
 			 * Predicate<T> transmittedList.removeIf(filter)
 			 */	
 			Timestamp ts1 = DateTools.dateConvertTimestamp(DateTools.todayDate());		// currently timestamp
-			Timestamp ts2 = new Timestamp(trendRule.convertDurationInHours(trendRule));	// duration rule in timestamp
-			
+			Timestamp ts2 = new Timestamp(trendRule.convertDurationInHours(trendRule)*3600000);	// duration trend rule in timestamp
+			System.out.println(ts2);
+			System.out.println(DateTools.dateFormat("dd/MM/yyyy", DateTools.timestampConvertDate(new Timestamp(ts1.getTime()-ts2.getTime()))));
 			
 			Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime()<(ts1.getTime()-ts2.getTime()); // if timestamp is too older, remove it
 			transmittedListToCalcul.removeIf(crPredicate);
-
+			
+			i++;
+			System.out.println("tendance " + i + " taille tableau : " + transmittedListToCalcul.size() + "--------------------------------------------");
 		}
-
+		
+		
+		// stage 6 : prevent end thread 
+		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
+		cTB.setNbActifThreadsTrend(cTB.getNbActifThreadsTrend()-1);
+		System.out.println("fin traitement *******************************************************");
 	}
 
 	public final static Comparator<CurrencyTrend> CTNoteComparator = new Comparator<CurrencyTrend>() {
