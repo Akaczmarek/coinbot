@@ -124,7 +124,7 @@ public class CurrencyRate extends Currency{
 	}
 	
 	
-	public static Comparator<CurrencyRate> CRTimestampComparator = new Comparator<CurrencyRate>() {
+	public final static Comparator<CurrencyRate> CRTimestampComparator = new Comparator<CurrencyRate>() {
 
 		@Override
 		public int compare(CurrencyRate cr1, CurrencyRate cr2) {

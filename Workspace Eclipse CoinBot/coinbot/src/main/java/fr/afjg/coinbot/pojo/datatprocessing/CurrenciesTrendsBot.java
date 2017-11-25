@@ -3,11 +3,7 @@ package fr.afjg.coinbot.pojo.datatprocessing;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
@@ -25,7 +21,7 @@ public class CurrenciesTrendsBot implements Runnable {
 	private final long DATARANGEINHOURS;
 
 	{
-		this.NBTHREADSTREND = 5; // parameter for optimization execution  (allocation number threads)
+		this.NBTHREADSTREND = 1; // parameter for optimization execution  (allocation number threads)
 		
 		this.setTrendRule(new TrendRulesBot());
 		((TrendRulesBot)this.getTrendRule()).loadTrendRulesBotEnum();		//loading trend rules
@@ -124,8 +120,16 @@ public class CurrenciesTrendsBot implements Runnable {
 		this.setCurrenciesTrends(DPService.getAllLastCurrenciesTrends());	//loading list of all currencies
 
 		List<CurrencyTrend> cts = this.getCurrenciesTrends();
-
 		
+		
+		//test**********************************************************************************
+		System.out.println("liste des devises chargée-----------------------------------");
+		for (CurrencyTrend currencyTrend : cts) {
+		
+			System.out.println("liste :" + currencyTrend.getName() + " " + DateTools.dateFormat("dd/MM/yyyy", DateTools.timestampConvertDate(currencyTrend.getTimeRecord())));
+		}
+		
+		//test**********************************************************************************
 		
 		while (true) {
 
@@ -137,28 +141,44 @@ public class CurrenciesTrendsBot implements Runnable {
 				// list after sort)
 				Collections.sort(cts, CurrencyTrend.CTTimestampComparator);
 				Currency CurrencyBeTreated = cts.get(0);
+				
+				//test**********************************************************************************
+				System.out.println("liste des devises triée-----------------------------------");
+				for (CurrencyTrend currencyTrend : cts) {
+					System.out.println("liste :" + currencyTrend.getTimeRecord());
+				}
+				
+				//test**********************************************************************************
+				
 
 				// stage 4 : definition timestamp for request historic rate currency
 
 				Duration duration = Duration.ofHours(this.getDATARANGEINHOURS());
 				Timestamp tst = new Timestamp(System.currentTimeMillis() - (duration.getSeconds() * 1000)); // date we
 																											// go back
+				//test**********************************************************************************
+				System.out.println("date à laqelle il faut remonter-----------------------------------");
+				
+					System.out.println("liste :" + tst);
+				
+				//test**********************************************************************************
 
 				// Stage 5 : transmission information for object currencyTrend and create Object
 				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst, CurrencyBeTreated);
 				Collections.sort(crs, CurrencyRate.CRTimestampComparator);
 				
+				System.out.println("chargement de la devise à traiter-----------------------------------");
 				List<TrendRule> trs = this.getTrendRule().getTrendRules();
 				
-				CurrencyTrend ct = new CurrencyTrend(crs, trs );
+				CurrencyTrend ct = new CurrencyTrend(crs, trs);
 
 				Thread thread = new Thread(ct);
-				thread.start();
+				//thread.start();
 
 			}
 
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -167,6 +187,8 @@ public class CurrenciesTrendsBot implements Runnable {
 
 	}
 
+	
+	/*
 	public static void main(String[] args) {
 		
 		TrendRulesBot tr =  new TrendRulesBot();
@@ -176,5 +198,6 @@ public class CurrenciesTrendsBot implements Runnable {
 		
 
 	}
+	*/
 
 }

@@ -27,7 +27,8 @@ public class DataProcessingServiceImpl implements DataProcessingServiceIntf{
 	@Override
 	public List<CurrencyTrend> getAllLastCurrenciesTrends() {
 		// TODO Auto-generated method stub
-		return null;
+
+		return DataProcessing.getAllLastCurrenciesTrends();
 	}
 
 	

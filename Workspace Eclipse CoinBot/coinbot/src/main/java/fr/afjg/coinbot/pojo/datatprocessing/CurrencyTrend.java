@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
+import fr.afjg.coinbot.util.DateTools;
 
 public class CurrencyTrend extends Currency implements Runnable {
 
@@ -25,6 +27,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 	public CurrencyTrend(List<CurrencyRate> currencyRates, List<TrendRule> trendRules) {
 		this.setCurrencyRates(currencyRates);
 		this.setTrendRules(trendRules);
+		System.out.println("traitement lancé-----------------------------------");
 	}
 
 	// getters &
@@ -46,12 +49,14 @@ public class CurrencyTrend extends Currency implements Runnable {
 		this.trendCalculs = trendCalculs;
 	}
 
+
+
 	public List<TrendRule> getTrendRules() {
 		return trendRules;
 	}
 
 	public void setTrendRules(List<TrendRule> trendRules) {
-		trendRules = trendRules;
+		this.trendRules = trendRules;
 	}
 
 	public Timestamp getTimeRecord() {
@@ -68,14 +73,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 	public void setNote(CurrencyNote note) {
 		this.note = note;
-	}
-
-	public static Comparator<CurrencyTrend> getCTTimestampComparator() {
-		return CTTimestampComparator;
-	}
-
-	public static void setCTTimestampComparator(Comparator<CurrencyTrend> cTTimestampComparator) {
-		CTTimestampComparator = cTTimestampComparator;
 	}
 
 	public double getNoteCurrency() {
@@ -103,19 +100,25 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 		// Stage 1 : boucler pour faire toutes les tendances
 
-		for (TrendRule trendRules : trList) {
+		for (TrendRule trendRule : trList) {
 
-			List<CurrencyRate> transmittedList = new ArrayList<>(this.getCurrencyRates());
+			List<CurrencyRate> transmittedListToCalcul = new ArrayList<>(this.getCurrencyRates());
 
 			/*
 			 * Predicate<T> transmittedList.removeIf(filter)
-			 */
+			 */	
+			Timestamp ts1 = DateTools.dateConvertTimestamp(DateTools.todayDate());		// currently timestamp
+			Timestamp ts2 = new Timestamp(trendRule.convertDurationInHours(trendRule));	// duration rule in timestamp
+			
+			
+			Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime()<(ts1.getTime()-ts2.getTime()); // if timestamp is too older, remove it
+			transmittedListToCalcul.removeIf(crPredicate);
 
 		}
 
 	}
 
-	public static Comparator<CurrencyTrend> CTNoteComparator = new Comparator<CurrencyTrend>() {
+	public final static Comparator<CurrencyTrend> CTNoteComparator = new Comparator<CurrencyTrend>() {
 
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
@@ -126,7 +129,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 		}
 	};
 
-	public static Comparator<CurrencyTrend> CTTimestampComparator = new Comparator<CurrencyTrend>() {
+	public final static Comparator<CurrencyTrend> CTTimestampComparator = new Comparator<CurrencyTrend>() {
 
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
@@ -141,16 +144,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 	public static void main(String[] args) {
 
-		List<TrendRulesBotEnum> trList = TrendRulesBotEnum.list();
-		Collections.sort(trList, TrendRulesBotEnum.TRDurationComparator);
 
-		// Stage 1 : boucler pour faire toutes les tendances
-
-		while (trList.size() != 0) {
-
-			System.out.println(trList.get(0));
-			trList.remove(0);
-		}
 
 	}
 

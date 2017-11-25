@@ -32,6 +32,8 @@ public class TrendRulesBot extends TrendRule {
 		
 		this.setTrendRules(trendRules);
 		
+		System.out.println("règles de calcul de tendance chargées-----------------------------------------");
+		
 	}
 	
 	
