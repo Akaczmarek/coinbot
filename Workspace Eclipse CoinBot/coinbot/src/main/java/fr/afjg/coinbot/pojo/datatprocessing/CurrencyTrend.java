@@ -126,7 +126,7 @@ int i = 0;
 		}
 		
 		
-		// stage 6 : prevent end thread 
+		// stage 4 : prevent end thread 
 		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
 		cTB.setNbActifThreadsTrend(cTB.getNbActifThreadsTrend()-1);
 		System.out.println("fin traitement *******************************************************");
