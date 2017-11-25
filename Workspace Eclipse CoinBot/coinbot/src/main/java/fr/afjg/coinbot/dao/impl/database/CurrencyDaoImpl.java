@@ -20,11 +20,14 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		// for start test***************************************************
 		List<CurrencyRate> list = new ArrayList<>();
 		
-		for (int i=0; i<43200; i++) {
+		for (int i=0; i<58500; i++) {
 			CurrencyRate cr =  new CurrencyRate();
-			cr.setTimeRecord(new Timestamp(1508112017000L + i*60000));
+			cr.setTimeRecord(new Timestamp(1508112017000L + (i*60000L)));
 			cr.setBidBTC(i);
 			list.add(cr);
+			if (i%1000==0) {
+			System.out.println(i + "...  " + cr.getTimeRecord());
+			}
 		}
 		System.out.println("currency rate envoyé -------------------------------------------");
 		// end test***************************************************

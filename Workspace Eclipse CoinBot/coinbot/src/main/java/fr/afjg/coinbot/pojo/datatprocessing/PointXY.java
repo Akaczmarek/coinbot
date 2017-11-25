@@ -12,22 +12,22 @@ import java.sql.Timestamp;
  */
 public class PointXY {
 
-	private Timestamp x;
+	private long x;
 	private double y;
 
 	public PointXY() {
 
 	}
-	public PointXY(Timestamp x, double y) {
+	public PointXY(long x, double y) {
 		this.setX(x);
 		this.setY(y);
 	}
 
-	public Timestamp getX() {
+	public long getX() {
 		return x;
 	}
 
-	public void setX(Timestamp x) {
+	public void setX(long x) {
 		this.x = x;
 	}
 

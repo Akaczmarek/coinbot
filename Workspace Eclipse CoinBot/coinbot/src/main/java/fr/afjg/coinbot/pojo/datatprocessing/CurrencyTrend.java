@@ -14,7 +14,7 @@ import fr.afjg.coinbot.util.DateTools;
 public class CurrencyTrend extends Currency implements Runnable {
 
 	private List<CurrencyRate> currencyRates;
-	private List<TrendCalculation> trendCalculs;
+	private volatile List<TrendCalculation> trendCalculs;
 	private List<TrendRule> trendRules;
 	private double noteCurrency;
 	private Timestamp timeRecord;
@@ -45,7 +45,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 		return trendCalculs;
 	}
 
-	public void setTrendCalculs(List<TrendCalculation> trendCalculs) {
+	public synchronized void setTrendCalculs(List<TrendCalculation> trendCalculs) {
 		this.trendCalculs = trendCalculs;
 	}
 
@@ -93,13 +93,18 @@ public class CurrencyTrend extends Currency implements Runnable {
 		List<TrendRule> trList = this.getTrendRules();				// we get the trend rules in list
 		Collections.sort(trList, TrendRule.TRDurationComparator);	//we sort the list, according to the duration of the trend
 
-		// Stage 1 : buckle to make all the trends
-		
+
+//test*****************************************************************************
 System.out.println("taille tableau currencuyrate : " + this.getCurrencyRates().size()+"-----------------------------------");
 
 int i = 0;
+
+//test*****************************************************************************
+
+// Stage 1 : buckle to make all the trends
 		for (TrendRule trendRule : trList) {
 
+			//stage 2 : definition of size the table 
 			List<CurrencyRate> transmittedListToCalcul = new ArrayList<>(this.getCurrencyRates());
 
 			/*
@@ -107,14 +112,17 @@ int i = 0;
 			 */	
 			Timestamp ts1 = DateTools.dateConvertTimestamp(DateTools.todayDate());		// currently timestamp
 			Timestamp ts2 = new Timestamp(trendRule.convertDurationInHours(trendRule)*3600000);	// duration trend rule in timestamp
-			System.out.println(ts2);
-			System.out.println(DateTools.dateFormat("dd/MM/yyyy", DateTools.timestampConvertDate(new Timestamp(ts1.getTime()-ts2.getTime()))));
+			
 			
 			Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime()<(ts1.getTime()-ts2.getTime()); // if timestamp is too older, remove it
 			transmittedListToCalcul.removeIf(crPredicate);
-			
+			//test*****************************************************************************
 			i++;
 			System.out.println("tendance " + i + " taille tableau : " + transmittedListToCalcul.size() + "--------------------------------------------");
+			//test*****************************************************************************
+		
+			// stage 3 : transmit the list for calculation
+			TrendCalculation tC = new TrendCalculation(transmittedListToCalcul,this, trendRule);
 		}
 		
 		
