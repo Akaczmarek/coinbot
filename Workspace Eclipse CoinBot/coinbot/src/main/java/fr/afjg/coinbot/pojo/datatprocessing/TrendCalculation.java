@@ -15,7 +15,6 @@ public class TrendCalculation implements Runnable {
 	private CurrencyTrend currencyTrend;
 	private TrendRule trendRule;
 
-
 	public TrendCalculation() {
 
 	}
@@ -36,8 +35,6 @@ public class TrendCalculation implements Runnable {
 	public void setCurrencyRates(List<CurrencyRate> currencyRates) {
 		this.currencyRates = currencyRates;
 	}
-	
-	
 
 	public List<LineEquationTrend> getLinesEquationsTrends() {
 		return linesEquationsTrends;
@@ -63,44 +60,38 @@ public class TrendCalculation implements Runnable {
 		this.trendRule = trendRule;
 	}
 
-	
-
-
-
 	// methods
 	// -----------------------------------------------------------------------
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+
 		String typeBidOrAsk;
-		String typeLine ="";
-		
-		//Stage 0 : Treatement on ask
+		String typeLine = "";
+
+		// Stage 0 : Treatement on ask
 		typeBidOrAsk = "ask";
-		
-		//Stage 1 : transform currency list in pointXY list
+
+		// Stage 1 : transform currency list in pointXY list
 		List<PointXY> ptList = ParseTools.transformCRListInPtList(getCurrencyRates(), typeBidOrAsk);
-		
-		//Stage 2 : split the list into two
-		PointXY [][] doubleListPtXY = ParseTools.parselistpointXYen2(ptList);
+
+		// Stage 2 : split the list into two
+		PointXY[][] doubleListPtXY = ParseTools.parselistpointXYen2(ptList);
 		List<PointXY> ptList1 = new ArrayList<>(Arrays.asList(doubleListPtXY[0]));
 		List<PointXY> ptList2 = new ArrayList<>(Arrays.asList(doubleListPtXY[0]));
-		
-		//Stage 3 : Average point1
+
+		// Stage 3 : Average point1
 		PointXY averagePt1 = MathTools.averagePoint(ptList1);
-		
-		//Stage 4 : Average point2
+
+		// Stage 4 : Average point2
 		PointXY averagePt2 = MathTools.averagePoint(ptList2);
-		
-		//Stage 5 : determination line equation
-		LineEquationTrend lET =  new LineEquationTrend(this, typeBidOrAsk, typeLine);
-		
-		
-		
+
+		// Stage 5 : determination line equation
+		LineEquationTrend lET = new LineEquationTrend(this, typeBidOrAsk, typeLine);
+
 		// final Stage : save trendcalculation in list of CurrencyTrend
 		this.getCurrencyTrend().getTrendCalculs().add(this);
-		
+
 	}
 }

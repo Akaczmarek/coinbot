@@ -20,7 +20,7 @@ public class MathTools {
 	 * @param nbDecimal
 	 * @return
 	 */
-	public static BigDecimal round(Double number, int nbDecimal) {
+	public final static BigDecimal round(Double number, int nbDecimal) {
 
 		BigDecimal value;
 
@@ -38,7 +38,7 @@ public class MathTools {
 	 * 
 	 * 
 	 */
-	public static Double dblRoundDbl(Double number, int nbDecimal) {
+	public final static Double dblRoundDbl(Double number, int nbDecimal) {
 
 		BigDecimal value;
 		Double correctedValue;
@@ -53,7 +53,7 @@ public class MathTools {
 	 * calculation of average point
 	 * 
 	 */
-	public static PointXY averagePoint(List<PointXY> list) {
+	public final static PointXY averagePoint(List<PointXY> list) {
 
 		PointXY ptXY = new PointXY();
 
@@ -80,6 +80,12 @@ public class MathTools {
 
 		return ptXY;
 	}
+	
+	/*
+	 * determination line equation
+	 */
+	
+	public final static 
 	
 	
 
