@@ -19,6 +19,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 	private double noteCurrency;
 	private Timestamp timeRecord;
 	private CurrencyNote note;
+	private volatile int countFinishedActions;
 
 	public CurrencyTrend() {
 
@@ -48,7 +49,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 	public synchronized void setTrendCalculs(List<TrendCalculation> trendCalculs) {
 		this.trendCalculs = trendCalculs;
 	}
-
 
 	public List<TrendRule> getTrendRules() {
 		return trendRules;
@@ -82,7 +82,19 @@ public class CurrencyTrend extends Currency implements Runnable {
 		this.noteCurrency = noteCurrency;
 	}
 
+	public int getCountFinishedActions() {
+		return countFinishedActions;
+	}
+
+	public void setCountFinishedActions(int countFinishedActions) {
+		this.countFinishedActions = countFinishedActions;
+	}
+
 	// methods------------------------------------------------------------------
+
+	public synchronized void finishActionsChecked() {
+		this.setCountFinishedActions(getCountFinishedActions() + 1);
+	}
 
 	@Override
 	public void run() {
@@ -90,45 +102,63 @@ public class CurrencyTrend extends Currency implements Runnable {
 		System.out.println("calcul lancé  --------------------------------------------");
 		// stage 0 : variables initialization
 
-		List<TrendRule> trList = this.getTrendRules();				// we get the trend rules in list
-		Collections.sort(trList, TrendRule.TRDurationComparator);	//we sort the list, according to the duration of the trend
+		List<TrendRule> trList = this.getTrendRules(); // we get the trend rules in list
+		Collections.sort(trList, TrendRule.TRDurationComparator); // we sort the list, according to the duration of the
+																	// trend
 
+		// test*****************************************************************************
+		System.out.println("taille tableau currencuyrate : " + this.getCurrencyRates().size()
+				+ "-----------------------------------");
 
-//test*****************************************************************************
-System.out.println("taille tableau currencuyrate : " + this.getCurrencyRates().size()+"-----------------------------------");
+		int i = 0;
 
-int i = 0;
+		// test*****************************************************************************
 
-//test*****************************************************************************
-
-// Stage 1 : buckle to make all the trends
+		// Stage 1 : buckle to make all the trends
 		for (TrendRule trendRule : trList) {
 
-			//stage 2 : definition of size the table 
+			// stage 2 : definition of size the table
 			List<CurrencyRate> transmittedListToCalcul = new ArrayList<>(this.getCurrencyRates());
 
 			/*
 			 * Predicate<T> transmittedList.removeIf(filter)
-			 */	
-			Timestamp ts1 = DateTools.dateConvertTimestamp(DateTools.todayDate());		// currently timestamp
-			Timestamp ts2 = new Timestamp(trendRule.convertDurationInHours(trendRule)*3600000);	// duration trend rule in timestamp
-			
-			
-			Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime()<(ts1.getTime()-ts2.getTime()); // if timestamp is too older, remove it
+			 */
+			Timestamp ts1 = DateTools.dateConvertTimestamp(DateTools.todayDate()); // currently timestamp
+			Timestamp ts2 = new Timestamp(trendRule.convertDurationInHours(trendRule) * 3600000); // duration trend rule
+																									// in timestamp
+
+			// If timestamp is too older, remove the lastest data
+			Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime() < (ts1.getTime() - ts2.getTime());
+
 			transmittedListToCalcul.removeIf(crPredicate);
-			//test*****************************************************************************
+			// test*****************************************************************************
 			i++;
-			System.out.println("tendance " + i + " taille tableau : " + transmittedListToCalcul.size() + "--------------------------------------------");
-			//test*****************************************************************************
-		
+			System.out.println("tendance " + i + " taille tableau : " + transmittedListToCalcul.size()
+					+ "--------------------------------------------");
+			// test*****************************************************************************
+
 			// stage 3 : transmit the list for calculation
-			TrendCalculation tC = new TrendCalculation(transmittedListToCalcul,this, trendRule);
+			TrendCalculation tC = new TrendCalculation(transmittedListToCalcul, this, trendRule);
 		}
+
+		// Stage 4 : control as every operation is finished and save currencyTrend in
+		// list of currenciesTrends
+		int numberOperation = trList.size();
 		
-		
-		// stage 4 : prevent end thread 
 		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
+
+		while (true) {
+			if (this.getCountFinishedActions() == numberOperation) {
+				cTB.getCurrenciesTrends().add(this);
+				
+			}
+		}
+
+		// Final stage : prevent end thread
+		
+		cTB.setNbActifThreadsTrend(cTB.getNbActifThreadsTrend() - 1);
 		cTB.setNbActifThreadsTrend(cTB.getNbActifThreadsTrend()-1);
+		
 		System.out.println("fin traitement *******************************************************");
 	}
 
@@ -155,11 +185,5 @@ int i = 0;
 			return result;
 		}
 	};
-
-	public static void main(String[] args) {
-
-
-
-	}
 
 }

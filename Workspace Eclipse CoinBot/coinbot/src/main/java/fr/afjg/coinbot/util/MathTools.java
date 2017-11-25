@@ -81,13 +81,7 @@ public class MathTools {
 		return ptXY;
 	}
 	
-	/*
-	 * determination line equation
-	 */
-	
-	public final static 
-	
-	
+
 
 	public static void main(String[] args) {
 
