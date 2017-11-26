@@ -19,11 +19,19 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		
 		// for start test***************************************************
 		List<CurrencyRate> list = new ArrayList<>();
+
+		long currentlyTime = System.currentTimeMillis();
+		long fixedTime = 1508112017000L; // date : 16/10/2017
 		
-		for (int i=0; i<58500; i++) {
+		long durationbetweenTimes = currentlyTime - fixedTime;
+		
+		long nbPoints = durationbetweenTimes/60000L;
+		
+		for (int i=0; i<(int)nbPoints; i++) {
 			CurrencyRate cr =  new CurrencyRate();
 			cr.setTimeRecord(new Timestamp(1508112017000L + (i*60000L)));
 			cr.setBidBTC(i);
+			cr.setAskBTC(i+30);
 			list.add(cr);
 			if (i%1000==0) {
 			System.out.println(i + "...  " + cr.getTimeRecord());

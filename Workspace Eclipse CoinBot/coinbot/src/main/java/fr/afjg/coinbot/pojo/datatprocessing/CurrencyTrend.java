@@ -28,6 +28,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 	public CurrencyTrend(List<CurrencyRate> currencyRates, List<TrendRule> trendRules) {
 		this.setCurrencyRates(currencyRates);
 		this.setTrendRules(trendRules);
+		this.setTrendCalculs(new ArrayList<>());
 		System.out.println("traitement lancé-----------------------------------");
 	}
 
@@ -124,8 +125,9 @@ public class CurrencyTrend extends Currency implements Runnable {
 			 * Predicate<T> transmittedList.removeIf(filter)
 			 */
 			Timestamp ts1 = DateTools.dateConvertTimestamp(DateTools.todayDate()); // currently timestamp
-			Timestamp ts2 = new Timestamp(trendRule.convertDurationInHours(trendRule) * 3600000); // duration trend rule
-																									// in timestamp
+
+			long durationInMillis = trendRule.convertDurationInHours(trendRule) * 3600000;
+			Timestamp ts2 = new Timestamp(durationInMillis); // duration trend rule in timestamp
 
 			// If timestamp is too older, remove the lastest data
 			Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime() < (ts1.getTime() - ts2.getTime());
@@ -139,26 +141,44 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 			// stage 3 : transmit the list for calculation
 			TrendCalculation tC = new TrendCalculation(transmittedListToCalcul, this, trendRule);
+			Thread t = new Thread(tC);
+			t.start();
+
 		}
 
-		// Stage 4 : control as every operation is finished and save currencyTrend in
-		// list of currenciesTrends
+		// Stage 4 : control as every operation of trend is finished and begin notation
+		// operations
 		int numberOperation = trList.size();
-		
-		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
 
 		while (true) {
 			if (this.getCountFinishedActions() == numberOperation) {
-				cTB.getCurrenciesTrends().add(this);
-				
+				this.setCountFinishedActions(0);
+				break;
 			}
 		}
 
+		// test******************************************************************************************
+		System.out.println("********************résulats**************************résultats************** ");
+		for (TrendCalculation trendcalc : this.trendCalculs) {
+
+			for (LineEquationTrend lET : trendcalc.getLinesEquationsTrends()) {
+				System.out.println("Selon règle : " + trendcalc.getTrendRule().getName() + " et tendance de type : "
+						+ lET.getTypeBidOrAsk() + " -- a = " + lET.getLeadingDirect() + " , b = " + lET.getOrdOrigin());
+
+			}
+
+		}
+		System.out.println("fin résultats*****************************fin résultats***********************");
+
+		// test**************************************************************************************
+
+		// Stage 5:
+
 		// Final stage : prevent end thread
-		
+
+		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
 		cTB.setNbActifThreadsTrend(cTB.getNbActifThreadsTrend() - 1);
-		cTB.setNbActifThreadsTrend(cTB.getNbActifThreadsTrend()-1);
-		
+
 		System.out.println("fin traitement *******************************************************");
 	}
 

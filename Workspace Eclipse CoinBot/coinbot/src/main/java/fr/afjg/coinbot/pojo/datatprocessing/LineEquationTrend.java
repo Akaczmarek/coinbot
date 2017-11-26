@@ -87,11 +87,12 @@ public class LineEquationTrend implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		
+		System.out.println("calcul équation lancé-----------------------------------------");
 		
 		//Stage 0 : variable initializing 
-		long pt1X = this.getAveragePt1().getX();
+		double pt1X = this.getAveragePt1().getX();
 		double pt1Y = this.getAveragePt1().getY();
-		long pt2X = this.getAveragePt2().getX();
+		double pt2X = this.getAveragePt2().getX();
 		double pt2Y = this.getAveragePt2().getY();
 		
 		
@@ -106,8 +107,8 @@ public class LineEquationTrend implements Runnable {
 		
 		//Stage 2 : to round result
 		
-		this.setOrdOrigin(MathTools.dblRoundDbl(b, 4));
-		this.setLeadingDirect(MathTools.dblRoundDbl(a, 4));
+//		this.setOrdOrigin(MathTools.dblRoundDbl(b, 4));
+//		this.setLeadingDirect(MathTools.dblRoundDbl(a, 4));
 		
 		//Stage 3 :Save in list lineEquationTrend of trendCalculation
 		
@@ -117,7 +118,17 @@ public class LineEquationTrend implements Runnable {
 		
 		this.getTrendCalculation().finishActionsChecked();
 		
+		System.out.println("calcul équation terminé ///////////////////////////////////////////");
+		
+		
 	}
+	
+	
+
+	
+	
+	
+	
 	
 	
 }

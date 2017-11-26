@@ -20,7 +20,7 @@ public class MathTools {
 	 * @param nbDecimal
 	 * @return
 	 */
-	public final static BigDecimal round(Double number, int nbDecimal) {
+	public final synchronized static BigDecimal round(Double number, int nbDecimal) {
 
 		BigDecimal value;
 
@@ -38,7 +38,7 @@ public class MathTools {
 	 * 
 	 * 
 	 */
-	public final static Double dblRoundDbl(Double number, int nbDecimal) {
+	public final synchronized static Double dblRoundDbl(Double number, int nbDecimal) {
 
 		BigDecimal value;
 		Double correctedValue;
@@ -53,7 +53,7 @@ public class MathTools {
 	 * calculation of average point
 	 * 
 	 */
-	public final static PointXY averagePoint(List<PointXY> list) {
+	public final synchronized static PointXY averagePoint(List<PointXY> list) {
 
 		PointXY ptXY = new PointXY();
 
@@ -64,24 +64,28 @@ public class MathTools {
 		Iterator<PointXY> ite = list.iterator();
 
 		while (ite.hasNext()) {
+
 			PointXY pt = ite.next();
 
-			x = x + pt.getX();
-			y = y + pt.getY();
-			
-			k++;
+			if (pt != null) {
+				x = x + pt.getX();
+				y = y + pt.getY();
+				k++;
+			}
+
 		}
-		
-		x=x/k;
-		y=y/k;
-		
+
+		if (k != 0) {
+			x = x / k;
+			y = y / k;
+
+		}
+
 		ptXY.setX(x);
 		ptXY.setY(y);
 
 		return ptXY;
 	}
-	
-
 
 	public static void main(String[] args) {
 

@@ -13,6 +13,7 @@ import java.util.List;
 public abstract class TrendRule {
 
 	List<TrendRule> TrendRules;
+	private String name;
 	private int numberDays;
 	private int numberHours;
 	private int multiplier;
@@ -28,9 +29,17 @@ public abstract class TrendRule {
 		this.setMultiplier(multiplier);
 	}
 
-	
-	// getters and setters ----------------------------------------------------------------------------
-	
+	// getters and setters
+	// ----------------------------------------------------------------------------
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public int getNumberDays() {
 		return numberDays;
 	}
@@ -62,17 +71,17 @@ public abstract class TrendRule {
 	public void setTrendRules(List<TrendRule> trendRules) {
 		TrendRules = trendRules;
 	}
-	
-	
-	// Methods -------------------------------------------------------------------------------
-	
+
+	// Methods
+	// -------------------------------------------------------------------------------
+
 	/*
 	 * return the max value duration of trend
 	 */
 	public long MaxTimeInHours() {
-		
+
 		List<TrendRule> tr = this.getTrendRules();
-		
+
 		Collections.sort(tr, TrendRule.TRDurationComparator);
 
 		return this.convertDurationInHours(tr.get(0));
@@ -99,6 +108,4 @@ public abstract class TrendRule {
 		}
 	};
 
-	
-	
 }
