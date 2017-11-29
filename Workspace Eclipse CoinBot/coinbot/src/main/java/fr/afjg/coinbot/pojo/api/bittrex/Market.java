@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.pojo.api;
+package fr.afjg.coinbot.pojo.api.bittrex;
 
 import java.util.ArrayList;
 import java.util.List;

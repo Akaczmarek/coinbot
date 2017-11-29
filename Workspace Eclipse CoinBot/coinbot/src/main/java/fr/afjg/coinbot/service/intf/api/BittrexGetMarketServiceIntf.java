@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.json.JSONException;
 
-import fr.afjg.coinbot.pojo.api.Market;
+import fr.afjg.coinbot.pojo.api.bittrex.Market;
 
 public interface BittrexGetMarketServiceIntf {
 	

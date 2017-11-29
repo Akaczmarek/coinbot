@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 import fr.afjg.coinbot.dao.impl.api.BittrexDaoImpl;
 import fr.afjg.coinbot.dao.intf.api.BittrexDaoIntf;
-import fr.afjg.coinbot.pojo.api.Market;
-import fr.afjg.coinbot.pojo.api.Result;
+import fr.afjg.coinbot.pojo.api.bittrex.Market;
+import fr.afjg.coinbot.pojo.api.bittrex.Result;
 import fr.afjg.coinbot.service.intf.api.BittrexGetMarketServiceIntf;
 
 public class BittrexGetMarketServiceImpl implements BittrexGetMarketServiceIntf {
