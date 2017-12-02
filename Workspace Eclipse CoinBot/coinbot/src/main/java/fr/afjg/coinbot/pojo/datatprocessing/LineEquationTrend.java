@@ -1,7 +1,5 @@
 package fr.afjg.coinbot.pojo.datatprocessing;
 
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 public class LineEquationTrend implements Runnable {
@@ -127,6 +125,7 @@ public class LineEquationTrend implements Runnable {
 		
 		//Stage 2 : sort point list (the first point is highest point in relation to the line, the last point is the lowest point...) 
 		List<PointXY> ptList = this.getPtList();
+		
 		
 
 		
