@@ -30,7 +30,7 @@ public class TrendCalculation implements Runnable {
 		this.setCurrencyTrend(currencyTrend);
 		this.setTrendRule(trendRule);
 		this.setLinesEquationsTrends(new ArrayList<>());
-		
+
 	}
 
 	// getters and
@@ -87,48 +87,35 @@ public class TrendCalculation implements Runnable {
 		// TODO Auto-generated method stub
 
 		System.out.println("trend calculation lancé-----------------------------------------");
-		
+
 		// Stage 0 : Definition of treatment procedure
-//		String[] typeBidOrAsk = { "ask" };
-		String[] typeLine = { "average"};
+		// String[] typeBidOrAsk = { "ask" };
+		// String[] typeLine = { "average"};
 		String[] typeBidOrAsk = { "ask", "bid" };
-//		String[] typeLine = { "average", "support", "ceiling" };
+		String[] typeLine = { "average", "support", "ceiling" };
 
 		for (int i = 0; i < typeBidOrAsk.length; i++) {
 
+			// Stage 1 : transform currency list in pointXY list
+			List<PointXY> ptList = ParseTools.transformCRListInPtList(getCurrencyRates(), typeBidOrAsk[i]);
+
+			// Stage 2 : split the list into two
+			PointXY[][] doubleListPtXY = ParseTools.parselistpointXYen2(ptList);
+			List<PointXY> ptList1 = new ArrayList<>(Arrays.asList(doubleListPtXY[0]));
+			List<PointXY> ptList2 = new ArrayList<>(Arrays.asList(doubleListPtXY[1]));
+
+			// Stage 3 : Average point1
+			PointXY averagePt1 = MathTools.averagePoint(ptList1);
+
+			// Stage 4 : Average point2
+			PointXY averagePt2 = MathTools.averagePoint(ptList2);
+
 			for (int j = 0; j < typeLine.length; j++) {
-
-				// Stage 1 : transform currency list in pointXY list
-				List<PointXY> ptList = ParseTools.transformCRListInPtList(getCurrencyRates(), typeBidOrAsk[i]);
-
-				// Stage 2 : split the list into two
-				PointXY[][] doubleListPtXY = ParseTools.parselistpointXYen2(ptList);
-				List<PointXY> ptList1 = new ArrayList<>(Arrays.asList(doubleListPtXY[0]));
-				List<PointXY> ptList2 = new ArrayList<>(Arrays.asList(doubleListPtXY[1]));
-
-				// test******************************************************
-				/*
-				int n = 0;
-				for (PointXY pointXY : ptList1) {
-					
-					if(n%1000==0) {
-					System.out.println("test liste de points, relevé point " + n + " , x = " + pointXY.getX());
-					}
-					n++;
-				}
-				*/
-				// test******************************************************
-				
-				// Stage 3 : Average point1
-				PointXY averagePt1 = MathTools.averagePoint(ptList1);
-
-				// Stage 4 : Average point2
-				PointXY averagePt2 = MathTools.averagePoint(ptList2);
 
 				// Stage 5 : determination line equation
 				LineEquationTrend lET = new LineEquationTrend(this, typeBidOrAsk[i], typeLine[j], averagePt1,
-						averagePt2);
-				Thread t =new Thread(lET);
+						averagePt2,ptList);
+				Thread t = new Thread(lET);
 				t.start();
 
 			}

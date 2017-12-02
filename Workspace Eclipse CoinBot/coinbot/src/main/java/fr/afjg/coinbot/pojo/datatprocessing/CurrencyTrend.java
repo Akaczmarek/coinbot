@@ -121,9 +121,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 			// stage 2 : definition of size the table
 			List<CurrencyRate> transmittedListToCalcul = new ArrayList<>(this.getCurrencyRates());
 
-			/*
-			 * Predicate<T> transmittedList.removeIf(filter)
-			 */
+
 			Timestamp ts1 = DateTools.dateConvertTimestamp(DateTools.todayDate()); // currently timestamp
 
 			long durationInMillis = trendRule.convertDurationInHours(trendRule) * 3600000;
@@ -163,7 +161,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 			for (LineEquationTrend lET : trendcalc.getLinesEquationsTrends()) {
 				System.out.println("Selon règle : " + trendcalc.getTrendRule().getName() + " et tendance de type : "
-						+ lET.getTypeBidOrAsk() + " -- a = " + lET.getLeadingDirect() + " , b = " + lET.getOrdOrigin());
+						+ lET.getTypeBidOrAsk() + " type de ligne : " + lET.getTypeLine()+ " -- a = " + lET.getLeadingDirect() + " , b = " + lET.getOrdOrigin());
 
 			}
 

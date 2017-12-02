@@ -14,7 +14,7 @@ import fr.afjg.coinbot.pojo.datatprocessing.CurrencyTrend;
 public class CurrencyDaoImpl implements CurrencyDaoIntf{
 
 	@Override
-	public List<CurrencyRate> getCurrencyRateByDurationAndCurrency(Timestamp timestamp, Currency currency){
+	public List<CurrencyRate> getCurrencyRateByDurationAndCurrency(Timestamp tst0,Timestamp tst1, Currency currency){
 		// TODO Auto-generated method stub
 		
 		// for start test***************************************************

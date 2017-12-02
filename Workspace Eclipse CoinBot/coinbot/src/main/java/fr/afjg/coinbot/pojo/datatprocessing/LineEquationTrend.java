@@ -1,6 +1,8 @@
 package fr.afjg.coinbot.pojo.datatprocessing;
 
-import fr.afjg.coinbot.util.MathTools;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class LineEquationTrend implements Runnable {
 
@@ -12,17 +14,19 @@ public class LineEquationTrend implements Runnable {
 	private String typeBidOrAsk;	//"bid" or "ask"
 	private String typeLine;		//"average" or "support" or "ceiling"
 	private TrendCalculation trendCalculation;
+	private List<PointXY> ptList;
 	
 	public LineEquationTrend() {
 		
 	}
 	
-	public LineEquationTrend(TrendCalculation trendCalculation,String typeBidOrAsk,String typeLine, PointXY averagePt1,PointXY averagePt2) {
+	public LineEquationTrend(TrendCalculation trendCalculation,String typeBidOrAsk,String typeLine, PointXY averagePt1,PointXY averagePt2,List<PointXY> ptList) {
 		this.setTrendCalculation(trendCalculation);
 		this.setTypeBidOrAsk(typeBidOrAsk);
 		this.setTypeLine(typeLine);
 		this.setAveragePt1(averagePt1);
 		this.setAveragePt2(averagePt2);
+		this.setPtList(ptList);
 	}
 
 	public double getLeadingDirect() {
@@ -81,7 +85,21 @@ public class LineEquationTrend implements Runnable {
 	public void setTrendCalculation(TrendCalculation trendCalculation) {
 		this.trendCalculation = trendCalculation;
 	}
+	
 
+	
+	public List<PointXY> getPtList() {
+		return ptList;
+	}
+
+	public void setPtList(List<PointXY> ptList) {
+		this.ptList = ptList;
+	}
+
+	
+
+
+	
 	
 	@Override
 	public void run() {
@@ -96,7 +114,7 @@ public class LineEquationTrend implements Runnable {
 		double pt2Y = this.getAveragePt2().getY();
 		
 		
-		//Stage 1 : calculation
+		//Stage 1 : calculation main equation line
 		this.setOrdOrigin((pt1X * pt2Y - pt1Y * pt2X) / (pt1X - pt2X));
 		
 		double b = this.getOrdOrigin();
@@ -105,10 +123,24 @@ public class LineEquationTrend implements Runnable {
 		
 		double a = this.getLeadingDirect();
 		
-		//Stage 2 : to round result
 		
-//		this.setOrdOrigin(MathTools.dblRoundDbl(b, 4));
-//		this.setLeadingDirect(MathTools.dblRoundDbl(a, 4));
+		
+		//Stage 2 : sort point list (the first point is highest point in relation to the line, the last point is the lowest point...) 
+		List<PointXY> ptList = this.getPtList();
+		
+
+		
+		//Stage 3 :correction equation for ceiling and support : change ordOrigin
+		if ("ceiling".equals(this.getTypeLine())) {
+			
+			//Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime() < (ts1.getTime() - ts2.getTime());
+			
+			
+		}else if ("support".equals(this.getTypeLine())) {
+			
+		}
+		
+
 		
 		//Stage 3 :Save in list lineEquationTrend of trendCalculation
 		
@@ -121,9 +153,17 @@ public class LineEquationTrend implements Runnable {
 		System.out.println("calcul équation terminé ///////////////////////////////////////////");
 		
 		
+		
+		
+		
 	}
 	
-	
+	public static void main(String[] args) {
+		
+		
+		
+		
+	}
 
 	
 	

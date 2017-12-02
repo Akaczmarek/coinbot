@@ -130,7 +130,7 @@ public class CurrenciesTrendsBot implements Runnable {
 		}
 
 		// test**********************************************************************************
-int k=0;
+		int k = 0;
 		while (true) {
 
 			// Stage 2 : transmit trend calculation order at object CurrencyTrend
@@ -153,22 +153,25 @@ int k=0;
 				// stage 4 : definition timestamp for request historic rate currency
 
 				Duration duration = Duration.ofHours(this.getDATARANGEINHOURS());
-				Timestamp tst = new Timestamp(System.currentTimeMillis() - (duration.getSeconds() * 1000)); // date we
-																											// go back
+				Timestamp tst1 = new Timestamp(System.currentTimeMillis()); // recently timestamp
+				Timestamp tst0 = new Timestamp(System.currentTimeMillis() - (duration.getSeconds() * 1000)); // date we
+																												// go
+																												// back
 				// test**********************************************************************************
 				System.out.println("date à laqelle il faut remonter-----------------------------------");
 
-				System.out.println("liste :" + tst);
+				System.out.println("liste :" + tst0);
 
 				// test**********************************************************************************
 
 				// Stage 5 : transmission information for object currencyTrend and create Object
-				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst, CurrencyBeTreated);
+				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst0, tst1, CurrencyBeTreated);
 				Collections.sort(crs, CurrencyRate.CRTimestampComparator);
 
 				System.out.println("chargement de la devise à traiter-----------------------------------");
 				k++;
-				System.out.println("lacement traitement" + k + "***********************************************************");
+				System.out.println(
+						"lacement traitement" + k + "***********************************************************");
 
 				List<TrendRule> trs = this.getTrendRule().getTrendRules();
 
