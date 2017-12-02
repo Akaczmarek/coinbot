@@ -1,6 +1,11 @@
 package fr.afjg.coinbot.pojo.datatprocessing;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class LineEquationTrend implements Runnable {
 
@@ -123,19 +128,48 @@ public class LineEquationTrend implements Runnable {
 		
 		
 		
-		//Stage 2 : sort point list (the first point is highest point in relation to the line, the last point is the lowest point...) 
+		//Stage 2 : sort point list (the last point is highest point in relation to the line, the first point is the lowest point...) 
 		List<PointXY> ptList = this.getPtList();
+		Map<Double, PointXY> comparisonList = new TreeMap<>();	//comparison between line and point
+		Iterator<PointXY> ite = ptList.iterator();
 		
+		while(ite.hasNext()) {
+			PointXY pt;
+			double resultComparison;
+			double y;
+			long x;
+			
+			pt = ite.next();
+			x = pt.getX();
+			y = pt.getY();
+			
+			resultComparison = y - a * x + b;
+			
+			comparisonList.put(resultComparison, pt);
+		}
 		
+		//result :
+		PointXY lowPt = comparisonList.get( ((TreeMap<Double, PointXY>) comparisonList).firstKey());
+		PointXY highPt = comparisonList.get( ((TreeMap<Double, PointXY>) comparisonList).lastKey());
 
+		
 		
 		//Stage 3 :correction equation for ceiling and support : change ordOrigin
 		if ("ceiling".equals(this.getTypeLine())) {
+			double yHighPt = highPt.getY();
+			long xHighPt = highPt.getX();
 			
-			//Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime() < (ts1.getTime() - ts2.getTime());
+			b = yHighPt - a * xHighPt;
+			this.setOrdOrigin(b);
 			
 			
 		}else if ("support".equals(this.getTypeLine())) {
+			
+			double yLowPt = lowPt.getY();
+			long xLowPt = lowPt.getX();
+			
+			b = yLowPt - a * xLowPt;
+			this.setOrdOrigin(b);
 			
 		}
 		
@@ -159,6 +193,26 @@ public class LineEquationTrend implements Runnable {
 	
 	public static void main(String[] args) {
 		
+		Map<Double, Double> comparisonList = new TreeMap<>();
+		
+		comparisonList.put(1.0,10.0);
+		comparisonList.put(8.0,2.0);
+		comparisonList.put(3.0,1.0);
+		comparisonList.put(4.0,1.0);
+		comparisonList.put(6.0,1.0);
+		comparisonList.put(5.0,1.0);
+		comparisonList.put(7.0,1.0);
+		comparisonList.put(2.0,3.0);
+		System.out.println("First key is: "+ ((TreeMap<Double, Double>) comparisonList).firstKey() + ", value : " + comparisonList.get(((TreeMap<Double, Double>) comparisonList).firstKey()));
+		
+	      Set<Entry<Double, Double>> set = comparisonList.entrySet();
+	      
+	      Iterator iterator = set.iterator();
+	      while(iterator.hasNext()) {
+	         Map.Entry mentry = (Map.Entry)iterator.next();
+	         System.out.print("key is: "+ mentry.getKey() + " & Value is: ");
+	         System.out.println(mentry.getValue());
+	      }
 		
 		
 		
