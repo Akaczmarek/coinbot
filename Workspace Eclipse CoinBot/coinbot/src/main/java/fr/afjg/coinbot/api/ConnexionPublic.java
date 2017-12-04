@@ -69,7 +69,7 @@ public class ConnexionPublic {
 
 				System.out.println("****** Content of the URL ********");
 				BufferedReader br = new BufferedReader(new InputStreamReader(this.getCon().getInputStream()));
-
+				
 				while (br.ready()) {
 					sb.append(br.readLine());
 				}

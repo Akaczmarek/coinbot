@@ -194,4 +194,15 @@ public class Market {
 		this.market_cap_eur = market_cap_eur;
 	}
 
+	@Override
+	public String toString() {
+		return "Market [id=" + id + ", name=" + name + ", symbol=" + symbol + ", rank=" + rank + ", price_usd="
+				+ price_usd + ", price_btc=" + price_btc + ", volume_usd24h=" + volume_usd24h + ", market_cap_usd="
+				+ market_cap_usd + ", available_supply=" + available_supply + ", total_supply=" + total_supply
+				+ ", max_supply=" + max_supply + ", percent_change_1h=" + percent_change_1h + ", percent_change_24h="
+				+ percent_change_24h + ", percent_change_7d=" + percent_change_7d + ", last_updated=" + last_updated
+				+ ", price_eur=" + price_eur + ", volume_eur24h=" + volume_eur24h + ", market_cap_eur=" + market_cap_eur
+				+ "]";
+	}
+
 }

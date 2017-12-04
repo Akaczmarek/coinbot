@@ -1,6 +1,9 @@
 package fr.afjg.coinbot.service.impl.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,10 +11,10 @@ import org.json.JSONObject;
 
 import fr.afjg.coinbot.dao.impl.api.CoinMarketCapDaoImpl;
 import fr.afjg.coinbot.dao.intf.api.CoinMarketCapDaoIntf;
-import fr.afjg.coinbot.pojo.api.bittrex.Market;
-import fr.afjg.coinbot.pojo.api.bittrex.Result;
+import fr.afjg.coinbot.pojo.api.coinmarketcap.Market;
+import fr.afjg.coinbot.service.intf.api.CoinMarketCapGetFirstHundredMarketIntf;
 
-public class CoinMarketCapGetFirstHundredMarket {
+public class CoinMarketCapGetFirstHundredMarket implements CoinMarketCapGetFirstHundredMarketIntf{
 	
 	CoinMarketCapDaoIntf CmcDao;
 
@@ -20,91 +23,133 @@ public class CoinMarketCapGetFirstHundredMarket {
 		this.setCmcDao(new CoinMarketCapDaoImpl());
 	}
 
-	public Market getMarket() throws IOException, JSONException {
+	public Set<Market> getMarket() throws IOException, JSONException {
 
 		StringBuffer sb = CmcDao.getFirstHundredMarket();
+		System.out.println(sb);
+		Set<Market> listMarket = new HashSet<>();
 		JSONObject jsonObj = new JSONObject(sb.toString());
-		Market market = new Market();
+		
 		JSONArray jsonArray = jsonObj.getJSONArray("result");
-
-		market.setSuccess(jsonObj.getBoolean("success"));
-		market.setMessage(jsonObj.getString("message"));
-
+		
 		for (int i = 0; i < jsonArray.length(); i++) {
-			Result result = new Result();
+			Market market = new Market();
 			jsonObj = (JSONObject) jsonArray.get(i);
 
-			if (jsonObj.isNull("MarketName")) {
-				result.setMarketName("");
+			if (jsonObj.isNull("id")) {
+				market.setId("");
 			} else {
-				result.setMarketName(jsonObj.getString("MarketName"));
+				market.setId(jsonObj.getString("id"));
 			}
 
-			if (jsonObj.isNull("MarketCurrency")) {
-				result.setMarketCurrency("");
+			if (jsonObj.isNull("name")) {
+				market.setName("");
 			} else {
-				result.setMarketCurrency(jsonObj.getString("MarketCurrency"));
+				market.setName(jsonObj.getString("name"));
 			}
 
-			if (jsonObj.isNull("MarketCurrencyLong")) {
-				result.setMarketCurrencyLong("");
+			if (jsonObj.isNull("symbol")) {
+				market.setSymbol("");
 			} else {
-				result.setMarketCurrencyLong(jsonObj.getString("MarketCurrencyLong"));
+				market.setSymbol(jsonObj.getString("symbol"));
 			}
 
-			if (jsonObj.isNull("Notice")) {
-				result.setNotice("");
+			if (jsonObj.isNull("rank")) {
+				market.setRank("");
 			} else {
-				result.setNotice(jsonObj.getString("Notice"));
+				market.setRank(jsonObj.getString("rank"));
 			}
 			
-			if (jsonObj.isNull("IsActive")) {
-				result.setActive(false);
+			if (jsonObj.isNull("price_usd")) {
+				market.setPrice_usd("");
 			} else {
-				result.setActive(jsonObj.getBoolean("IsActive"));
+				market.setPrice_usd(jsonObj.getString("price_usd"));
 			}
 			
-			if (jsonObj.isNull("IsSponsored")) {
-				result.setSponsored(false);
+			if (jsonObj.isNull("price_btc")) {
+				market.setPrice_btc("");
 			} else {
-				result.setSponsored(jsonObj.getBoolean("IsSponsored"));
-			}
-			
-
-			if (jsonObj.isNull("LogoUrl")) {
-				result.setLogoUrl("");
-			} else {
-				result.setLogoUrl(jsonObj.getString("LogoUrl"));
-			}
-
-			if (jsonObj.isNull("BaseCurrency")) {
-				result.setBaseCurrency("");
-			} else {
-				result.setBaseCurrency(jsonObj.getString("BaseCurrency"));
-			}
-
-			if (jsonObj.isNull("BaseCurrencyLong")) {
-				result.setBaseCurrencyLong("");
-			} else {
-				result.setBaseCurrencyLong(jsonObj.getString("BaseCurrencyLong"));
-			}
-
-			if (jsonObj.isNull("MinTradeSize")) {
-				result.setBaseCurrencyLong("");
-			} else {
-				result.setMinTradeSize(jsonObj.getLong("MinTradeSize"));
+				market.setPrice_btc(jsonObj.getString("price_btc"));
 			}
 			
 
-			if (jsonObj.isNull("Created")) {
-				result.setCreated("");
+			if (jsonObj.isNull("volume_usd24h")) {
+				market.setVolume_usd24h("");
 			} else {
-				result.setCreated(jsonObj.getString("Created"));
+				market.setVolume_usd24h(jsonObj.getString("volume_usd24h"));
 			}
-			market.addResult(result);
+
+			if (jsonObj.isNull("market_cap_usd")) {
+				market.setMarket_cap_usd("");
+			} else {
+				market.setMarket_cap_usd(jsonObj.getString("market_cap_usd"));
+			}
+
+			if (jsonObj.isNull("available_supply")) {
+				market.setAvailable_supply("");
+			} else {
+				market.setAvailable_supply(jsonObj.getString("available_supply"));
+			}
+
+			if (jsonObj.isNull("total_supply")) {
+				market.setTotal_supply("");
+			} else {
+				market.setTotal_supply(jsonObj.getString("total_supply"));
+			}
+
+			if (jsonObj.isNull("max_supply")) {
+				market.setMax_supply("");
+			} else {
+				market.setMax_supply(jsonObj.getString("max_supply"));
+			}
+
+			if (jsonObj.isNull("percent_change_1h")) {
+				market.setPercent_change_1h("");
+			} else {
+				market.setPercent_change_1h(jsonObj.getString("percent_change_1h"));
+			}
+
+			if (jsonObj.isNull("percent_change_24h")) {
+				market.setPercent_change_24h("");
+			} else {
+				market.setPercent_change_24h(jsonObj.getString("percent_change_24h"));
+			}
+
+			if (jsonObj.isNull("percent_change_7d")) {
+				market.setPercent_change_7d("");
+			} else {
+				market.setPercent_change_7d(jsonObj.getString("percent_change_7d"));
+			}
+
+			if (jsonObj.isNull("last_updated")) {
+				market.setLast_updated("");
+			} else {
+				market.setLast_updated(jsonObj.getString("last_updated"));
+			}
+
+			if (jsonObj.isNull("price_eur")) {
+				market.setPrice_eur("");
+			} else {
+				market.setPrice_eur(jsonObj.getString("price_eur"));
+			}
+
+			if (jsonObj.isNull("volume_eur24h")) {
+				market.setVolume_eur24h("");
+			} else {
+				market.setVolume_eur24h(jsonObj.getString("volume_eur24h"));
+			}
+
+			if (jsonObj.isNull("market_cap_eur")) {
+				market.setMarket_cap_eur("");
+			} else {
+				market.setMarket_cap_eur(jsonObj.getString("market_cap_eur"));
+			}
+			
+			listMarket.add(market);
+			
 		}
 
-		return market;
+		return listMarket;
 	}
 	
 

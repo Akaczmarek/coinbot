@@ -15,9 +15,13 @@ public class CoinMarketCapDaoImpl implements CoinMarketCapDaoIntf{
 
 	public StringBuffer getFirstHundredMarket() throws IOException {
 
-		String url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=100";
+		String url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=25";
 		this.setApi(new ConnexionPublic(url));
-		return this.getApi().print_content();
+		StringBuffer sb = new StringBuffer();
+		sb.append("{ \"result\" : ");
+		sb.append(this.getApi().print_content());
+		sb.append(" } ");
+		return sb;
 	}
 
 	public ConnexionPublic getApi() {
