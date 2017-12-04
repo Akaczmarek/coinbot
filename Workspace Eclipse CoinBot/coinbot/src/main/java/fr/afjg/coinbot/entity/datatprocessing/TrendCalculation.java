@@ -14,8 +14,10 @@ public class TrendCalculation implements Runnable {
 	private List<CurrencyRate> currencyRates;
 	private volatile List<LineEquationTrend> linesEquationsTrends;
 	private CurrencyTrend currencyTrend;
+	private LastTrend lastTrend;
 	private TrendRule trendRule;
 	private volatile int countFinishedActions;
+	
 
 	{
 		this.setCountFinishedActions(0);
@@ -75,8 +77,19 @@ public class TrendCalculation implements Runnable {
 	public void setCountFinishedActions(int countFinishedActions) {
 		this.countFinishedActions = countFinishedActions;
 	}
+	
+	public LastTrend getLastTrend() {
+		return lastTrend;
+	}
+
+	public void setLastTrend(LastTrend lastTrend) {
+		this.lastTrend = lastTrend;
+	}
+	
 	// methods
 	// -----------------------------------------------------------------------
+
+
 
 	public synchronized void finishActionsChecked() {
 		this.setCountFinishedActions(getCountFinishedActions() + 1);
@@ -141,15 +154,28 @@ public class TrendCalculation implements Runnable {
 				
 				
 				if (ptn1 != null) {
+					System.out.println("ptn0Y : " + ptn0.getY()+ " , ptn1Y : " +ptn1.getY() + " , soustract : " +(ptn0.getY() - ptn1.getY()));
 
-					if ((ptn0.getY() - ptn1.getY()) > 0 && (checkTrend ==null || "up".equals(checkTrend))) {
+					if ((ptn.getY() - ptn1.getY()) > 0 && (checkTrend ==null || "up".equals(checkTrend))) {
 						checkTrend = "up";
 						
+						System.out.println("test1");
+						ptn1 = ptn;
 						
-					}else if ((ptn0.getY() - ptn1.getY())<=0 && (checkTrend ==null || "down".equals(checkTrend))) {
+					}else if ((ptn.getY() - ptn1.getY())<0 && (checkTrend ==null || "down".equals(checkTrend))) {
 						checkTrend = "down";
+						System.out.println("test2");
+						ptn1 = ptn;
 						
+					}else if((ptn.getY() - ptn1.getY())==0) {
+						
+						//incompatible value, redo a ride
+						System.out.println("test3");
+						ptn1 = ptn;
 					}else {
+						
+						System.out.println("test4");
+						this.setLastTrend(new LastTrend(this, ptn0, ptn1, checkTrend));
 						//leave the loop
 						break;
 					}

@@ -106,6 +106,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 		List<TrendRule> trList = this.getTrendRules(); // we get the trend rules in list
 		Collections.sort(trList, TrendRule.TRDurationComparator); // we sort the list, according to the duration of the
 																	// trend
+		int numberOperation = 0;
 
 		// test*****************************************************************************
 		System.out.println("taille tableau currencuyrate : " + this.getCurrencyRates().size()
@@ -120,7 +121,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 			// stage 2 : definition of size the table
 			List<CurrencyRate> transmittedListToCalcul = new ArrayList<>(this.getCurrencyRates());
-
 
 			Timestamp ts1 = DateTools.dateConvertTimestamp(DateTools.todayDate()); // currently timestamp
 
@@ -138,15 +138,18 @@ public class CurrencyTrend extends Currency implements Runnable {
 			// test*****************************************************************************
 
 			// stage 3 : transmit the list for calculation
-			TrendCalculation tC = new TrendCalculation(transmittedListToCalcul, this, trendRule);
-			Thread t = new Thread(tC);
-			t.start();
-
+			if (transmittedListToCalcul.size() > 2) {
+				
+				TrendCalculation tC = new TrendCalculation(transmittedListToCalcul, this, trendRule);
+				Thread t = new Thread(tC);
+				t.start();
+				
+				numberOperation++;
+			}
 		}
 
 		// Stage 4 : control as every operation of trend is finished and begin notations
 		// operations
-		int numberOperation = trList.size();
 
 		while (true) {
 			if (this.getCountFinishedActions() == numberOperation) {
@@ -154,15 +157,8 @@ public class CurrencyTrend extends Currency implements Runnable {
 				break;
 			}
 		}
-		
+
 		// stage 5 : transmit the list of trend for the notation
-		
-		
-		
-		
-		
-		
-		
 
 		// test******************************************************************************************
 		System.out.println("********************résulats**************************résultats************** ");
@@ -170,11 +166,16 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 			for (LineEquationTrend lET : trendcalc.getLinesEquationsTrends()) {
 				System.out.println("Selon règle : " + trendcalc.getTrendRule().getName() + " et tendance de type : "
-						+ lET.getTypeBidOrAsk() + " type de ligne : " + lET.getTypeLine()+ " -- a = " + lET.getLeadingDirect() + " , b = " + lET.getOrdOrigin());
+						+ lET.getTypeBidOrAsk() + " type de ligne : " + lET.getTypeLine() + " -- a = "
+						+ lET.getLeadingDirect() + " , b = " + lET.getOrdOrigin());
 
 			}
-
+			if (trendcalc.getLastTrend()!=null) {
+			System.out.println("dernière tendance : a = " + trendcalc.getLastTrend().getLeadingDirect() + " , b = "
+					+ trendcalc.getLastTrend().getOrdOrigin());
+			}
 		}
+
 		System.out.println("fin résultats*****************************fin résultats***********************");
 
 		// test**************************************************************************************
