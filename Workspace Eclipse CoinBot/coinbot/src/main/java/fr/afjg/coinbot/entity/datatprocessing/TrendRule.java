@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.pojo.datatprocessing;
+package fr.afjg.coinbot.entity.datatprocessing;
 
 import java.util.Collections;
 import java.util.Comparator;

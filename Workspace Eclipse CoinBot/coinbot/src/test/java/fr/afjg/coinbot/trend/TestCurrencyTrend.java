@@ -2,7 +2,7 @@ package fr.afjg.coinbot.trend;
 
 import java.sql.Timestamp;
 
-import fr.afjg.coinbot.pojo.datatprocessing.CurrenciesTrendsBot;
+import fr.afjg.coinbot.entity.datatprocessing.CurrenciesTrendsBot;
 
 public class TestCurrencyTrend {
 

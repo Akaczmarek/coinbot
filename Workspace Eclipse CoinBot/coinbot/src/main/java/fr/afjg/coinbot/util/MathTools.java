@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 
-import fr.afjg.coinbot.pojo.datatprocessing.PointXY;
+import fr.afjg.coinbot.entity.datatprocessing.PointXY;
 
 /**
  * 

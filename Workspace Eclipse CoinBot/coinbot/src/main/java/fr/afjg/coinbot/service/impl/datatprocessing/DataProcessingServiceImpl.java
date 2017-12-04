@@ -5,9 +5,9 @@ import java.util.List;
 
 import fr.afjg.coinbot.dao.impl.database.CurrencyDaoImpl;
 import fr.afjg.coinbot.dao.intf.database.CurrencyDaoIntf;
+import fr.afjg.coinbot.entity.datatprocessing.CurrencyTrend;
 import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
-import fr.afjg.coinbot.pojo.datatprocessing.CurrencyTrend;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
 
 public class DataProcessingServiceImpl implements DataProcessingServiceIntf{

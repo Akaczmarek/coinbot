@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.pojo.datatprocessing;
+package fr.afjg.coinbot.entity.datatprocessing;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -144,7 +144,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 		}
 
-		// Stage 4 : control as every operation of trend is finished and begin notation
+		// Stage 4 : control as every operation of trend is finished and begin notations
 		// operations
 		int numberOperation = trList.size();
 
@@ -154,6 +154,15 @@ public class CurrencyTrend extends Currency implements Runnable {
 				break;
 			}
 		}
+		
+		// stage 5 : transmit the list of trend for the notation
+		
+		
+		
+		
+		
+		
+		
 
 		// test******************************************************************************************
 		System.out.println("********************résulats**************************résultats************** ");

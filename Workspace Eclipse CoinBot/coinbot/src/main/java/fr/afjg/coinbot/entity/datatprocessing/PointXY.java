@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.pojo.datatprocessing;
+package fr.afjg.coinbot.entity.datatprocessing;
 
 import java.sql.Timestamp;
 import java.util.Comparator;

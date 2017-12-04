@@ -1,9 +1,9 @@
-package fr.afjg.coinbot.pojo.datatprocessing;
+package fr.afjg.coinbot.entity.datatprocessing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
+import java.util.ListIterator;
 
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
 import fr.afjg.coinbot.util.MathTools;
@@ -89,15 +89,15 @@ public class TrendCalculation implements Runnable {
 		System.out.println("trend calculation lancé-----------------------------------------");
 
 		// Stage 0 : Definition of treatment procedure
-		// String[] typeBidOrAsk = { "ask" };
-		// String[] typeLine = { "average"};
+
 		String[] typeBidOrAsk = { "ask", "bid" };
 		String[] typeLine = { "average", "support", "ceiling" };
+		List<PointXY> ptList = null;
 
 		for (int i = 0; i < typeBidOrAsk.length; i++) {
 
 			// Stage 1 : transform currency list in pointXY list
-			List<PointXY> ptList = ParseTools.transformCRListInPtList(getCurrencyRates(), typeBidOrAsk[i]);
+			ptList = ParseTools.transformCRListInPtList(getCurrencyRates(), typeBidOrAsk[i]);
 
 			// Stage 2 : split the list into two
 			PointXY[][] doubleListPtXY = ParseTools.parselistpointXYen2(ptList);
@@ -114,7 +114,7 @@ public class TrendCalculation implements Runnable {
 
 				// Stage 5 : determination line equation
 				LineEquationTrend lET = new LineEquationTrend(this, typeBidOrAsk[i], typeLine[j], averagePt1,
-						averagePt2,ptList);
+						averagePt2, ptList);
 				Thread t = new Thread(lET);
 				t.start();
 
@@ -122,7 +122,47 @@ public class TrendCalculation implements Runnable {
 
 		}
 
-		// Stage 6 : control as every operation is finished and save trendcalculation in
+		// Stage 6 : determination the last trend ( uptrend or downTrend)
+
+		if (ptList != null) {
+			ListIterator<PointXY> iterator = ptList.listIterator(ptList.size());
+
+			PointXY ptn0 = null; // ptn0 = the last point of list
+			PointXY ptn = null;	// ptn = the current point study
+			PointXY ptn1 = null; // ptn1 = the point ptn-1 of list
+			String checkTrend = null;	//memorize the trend
+			
+			while (iterator.hasPrevious()) {
+				ptn = iterator.previous();
+
+				if (ptn0 == null) {
+					ptn0 = ptn;
+				}
+				
+				
+				if (ptn1 != null) {
+
+					if ((ptn0.getY() - ptn1.getY()) > 0 && (checkTrend ==null || "up".equals(checkTrend))) {
+						checkTrend = "up";
+						
+						
+					}else if ((ptn0.getY() - ptn1.getY())<=0 && (checkTrend ==null || "down".equals(checkTrend))) {
+						checkTrend = "down";
+						
+					}else {
+						//leave the loop
+						break;
+					}
+					
+				}else {
+					ptn1 = ptn;
+				}
+
+			}
+
+		}
+
+		// Stage 7 : control as every operation is finished and save trendcalculation in
 		// list of CurrencyTrend
 		int numberOperation = typeBidOrAsk.length * typeLine.length;
 
