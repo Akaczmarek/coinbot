@@ -25,12 +25,12 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		String ligne;
 		String[] coordonnees;
 		CurrencyRate cr;
-		
+		int i = 0;
 		
 		try {
 			while ((ligne=buff.readLine())!=null){
 				
-				
+				System.out.println("chargement : " + ++i);
 				cr = new CurrencyRate();
 
 				coordonnees = ligne.split(";");
