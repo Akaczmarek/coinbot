@@ -13,11 +13,10 @@ public class TrendCalculation implements Runnable {
 
 	private List<CurrencyRate> currencyRates;
 	private volatile List<LineEquationTrend> linesEquationsTrends;
+	private volatile List<LastTrend> lastTrends;
 	private CurrencyTrend currencyTrend;
-	private LastTrend lastTrend;
 	private TrendRule trendRule;
 	private volatile int countFinishedActions;
-	
 
 	{
 		this.setCountFinishedActions(0);
@@ -32,6 +31,7 @@ public class TrendCalculation implements Runnable {
 		this.setCurrencyTrend(currencyTrend);
 		this.setTrendRule(trendRule);
 		this.setLinesEquationsTrends(new ArrayList<>());
+		this.setLastTrends(new ArrayList<>());
 
 	}
 
@@ -46,7 +46,7 @@ public class TrendCalculation implements Runnable {
 		this.currencyRates = currencyRates;
 	}
 
-	public List<LineEquationTrend> getLinesEquationsTrends() {
+	public synchronized List<LineEquationTrend> getLinesEquationsTrends() {
 		return linesEquationsTrends;
 	}
 
@@ -77,15 +77,16 @@ public class TrendCalculation implements Runnable {
 	public void setCountFinishedActions(int countFinishedActions) {
 		this.countFinishedActions = countFinishedActions;
 	}
-	
-	public LastTrend getLastTrend() {
-		return lastTrend;
+
+	public synchronized List<LastTrend> getLastTrends() {
+		return lastTrends;
 	}
 
-	public void setLastTrend(LastTrend lastTrend) {
-		this.lastTrend = lastTrend;
+	public synchronized void setLastTrends(List<LastTrend> lastTrend) {
+		this.lastTrends = lastTrend;
 	}
-	
+
+
 	// methods
 	// -----------------------------------------------------------------------
 
@@ -133,61 +134,64 @@ public class TrendCalculation implements Runnable {
 
 			}
 
-		}
+			// Stage 6 : determination the last trend for bid and ask ( uptrend or
+			// downTrend)
 
-		// Stage 6 : determination the last trend ( uptrend or downTrend)
+			if (ptList != null) {
+				ListIterator<PointXY> iterator = ptList.listIterator(ptList.size());
 
-		if (ptList != null) {
-			ListIterator<PointXY> iterator = ptList.listIterator(ptList.size());
+				PointXY ptn0 = null; // ptn0 = the last point of list
+				PointXY ptn = null; // ptn = the current point pt(n)study
+				PointXY ptn1 = null; // ptn1 = the point pt(n+1) of list
+				String checkTrend = null; // memorize the trend
 
-			PointXY ptn0 = null; // ptn0 = the last point of list
-			PointXY ptn = null;	// ptn = the current point study
-			PointXY ptn1 = null; // ptn1 = the point ptn-1 of list
-			String checkTrend = null;	//memorize the trend
-			
-			while (iterator.hasPrevious()) {
-				ptn = iterator.previous();
+				while (iterator.hasPrevious()) {
+					ptn = iterator.previous();
 
-				if (ptn0 == null) {
-					ptn0 = ptn;
-				}
-				
-				
-				if (ptn1 != null) {
-					System.out.println("ptn0Y : " + ptn0.getY()+ " , ptn1Y : " +ptn1.getY() + " , soustract : " +(ptn0.getY() - ptn1.getY()));
-
-					if ((ptn.getY() - ptn1.getY()) > 0 && (checkTrend ==null || "up".equals(checkTrend))) {
-						checkTrend = "up";
-						
-						System.out.println("test1");
-						ptn1 = ptn;
-						
-					}else if ((ptn.getY() - ptn1.getY())<0 && (checkTrend ==null || "down".equals(checkTrend))) {
-						checkTrend = "down";
-						System.out.println("test2");
-						ptn1 = ptn;
-						
-					}else if((ptn.getY() - ptn1.getY())==0) {
-						
-						//incompatible value, redo a ride
-						System.out.println("test3");
-						ptn1 = ptn;
-					}else {
-						
-						System.out.println("test4");
-						this.setLastTrend(new LastTrend(this, ptn0, ptn1, checkTrend));
-						//leave the loop
-						break;
+					if (ptn0 == null) {
+						ptn0 = ptn;
 					}
-					
-				}else {
-					ptn1 = ptn;
+
+					if (ptn1 != null) {
+						
+						System.out.println("ptnY : " + ptn.getY() + " , ptn1Y : " + ptn1.getY() + " , soustract : "
+								+ (ptn1.getY() - ptn.getY()));
+
+						if ((ptn1.getY() - ptn.getY()) > 0 && (checkTrend == null || "up".equals(checkTrend))) {
+							checkTrend = "up";
+
+							System.out.println("test1");
+							ptn1 = ptn;
+
+						} else if ((ptn1.getY() - ptn.getY()) < 0
+								&& (checkTrend == null || "down".equals(checkTrend))) {
+							checkTrend = "down";
+							System.out.println("test2");
+							ptn1 = ptn;
+
+						} else if ((ptn1.getY() - ptn.getY()) == 0) {
+
+							// incompatible value, redo a ride
+							System.out.println("test3");
+							ptn1 = ptn;
+						} else {
+
+							System.out.println("test4");
+							LastTrend lt = new LastTrend(this, ptn0, ptn1, checkTrend,typeBidOrAsk[i]);
+							// leave the loop
+							break;
+						}
+
+
+					} else {
+						ptn1 = ptn;
+					}
+
 				}
-
 			}
-
 		}
 
+		
 		// Stage 7 : control as every operation is finished and save trendcalculation in
 		// list of CurrencyTrend
 		int numberOperation = typeBidOrAsk.length * typeLine.length;

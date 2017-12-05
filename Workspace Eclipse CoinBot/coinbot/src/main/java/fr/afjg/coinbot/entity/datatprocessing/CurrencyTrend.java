@@ -18,7 +18,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 	private List<TrendRule> trendRules;
 	private double noteCurrency;
 	private Timestamp timeRecord;
-	private CurrencyNote note;
+	private CurrencyNotes notes;
 	private volatile int countFinishedActions;
 
 	public CurrencyTrend() {
@@ -67,12 +67,12 @@ public class CurrencyTrend extends Currency implements Runnable {
 		this.timeRecord = timeRecord;
 	}
 
-	public CurrencyNote getNote() {
-		return note;
+	public CurrencyNotes getNote() {
+		return notes;
 	}
 
-	public void setNote(CurrencyNote note) {
-		this.note = note;
+	public void setNote(CurrencyNotes note) {
+		this.notes = note;
 	}
 
 	public double getNoteCurrency() {
@@ -139,11 +139,11 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 			// stage 3 : transmit the list for calculation
 			if (transmittedListToCalcul.size() > 2) {
-				
+
 				TrendCalculation tC = new TrendCalculation(transmittedListToCalcul, this, trendRule);
 				Thread t = new Thread(tC);
 				t.start();
-				
+
 				numberOperation++;
 			}
 		}
@@ -160,6 +160,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 		// stage 5 : transmit the list of trend for the notation
 
+	
 		// test******************************************************************************************
 		System.out.println("********************résulats**************************résultats************** ");
 		for (TrendCalculation trendcalc : this.trendCalculs) {
@@ -170,9 +171,13 @@ public class CurrencyTrend extends Currency implements Runnable {
 						+ lET.getLeadingDirect() + " , b = " + lET.getOrdOrigin());
 
 			}
-			if (trendcalc.getLastTrend()!=null) {
-			System.out.println("dernière tendance : a = " + trendcalc.getLastTrend().getLeadingDirect() + " , b = "
-					+ trendcalc.getLastTrend().getOrdOrigin());
+			if (trendcalc.getLastTrends() != null) {
+				for (LastTrend lt : trendcalc.getLastTrends()) {
+					System.out.println(
+							"dernière tendance sur courbe " + lt.getTypeBidOrAsk() + " : a = " + lt.getLeadingDirect()
+									+ " , b = " + lt.getOrdOrigin() + " , validity :" + lt.isValidityTrend());
+				}
+
 			}
 		}
 
@@ -180,7 +185,9 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 		// test**************************************************************************************
 
-		// Stage 5:
+		// Stage 5: transmit the list of trend for the notation
+		
+		this.setNote(new CurrencyNotes(this));
 
 		// Final stage : prevent end thread
 

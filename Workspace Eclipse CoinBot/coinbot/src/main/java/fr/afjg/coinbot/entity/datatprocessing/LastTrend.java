@@ -10,14 +10,23 @@ public class LastTrend {
 	private double ordOrigin;
 	private TrendCalculation trendCalculation;
 	private boolean validityTrend;
+	private String typeBidOrAsk;	//"bid" or "ask"
 	
-	public LastTrend(TrendCalculation trendCalculation,PointXY lastPt,PointXY otherPt, String trend) {
+	public LastTrend(TrendCalculation trendCalculation,PointXY lastPt,PointXY otherPt, String trend, String typeBidOrAsk) {
+		
+		// Object initialization 
 		this.setTrendCalculation(trendCalculation);
 		this.setLastPt(lastPt);
 		this.setOtherPt(otherPt);
 		this.setTrend(trend);
+		this.setTypeBidOrAsk(typeBidOrAsk);
+		
+		//operations
 		this.calculingEquationLastTrend();
 		this.checkTrend();
+		
+		//save
+		this.getTrendCalculation().getLastTrends().add(this);
 		
 	}
 
@@ -79,10 +88,18 @@ public class LastTrend {
 		this.validityTrend = validityTrend;
 	}
 
-	
+	public String getTypeBidOrAsk() {
+		return typeBidOrAsk;
+	}
+
+	public void setTypeBidOrAsk(String typeBidOrAsk) {
+		this.typeBidOrAsk = typeBidOrAsk;
+	}
 	
 	// methods-----------------------------------------------------------------
 	
+
+
 
 	public void calculingEquationLastTrend () {
 		
