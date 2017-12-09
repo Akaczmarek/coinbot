@@ -109,10 +109,6 @@ public class CurrenciesTrendsBot implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 
-		// opération de lancement des threads de calcul des tendances
-		// CurrencyTrend
-
-		// exemple d'envoi
 
 		// Stage 0 : variables initialization
 
@@ -167,6 +163,13 @@ public class CurrenciesTrendsBot implements Runnable {
 				// Stage 5 : transmission information for object currencyTrend and create Object
 				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst0, tst1, CurrencyBeTreated);
 				Collections.sort(crs, CurrencyRate.CRTimestampComparator);
+				
+				
+				for (CurrencyRate currencyRate : crs) {
+					System.out.println(currencyRate.getTimeRecord().getTime());
+				}
+				
+				
 
 				System.out.println("chargement de la devise à traiter-----------------------------------");
 				k++;

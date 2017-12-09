@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import fr.afjg.coinbot.pojo.database.CurrencyRate;
+import fr.afjg.coinbot.util.ParseTools;
+
 public class CurrencyNotes {
 	
 	private CurrencyTrend currencyTrend;
@@ -101,9 +104,17 @@ public class CurrencyNotes {
 				
 			}
 			
-			//stage 5 : treatment last point
+			//stage 5 : treatment on last point (the youngest point)
+			List<CurrencyRate> listCR = getCurrencyTrend().getCurrencyRates();
+			CurrencyRate lastCR = listCR.get(listCR.size()-1);
+			PointXY lastPointBid = ParseTools.parseOneCurrencyRateInPointXY(lastCR, "bid");
+			PointXY lastPointAsk = ParseTools.parseOneCurrencyRateInPointXY(lastCR, "ask");
+			
+			//stage 6 : information of trendrule
 			
 			
+			// send data to currencyNote
+			CurrencyNote crBid = new CurrencyNote(currencyNotes, letsAsk, ltsAsk, lastPoint);
 			
 			
 		}

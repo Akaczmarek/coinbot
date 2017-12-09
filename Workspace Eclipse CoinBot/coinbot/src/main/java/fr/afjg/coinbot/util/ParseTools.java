@@ -61,5 +61,19 @@ public class ParseTools {
 		return doubleList;
 		
 	}
+	
+	public static PointXY parseOneCurrencyRateInPointXY (CurrencyRate cr, String typeBidOrAsk) {
+		
+		PointXY ptXY = new PointXY();
+		ptXY.setX(cr.getTimeRecord().getTime());
+		
+		if ("bid".equals(typeBidOrAsk)) {
+			ptXY.setY(cr.getBidBTC());
+		}else if("ask".equals(typeBidOrAsk)){
+			ptXY.setY(cr.getAskBTC());
+		}
+		
+		return ptXY;
+	}
 
 }
