@@ -191,29 +191,6 @@ public class LineEquationTrend implements Runnable {
 		
 	}
 	
-	public static void main(String[] args) {
-		
-		Map<Double, Double> comparisonList = new TreeMap<>();
-		
-		comparisonList.put(1.0,10.0);
-		comparisonList.put(8.0,2.0);
-		comparisonList.put(3.0,1.0);
-		comparisonList.put(4.0,1.0);
-		comparisonList.put(6.0,1.0);
-		comparisonList.put(5.0,1.0);
-		comparisonList.put(7.0,1.0);
-		comparisonList.put(2.0,3.0);
-		System.out.println("First key is: "+ ((TreeMap<Double, Double>) comparisonList).firstKey() + ", value : " + comparisonList.get(((TreeMap<Double, Double>) comparisonList).firstKey()));
-		
-	      Set<Entry<Double, Double>> set = comparisonList.entrySet();
-	      
-	      Iterator iterator = set.iterator();
-	      while(iterator.hasNext()) {
-	         Map.Entry mentry = (Map.Entry)iterator.next();
-	         System.out.print("key is: "+ mentry.getKey() + " & Value is: ");
-	         System.out.println(mentry.getValue());
-	      }
-		
 		
 		
 	}
