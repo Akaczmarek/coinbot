@@ -192,6 +192,7 @@ public class TrendCalculation implements Runnable {
 		}
 
 		
+		
 		// Stage 7 : control as every operation is finished and save trendcalculation in
 		// list of CurrencyTrend
 		int numberOperation = typeBidOrAsk.length * typeLine.length;
