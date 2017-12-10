@@ -122,6 +122,7 @@ public class CurrencyNote implements Runnable {
 			treatmentNotationBid(averageLE, supportLE, ceilingLE, lastPoint);
 			break;
 		case "ask":
+			treatmentNotationAsk(averageLE, supportLE, ceilingLE, lastPoint);
 			break;
 		default:
 			System.out.println("problème d'identification bid ou ask");
@@ -147,30 +148,132 @@ public class CurrencyNote implements Runnable {
 		double aSupport = supportLE.getLeadingDirect();
 		double bSupport = supportLE.getOrdOrigin();
 		
-		double note1 =0; // comparison position last point between ceiling and support
-		
+		int multiplier = this.getTrendRule().getMultiplier();
+
+		double note1 = 0; // comparison position last point between ceiling and support
+		double note2 = 0; // comparison position last point between ceiling and average
+		double globalNote = 0;
 
 		// Stage 1 : value of the gap between ceiling and support
 		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
-		if (gapCeilingSupport<0) System.out.println("erreur de calcul");
+		if (gapCeilingSupport < 0)
+			System.out.println("erreur de calcul");
 
 		// Stage 2 : value of the gap between ceiling and average
 		double gapCeilingAverage = (aCeiling * xRef + bCeiling) - (aAverage * xRef + bAverage);
-		if (gapCeilingAverage<0) System.out.println("erreur de calcul");
-		
-		
+		if (gapCeilingAverage < 0)
+			System.out.println("erreur de calcul");
+
 		// Stage 3 : comparison position last point between ceiling and support
-		
+		// gapCeilingPt<0 : last point is above ceiling line, note>1
+		// gapCeilingPt>=0 && gapCeilingPt<=gapCeilingSupport : last point is between
+		// ceiling and support 0>note>1
+		// gapCeilingPt>=0 && gapCeilingPt>gapCeilingSupport : last point is below
+		// support note=0
+
 		double gapCeilingPt = (aCeiling * xRef + bCeiling) - yPt;
-		if (gapCeilingPt<0) {
-			note1 = 1 + gapCeilingPt/gapCeilingSupport;
-		} else if (gapCeilingPt>=0 && gapCeilingPt<=gapCeilingSupport) {
-			note1 = 1 - gapCeilingPt/gapCeilingSupport;
-		} else if (gapCeilingPt>=0 && gapCeilingPt>gapCeilingSupport) {
+		if (gapCeilingPt < 0) {
+			note1 = 1 + gapCeilingPt / gapCeilingSupport;
+		} else if (gapCeilingPt >= 0 && gapCeilingPt <= gapCeilingSupport) {
+			note1 = 1 - gapCeilingPt / gapCeilingSupport;
+		} else if (gapCeilingPt >= 0 && gapCeilingPt > gapCeilingSupport) {
 			note1 = 0;
+		} else {
+			System.out.println("calcul de note pas pris en compte bid , support et ceiling");
 		}
 
+		// Stage 4 : comparison position last point between ceiling and average
+		// gapCeilingPt<0 : last point is above ceiling line, note>1
+		// gapCeilingPt>=0 && gapCeilingPt<=gapCeilingaverage : last point is between
+		// ceiling and average 0>note>1
+		// gapCeilingPt>=0 && gapCeilingPt>gapCeilingaverage : last point is below
+		// average note=0
+
+		if (gapCeilingPt < 0) {
+			note2 = 1 + gapCeilingPt / gapCeilingAverage;
+		} else if (gapCeilingPt >= 0 && gapCeilingPt <= gapCeilingAverage) {
+			note2 = 1 - gapCeilingPt / gapCeilingAverage;
+		} else if (gapCeilingPt >= 0 && gapCeilingPt > gapCeilingAverage) {
+			note2 = 0;
+		} else {
+			System.out.println("calcul de note pas pris en compte bid , support et average");
+		}
 		
+		
+		//stage 6 : calculation global note
+		globalNote = (note1 + note2)*multiplier;
+
+	}
+	
+	private void treatmentNotationAsk(LineEquationTrend averageLE, LineEquationTrend supportLE,
+			LineEquationTrend ceilingLE, PointXY lastPoint) {
+		// it's worth buying when the ask is at near of the support line
+
+		// stage 0 : variables initialization
+		double yPt = lastPoint.getY();
+		long xRef = lastPoint.getX();
+		double aCeiling = ceilingLE.getLeadingDirect();
+		double bCeiling = ceilingLE.getOrdOrigin();
+		double aAverage = averageLE.getLeadingDirect();
+		double bAverage = averageLE.getOrdOrigin();
+		double aSupport = supportLE.getLeadingDirect();
+		double bSupport = supportLE.getOrdOrigin();
+		
+		int multiplier = this.getTrendRule().getMultiplier();
+
+		double note1 = 0; // comparison position last point between ceiling and support
+		double note2 = 0; // comparison position last point between ceiling and average
+		double globalNote = 0;
+
+		// Stage 1 : value of the gap between ceiling and support
+		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
+		if (gapCeilingSupport < 0)
+			System.out.println("erreur de calcul");
+
+		// Stage 2 : value of the gap between ceiling and average
+		double gapAverageSupport = (aAverage * xRef + bAverage) - (aSupport * xRef + bSupport);
+		if (gapAverageSupport < 0)
+			System.out.println("erreur de calcul");
+
+		// Stage 3 : comparison position last point between ceiling and support
+		// gapSupportPt > 0 : last point is below support line, note>1
+		// gapCeilingPt<=0 && gapCeilingPt<=gapCeilingSupport : last point is between
+		// ceiling and support 0>note>1
+		// gapCeilingPt>=0 && gapCeilingPt>gapCeilingSupport : last point is below
+		// support note=0
+
+		double gapSupportPt = (aSupport * xRef + bSupport) - yPt;
+		if (gapSupportPt > 0) {
+			note1 = 1 + gapSupportPt / gapCeilingSupport;
+		} else if (gapSupportPt >= 0 && gapSupportPt <= gapCeilingSupport) {
+			note1 = 1 - gapSupportPt / gapCeilingSupport;
+		} else if (gapSupportPt >= 0 && gapSupportPt > gapCeilingSupport) {
+			note1 = 0;
+		} else {
+			System.out.println("calcul de note pas pris en compte bid , support et ceiling");
+		}
+
+		// Stage 4 : comparison position last point between ceiling and average
+		// gapCeilingPt<0 : last point is above ceiling line, note>1
+		// gapCeilingPt>=0 && gapCeilingPt<=gapCeilingaverage : last point is between
+		// ceiling and average 0>note>1
+		// gapCeilingPt>=0 && gapCeilingPt>gapCeilingaverage : last point is below
+		// average note=0
+
+		if (gapSupportPt < 0) {
+			note2 = 1 + gapSupportPt / gapAverageSupport;
+		} else if (gapSupportPt >= 0 && gapSupportPt <= gapAverageSupport) {
+			note2 = 1 - gapSupportPt / gapAverageSupport;
+		} else if (gapSupportPt >= 0 && gapSupportPt > gapAverageSupport) {
+			note2 = 0;
+		} else {
+			System.out.println("calcul de note pas pris en compte bid , support et average");
+		}
+		
+		
+		//stage 6 : calculation global note
+		globalNote = (note1 + note2)*multiplier;
+
 	}
 
 }
