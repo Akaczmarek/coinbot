@@ -13,6 +13,10 @@ public class CurrencyNote implements Runnable {
 	private TrendRule trendRule;
 	private double note;
 
+	public CurrencyNote() {
+		
+	}
+	
 	public CurrencyNote(CurrencyNotes currencyNotes, List<LineEquationTrend> lets, List<LastTrend> lts,
 			PointXY lastPoint, TrendRule trendRule, String typeBidOrAsk) {
 		this.setCurrencyNotes(currencyNotes);
@@ -156,11 +160,13 @@ public class CurrencyNote implements Runnable {
 
 		// Stage 1 : value of the gap between ceiling and support
 		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
+		System.out.println("ecart support et plafond " + gapCeilingSupport);
 		if (gapCeilingSupport < 0)
 			System.out.println("erreur de calcul");
 
 		// Stage 2 : value of the gap between ceiling and average
 		double gapCeilingAverage = (aCeiling * xRef + bCeiling) - (aAverage * xRef + bAverage);
+		System.out.println("ecart moyenne et plafond " + gapCeilingSupport);
 		if (gapCeilingAverage < 0)
 			System.out.println("erreur de calcul");
 
@@ -172,11 +178,12 @@ public class CurrencyNote implements Runnable {
 		// support note=0
 
 		double gapCeilingPt = (aCeiling * xRef + bCeiling) - yPt;
+		System.out.println("ecart point et plafond " + gapCeilingPt);
 		if (gapCeilingPt < 0) {
-			note1 = 1 + gapCeilingPt / gapCeilingSupport;
-		} else if (gapCeilingPt >= 0 && gapCeilingPt <= gapCeilingSupport) {
-			note1 = 1 - gapCeilingPt / gapCeilingSupport;
-		} else if (gapCeilingPt >= 0 && gapCeilingPt > gapCeilingSupport) {
+			note1 = 1 + Math.abs(gapCeilingPt) / gapCeilingSupport;
+		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) <= gapCeilingSupport) {
+			note1 = 1 - Math.abs(gapCeilingPt) / gapCeilingSupport;
+		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) > gapCeilingSupport) {
 			note1 = 0;
 		} else {
 			System.out.println("calcul de note pas pris en compte bid , support et ceiling");
@@ -190,10 +197,10 @@ public class CurrencyNote implements Runnable {
 		// average note=0
 
 		if (gapCeilingPt < 0) {
-			note2 = 1 + gapCeilingPt / gapCeilingAverage;
-		} else if (gapCeilingPt >= 0 && gapCeilingPt <= gapCeilingAverage) {
-			note2 = 1 - gapCeilingPt / gapCeilingAverage;
-		} else if (gapCeilingPt >= 0 && gapCeilingPt > gapCeilingAverage) {
+			note2 = 1 + Math.abs(gapCeilingPt) / gapCeilingAverage;
+		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) <= gapCeilingAverage) {
+			note2 = 1 - Math.abs(gapCeilingPt) / gapCeilingAverage;
+		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) > gapCeilingAverage) {
 			note2 = 0;
 		} else {
 			System.out.println("calcul de note pas pris en compte bid , support et average");
@@ -202,6 +209,11 @@ public class CurrencyNote implements Runnable {
 		
 		//stage 6 : calculation global note
 		globalNote = (note1 + note2)*multiplier;
+		
+		globalNote = (note1 + note2)*multiplier;
+		System.out.println("note 1 : " + note1);
+		System.out.println("note 2 : " + note2);
+		System.out.println("globale note: " + globalNote);
 
 	}
 	
@@ -227,11 +239,13 @@ public class CurrencyNote implements Runnable {
 
 		// Stage 1 : value of the gap between ceiling and support
 		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
+		System.out.println("ecart support et plafond " + gapCeilingSupport);
 		if (gapCeilingSupport < 0)
 			System.out.println("erreur de calcul");
 
 		// Stage 2 : value of the gap between ceiling and average
 		double gapAverageSupport = (aAverage * xRef + bAverage) - (aSupport * xRef + bSupport);
+		System.out.println("ecart support et moyenne " + gapAverageSupport);
 		if (gapAverageSupport < 0)
 			System.out.println("erreur de calcul");
 
@@ -243,11 +257,12 @@ public class CurrencyNote implements Runnable {
 		// support note=0
 
 		double gapSupportPt = (aSupport * xRef + bSupport) - yPt;
+		System.out.println("ecart entre point et support " + gapSupportPt);
 		if (gapSupportPt > 0) {
 			note1 = 1 + Math.abs(gapSupportPt) / gapCeilingSupport;
-		} else if (gapSupportPt >= 0 && Math.abs(gapSupportPt) <= gapCeilingSupport) {
+		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) <= gapCeilingSupport) {
 			note1 = 1 - Math.abs(gapSupportPt) / gapCeilingSupport;
-		} else if (gapSupportPt >= 0 && Math.abs(gapSupportPt) > gapCeilingSupport) {
+		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) > gapCeilingSupport) {
 			note1 = 0;
 		} else {
 			System.out.println("calcul de note pas pris en compte ask , support et ceiling");
@@ -261,24 +276,53 @@ public class CurrencyNote implements Runnable {
 		// average note=0
 
 		if (gapSupportPt > 0) {
-			note1 = 1 + Math.abs(gapSupportPt) / gapAverageSupport;
-		} else if (gapSupportPt >= 0 && Math.abs(gapSupportPt) <= gapAverageSupport) {
-			note1 = 1 - Math.abs(gapSupportPt) / gapCeilingSupport;
-		} else if (gapSupportPt >= 0 && Math.abs(gapSupportPt) > gapAverageSupport) {
-			note1 = 0;
+			note2 = 1 + Math.abs(gapSupportPt) / gapAverageSupport;
+		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) <= gapAverageSupport) {
+			note2 = 1 - Math.abs(gapSupportPt) / gapAverageSupport;
+		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) > gapAverageSupport) {
+			note2 = 0;
 		} else {
-			System.out.println("calcul de note pas pris en compte ask , support et ceiling");
+			System.out.println("calcul de note pas pris en compte ask , support et average");
 		}
 		
 		
 		//stage 6 : calculation global note
 		globalNote = (note1 + note2)*multiplier;
+		
+		System.out.println("note 1 : " + note1);
+		System.out.println("note 2 : " + note2);
+		System.out.println("globale note: " + globalNote);
 
 	}
 
 	
 	public static void main(String[] args) {
-		System.out.println(Math.abs(-12.306));
+		
+		CurrencyNote cn = new CurrencyNote();
+		TrendRuleDiff tr = new TrendRuleDiff();
+		tr.setMultiplier(2);
+		cn.setTrendRule(tr);
+
+		
+		LineEquationTrend averageLE = new LineEquationTrend();
+		LineEquationTrend supportLE = new LineEquationTrend();
+		LineEquationTrend ceilingLE = new LineEquationTrend(); 
+		PointXY lastPoint = new PointXY();
+		
+		averageLE.setLeadingDirect(1.0);
+		averageLE.setOrdOrigin(0.5);
+		supportLE.setLeadingDirect(1.0);
+		supportLE.setOrdOrigin(0.0);
+		ceilingLE.setLeadingDirect(1.0);
+		ceilingLE.setOrdOrigin(2.0);
+		
+		lastPoint.setX(13);
+		lastPoint.setY(19);
+		
+		cn.treatmentNotationBid(averageLE, supportLE, ceilingLE, lastPoint);
+		
+		
+		
 	}
 }
 
