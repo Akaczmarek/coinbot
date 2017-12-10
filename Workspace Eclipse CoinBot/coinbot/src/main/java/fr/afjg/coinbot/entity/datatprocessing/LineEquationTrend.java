@@ -193,12 +193,7 @@ public class LineEquationTrend implements Runnable {
 	
 		
 		
-	}
-
-	
-	
-	
-	
-	
-	
 }
+
+
+
