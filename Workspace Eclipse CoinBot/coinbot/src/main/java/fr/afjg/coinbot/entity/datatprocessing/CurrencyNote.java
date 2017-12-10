@@ -244,13 +244,13 @@ public class CurrencyNote implements Runnable {
 
 		double gapSupportPt = (aSupport * xRef + bSupport) - yPt;
 		if (gapSupportPt > 0) {
-			note1 = 1 + gapSupportPt / gapCeilingSupport;
-		} else if (gapSupportPt >= 0 && gapSupportPt <= gapCeilingSupport) {
-			note1 = 1 - gapSupportPt / gapCeilingSupport;
-		} else if (gapSupportPt >= 0 && gapSupportPt > gapCeilingSupport) {
+			note1 = 1 + Math.abs(gapSupportPt) / gapCeilingSupport;
+		} else if (gapSupportPt >= 0 && Math.abs(gapSupportPt) <= gapCeilingSupport) {
+			note1 = 1 - Math.abs(gapSupportPt) / gapCeilingSupport;
+		} else if (gapSupportPt >= 0 && Math.abs(gapSupportPt) > gapCeilingSupport) {
 			note1 = 0;
 		} else {
-			System.out.println("calcul de note pas pris en compte bid , support et ceiling");
+			System.out.println("calcul de note pas pris en compte ask , support et ceiling");
 		}
 
 		// Stage 4 : comparison position last point between ceiling and average
@@ -260,14 +260,14 @@ public class CurrencyNote implements Runnable {
 		// gapCeilingPt>=0 && gapCeilingPt>gapCeilingaverage : last point is below
 		// average note=0
 
-		if (gapSupportPt < 0) {
-			note2 = 1 + gapSupportPt / gapAverageSupport;
-		} else if (gapSupportPt >= 0 && gapSupportPt <= gapAverageSupport) {
-			note2 = 1 - gapSupportPt / gapAverageSupport;
-		} else if (gapSupportPt >= 0 && gapSupportPt > gapAverageSupport) {
-			note2 = 0;
+		if (gapSupportPt > 0) {
+			note1 = 1 + Math.abs(gapSupportPt) / gapAverageSupport;
+		} else if (gapSupportPt >= 0 && Math.abs(gapSupportPt) <= gapAverageSupport) {
+			note1 = 1 - Math.abs(gapSupportPt) / gapCeilingSupport;
+		} else if (gapSupportPt >= 0 && Math.abs(gapSupportPt) > gapAverageSupport) {
+			note1 = 0;
 		} else {
-			System.out.println("calcul de note pas pris en compte bid , support et average");
+			System.out.println("calcul de note pas pris en compte ask , support et ceiling");
 		}
 		
 		
@@ -276,4 +276,10 @@ public class CurrencyNote implements Runnable {
 
 	}
 
+	
+	public static void main(String[] args) {
+		System.out.println(Math.abs(-12.306));
+	}
 }
+
+
