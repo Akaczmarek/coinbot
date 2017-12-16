@@ -8,20 +8,20 @@ public class CurrencyNote implements Runnable {
 	private String typeBidOrAsk; // "bid" or "ask"
 	private CurrencyNotes currencyNotes;
 	private List<LineEquationTrend> lets;
-	private List<LastTrend> lts;
+	private LastTrend lt;
 	private PointXY lastPoint;
 	private TrendRule trendRule;
 	private double note;
 
 	public CurrencyNote() {
-		
+
 	}
-	
-	public CurrencyNote(CurrencyNotes currencyNotes, List<LineEquationTrend> lets, List<LastTrend> lts,
-			PointXY lastPoint, TrendRule trendRule, String typeBidOrAsk) {
+
+	public CurrencyNote(CurrencyNotes currencyNotes, List<LineEquationTrend> lets, LastTrend lt, PointXY lastPoint,
+			TrendRule trendRule, String typeBidOrAsk) {
 		this.setCurrencyNotes(currencyNotes);
 		this.setLets(lets);
-		this.setLts(lts);
+		this.setLt(lt);
 		this.setLastPoint(lastPoint);
 		this.setTypeBidOrAsk(typeBidOrAsk);
 		this.setTrendRule(trendRule);
@@ -51,12 +51,12 @@ public class CurrencyNote implements Runnable {
 		this.lets = lets;
 	}
 
-	public List<LastTrend> getLts() {
-		return lts;
+	public LastTrend getLt() {
+		return lt;
 	}
 
-	public void setLts(List<LastTrend> lts) {
-		this.lts = lts;
+	public void setLt(LastTrend lt) {
+		this.lt = lt;
 	}
 
 	public PointXY getLastPoint() {
@@ -132,11 +132,18 @@ public class CurrencyNote implements Runnable {
 			System.out.println("problème d'identification bid ou ask");
 
 		}
+		
+		// stage 2 : treatment notation by last trend
+		
 
 		// final Stage : prevent it's finished
 
 		this.getCurrencyNotes().finishActionsChecked();
 	}
+
+	/*
+	 * information to sell
+	 */
 
 	private void treatmentNotationBid(LineEquationTrend averageLE, LineEquationTrend supportLE,
 			LineEquationTrend ceilingLE, PointXY lastPoint) {
@@ -151,7 +158,7 @@ public class CurrencyNote implements Runnable {
 		double bAverage = averageLE.getOrdOrigin();
 		double aSupport = supportLE.getLeadingDirect();
 		double bSupport = supportLE.getOrdOrigin();
-		
+
 		int multiplier = this.getTrendRule().getMultiplier();
 
 		double note1 = 0; // comparison position last point between ceiling and support
@@ -205,18 +212,26 @@ public class CurrencyNote implements Runnable {
 		} else {
 			System.out.println("calcul de note pas pris en compte bid , support et average");
 		}
-		
-		
-		//stage 6 : calculation global note
-		globalNote = (note1 + note2)*multiplier;
-		
-		globalNote = (note1 + note2)*multiplier;
+
+		// stage 6 : calculation global note
+		globalNote = (note1 + note2) * multiplier;
+
+		this.setNote(globalNote);
+
+		globalNote = (note1 + note2) * multiplier;
 		System.out.println("note 1 : " + note1);
 		System.out.println("note 2 : " + note2);
 		System.out.println("globale note: " + globalNote);
 
+		// Stage 7 : save note in sell list of currency notes
+		this.getCurrencyNotes().getCurrencyNotesToSell().add(this);
+
 	}
-	
+
+	/*
+	 * information to buy
+	 */
+
 	private void treatmentNotationAsk(LineEquationTrend averageLE, LineEquationTrend supportLE,
 			LineEquationTrend ceilingLE, PointXY lastPoint) {
 		// it's worth buying when the ask is at near of the support line
@@ -230,7 +245,7 @@ public class CurrencyNote implements Runnable {
 		double bAverage = averageLE.getOrdOrigin();
 		double aSupport = supportLE.getLeadingDirect();
 		double bSupport = supportLE.getOrdOrigin();
-		
+
 		int multiplier = this.getTrendRule().getMultiplier();
 
 		double note1 = 0; // comparison position last point between ceiling and support
@@ -284,46 +299,44 @@ public class CurrencyNote implements Runnable {
 		} else {
 			System.out.println("calcul de note pas pris en compte ask , support et average");
 		}
-		
-		
-		//stage 6 : calculation global note
-		globalNote = (note1 + note2)*multiplier;
-		
+
+		// stage 6 : calculation global note
+		globalNote = (note1 + note2) * multiplier;
+
+		this.setNote(globalNote);
+
 		System.out.println("note 1 : " + note1);
 		System.out.println("note 2 : " + note2);
 		System.out.println("globale note: " + globalNote);
 
+		// Stage 7 : save note in buy list of currency notes
+		this.getCurrencyNotes().getCurrencyNotesToBuy().add(this);
+
 	}
 
-	
 	public static void main(String[] args) {
-		
+
 		CurrencyNote cn = new CurrencyNote();
 		TrendRuleDiff tr = new TrendRuleDiff();
 		tr.setMultiplier(2);
 		cn.setTrendRule(tr);
 
-		
 		LineEquationTrend averageLE = new LineEquationTrend();
 		LineEquationTrend supportLE = new LineEquationTrend();
-		LineEquationTrend ceilingLE = new LineEquationTrend(); 
+		LineEquationTrend ceilingLE = new LineEquationTrend();
 		PointXY lastPoint = new PointXY();
-		
+
 		averageLE.setLeadingDirect(1.0);
 		averageLE.setOrdOrigin(0.5);
 		supportLE.setLeadingDirect(1.0);
 		supportLE.setOrdOrigin(0.0);
 		ceilingLE.setLeadingDirect(1.0);
 		ceilingLE.setOrdOrigin(2.0);
-		
+
 		lastPoint.setX(13);
 		lastPoint.setY(19);
-		
+
 		cn.treatmentNotationBid(averageLE, supportLE, ceilingLE, lastPoint);
-		
-		
-		
+
 	}
 }
-
-

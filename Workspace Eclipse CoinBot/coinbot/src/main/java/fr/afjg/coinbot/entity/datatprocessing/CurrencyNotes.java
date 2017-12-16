@@ -109,19 +109,19 @@ public class CurrencyNotes {
 
 			Iterator<LastTrend> iteLTS = lts.iterator();
 
-			// Stage 4.2 :data storage specific to bid or ask into two list last Trend
-			List<LastTrend> ltsBid = new ArrayList<>();
-			List<LastTrend> ltsAsk = new ArrayList<>();
+			// Stage 4.2 :data storage specific to bid or ask into two last Trend
+			LastTrend ltBid;
+			LastTrend ltAsk;
 
 			while (iteLTS.hasNext()) {
 				LastTrend lt = iteLTS.next();
 
 				// note for type of trend (bid => value to sell or ask=> value to buy)
 				if ("bid".equals(lt.getTypeBidOrAsk())) {
-					ltsBid.add(lt);
+					ltBid= lt;
 
 				} else if ("ask".equals(lt.getTypeBidOrAsk())) {
-					ltsAsk.add(lt);
+					ltAsk=lt;
 				}
 
 			}
@@ -134,6 +134,8 @@ public class CurrencyNotes {
 
 			// stage 6 : information of associate trendrule
 			TrendRule trendRule = tc.getTrendRule();
+			
+
 
 			// send data to currencyNote
 			CurrencyNote crBid = new CurrencyNote(this, letsBid, ltsBid, lastPointBid, trendRule, "bid");

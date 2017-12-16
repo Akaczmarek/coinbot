@@ -35,6 +35,7 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 
 				coordonnees = ligne.split(";");
 				
+				
 				cr.setTimeRecord(new Timestamp((long)(Long.parseLong(coordonnees[0]))));
 				cr.setBidBTC((double)(Integer.parseInt(coordonnees[1])));
 				cr.setAskBTC((double)(Integer.parseInt(coordonnees[2])));

@@ -13,7 +13,7 @@ public class TrendCalculation implements Runnable {
 
 	private List<CurrencyRate> currencyRates;
 	private volatile List<LineEquationTrend> linesEquationsTrends;
-	private volatile List<LastTrend> lastTrends;
+	private volatile List<LastTrend> lastTrends; //composed 2 last trend bid or ask
 	private CurrencyTrend currencyTrend;
 	private TrendRule trendRule;
 	private volatile int countFinishedActions;
