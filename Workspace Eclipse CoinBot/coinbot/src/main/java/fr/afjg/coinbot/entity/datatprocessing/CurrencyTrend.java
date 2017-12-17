@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -16,7 +17,8 @@ public class CurrencyTrend extends Currency implements Runnable {
 	private List<CurrencyRate> currencyRates;
 	private volatile List<TrendCalculation> trendCalculs;
 	private List<TrendRule> trendRules;
-	private double noteCurrency;
+	private double noteCurrencyToBuy;
+	private double noteCurrencyToSell;
 	private Timestamp timeRecord;
 	private CurrencyNotes notes;
 	private volatile int countFinishedActions;
@@ -67,20 +69,28 @@ public class CurrencyTrend extends Currency implements Runnable {
 		this.timeRecord = timeRecord;
 	}
 
-	public CurrencyNotes getNote() {
+	public CurrencyNotes getNotes() {
 		return notes;
 	}
 
-	public void setNote(CurrencyNotes note) {
+	public void setNotes(CurrencyNotes note) {
 		this.notes = note;
 	}
 
-	public double getNoteCurrency() {
-		return noteCurrency;
+	public double getNoteCurrencyToBuy() {
+		return noteCurrencyToBuy;
 	}
 
-	public void setNoteCurrency(double noteCurrency) {
-		this.noteCurrency = noteCurrency;
+	public void setNoteCurrencyToBuy(double noteCurrencyToBuy) {
+		this.noteCurrencyToBuy = noteCurrencyToBuy;
+	}
+
+	public double getNoteCurrencyToSell() {
+		return noteCurrencyToSell;
+	}
+
+	public void setNoteCurrencyToSell(double noteCurrencyToSell) {
+		this.noteCurrencyToSell = noteCurrencyToSell;
 	}
 
 	public int getCountFinishedActions() {
@@ -154,13 +164,11 @@ public class CurrencyTrend extends Currency implements Runnable {
 		while (true) {
 			if (this.getCountFinishedActions() == numberOperation) {
 				this.setCountFinishedActions(0);
+				numberOperation = 0;
 				break;
 			}
 		}
 
-		// stage 5 : transmit the list of trend for the notation
-
-	
 		// test******************************************************************************************
 		System.out.println("********************résulats**************************résultats************** ");
 		for (TrendCalculation trendcalc : this.trendCalculs) {
@@ -186,24 +194,84 @@ public class CurrencyTrend extends Currency implements Runnable {
 		// test**************************************************************************************
 
 		// Stage 5: transmit the list of trend for the notation
-		
-		this.setNote(new CurrencyNotes(this));
+
+		this.setNotes(new CurrencyNotes(this));
+		numberOperation = 1;
+
+		while (true) {
+			if (this.getCountFinishedActions() == numberOperation) {
+				this.setCountFinishedActions(0);
+				numberOperation = 0;
+				break;
+			}
+		}
+
+		// stage 6 : complete data
+
+		// stage 6.1 : calculation global Note to buy and sell
+		this.setNoteCurrencyToBuy(calculNoteCurrencyToBuy());
+		this.setNoteCurrencyToSell(calculNoteCurrencyToSell());
+
+		// Stage 6.2
+		this.setTimeRecord(DateTools.dateConvertTimestamp(DateTools.todayDate()));
+
+		// stage 7 : save in currenciesTrendsBot
+		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
+		cTB.getCurrenciesTrends().add(this);
 
 		// Final stage : prevent end thread
 
-		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
 		cTB.setNbActifThreadsTrend(cTB.getNbActifThreadsTrend() - 1);
 
 		System.out.println("fin traitement *******************************************************");
 	}
 
-	public final static Comparator<CurrencyTrend> CTNoteComparator = new Comparator<CurrencyTrend>() {
+	public double calculNoteCurrencyToBuy() {
+		double note = 0.0;
+		List<CurrencyNote> currencyNotesToBuy = this.getNotes().getCurrencyNotesToBuy();
+		Iterator<CurrencyNote> ite = currencyNotesToBuy.iterator();
+
+		CurrencyNote cn;
+		while (ite.hasNext()) {
+			cn = ite.next();
+			note = note + cn.getNote();
+		}
+
+		return note;
+	}
+
+	public double calculNoteCurrencyToSell() {
+		double note = 0.0;
+		List<CurrencyNote> currencyNotesToSell = this.getNotes().getCurrencyNotesToSell();
+		Iterator<CurrencyNote> ite = currencyNotesToSell.iterator();
+
+		CurrencyNote cn;
+		while (ite.hasNext()) {
+			cn = ite.next();
+			note = note + cn.getNote();
+		}
+
+		return note;
+	}
+
+	public final static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
 
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 			// TODO Auto-generated method stub
-			int noteCT1 = (int) (CT1.getNoteCurrency() * 1000);
-			int noteCT2 = (int) (CT2.getNoteCurrency() * 1000);
+			int noteCT1 = (int) (CT1.getNoteCurrencyToBuy() * 1000);
+			int noteCT2 = (int) (CT2.getNoteCurrencyToBuy() * 1000);
+			return noteCT1 - noteCT2;
+		}
+	};
+
+	public final static Comparator<CurrencyTrend> CTNoteToSellComparator = new Comparator<CurrencyTrend>() {
+
+		@Override
+		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
+			// TODO Auto-generated method stub
+			int noteCT1 = (int) (CT1.getNoteCurrencyToSell() * 1000);
+			int noteCT2 = (int) (CT2.getNoteCurrencyToSell() * 1000);
 			return noteCT1 - noteCT2;
 		}
 	};

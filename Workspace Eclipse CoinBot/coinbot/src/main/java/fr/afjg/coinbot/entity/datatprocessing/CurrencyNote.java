@@ -119,22 +119,25 @@ public class CurrencyNote implements Runnable {
 		}
 
 		// stage 1 : treatment notation last point between three lines
+		// stage 2 : treatment notation with last trend
+		// stage 3 : save in currencyNotes
 
 		switch (this.getTypeBidOrAsk()) {
 
 		case "bid":
 			treatmentNotationBid(averageLE, supportLE, ceilingLE, lastPoint);
+			treatementNotationLastTrend();
+			saveCurrencyNoteToSell();
 			break;
 		case "ask":
 			treatmentNotationAsk(averageLE, supportLE, ceilingLE, lastPoint);
+			treatementNotationLastTrend();
+			saveCurrencyNoteToBuy();
 			break;
 		default:
 			System.out.println("problème d'identification bid ou ask");
 
 		}
-		
-		// stage 2 : treatment notation by last trend
-		
 
 		// final Stage : prevent it's finished
 
@@ -222,9 +225,7 @@ public class CurrencyNote implements Runnable {
 		System.out.println("note 1 : " + note1);
 		System.out.println("note 2 : " + note2);
 		System.out.println("globale note: " + globalNote);
-
-		// Stage 7 : save note in sell list of currency notes
-		this.getCurrencyNotes().getCurrencyNotesToSell().add(this);
+		System.out.println("rule : " + this.getTrendRule().getName());
 
 	}
 
@@ -308,10 +309,51 @@ public class CurrencyNote implements Runnable {
 		System.out.println("note 1 : " + note1);
 		System.out.println("note 2 : " + note2);
 		System.out.println("globale note: " + globalNote);
+		System.out.println("rule : " + this.getTrendRule().getName());
 
-		// Stage 7 : save note in buy list of currency notes
+	}
+
+	/*
+	 * note by last trend
+	 */
+	private void treatementNotationLastTrend() {
+		double note = this.getNote();
+
+		if (this.getLt() != null) {
+
+			double a = this.getLt().getLeadingDirect();
+
+			if ("bid".equals(this.getTypeBidOrAsk()) && a <= 0) {
+
+				note = note * 1;
+
+			} else if ("ask".equals(this.getTypeBidOrAsk()) && a > 0) {
+
+				note = note * 1;
+			} else {
+
+				note = note * 0;
+			}
+
+		}else {
+			note = note * 0;
+		}
+
+		this.setNote(note);
+	}
+
+	/*
+	 * Save in currencyNotes
+	 */
+	private void saveCurrencyNoteToSell() {
+		this.getCurrencyNotes().getCurrencyNotesToSell().add(this);
+	}
+
+	/*
+	 * Save in currencyNotes
+	 */
+	private void saveCurrencyNoteToBuy() {
 		this.getCurrencyNotes().getCurrencyNotesToBuy().add(this);
-
 	}
 
 	public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package fr.afjg.coinbot.entity.datatprocessing;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.util.Collections;
@@ -128,7 +129,8 @@ public class CurrenciesTrendsBot implements Runnable {
 		// test**********************************************************************************
 		int k = 0;
 		while (true) {
-
+			
+			
 			// Stage 2 : transmit trend calculation order at object CurrencyTrend
 
 			while (this.getNbActifThreadsTrend() < this.getNBTHREADSTREND()) {
@@ -185,7 +187,23 @@ public class CurrenciesTrendsBot implements Runnable {
 
 				// stage 6 : prevent new thread start
 				this.setNbActifThreadsTrend(getNbActifThreadsTrend() + 1);
+				
+				
+				
+
+				
+				
 			}
+			
+			for (CurrencyTrend cr : this.getCurrenciesTrends()) {
+				System.out.println("**************************************************************");
+				System.out.println("note to buy : " + cr.getNoteCurrencyToBuy());
+				System.out.println("note to sell: " + cr.getNoteCurrencyToSell());
+				System.out.println("**************************************************************");
+				
+			}
+			
+
 
 			try {
 				Thread.sleep(2000);
@@ -197,15 +215,6 @@ public class CurrenciesTrendsBot implements Runnable {
 
 	}
 
-	/*
-	 * public static void main(String[] args) {
-	 * 
-	 * TrendRulesBot tr = new TrendRulesBot(); tr.loadTrendRulesBotEnum();
-	 * 
-	 * System.out.println(tr.MaxTimeInHours());
-	 * 
-	 * 
-	 * }
-	 */
+
 
 }
