@@ -30,7 +30,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 	public CurrencyTrend(List<CurrencyRate> currencyRates, List<TrendRule> trendRules) {
 		this.setCurrencyRates(currencyRates);
 		this.setTrendRules(trendRules);
-		this.setTrendCalculs(new ArrayList<>());
 
 	}
 
@@ -112,7 +111,8 @@ public class CurrencyTrend extends Currency implements Runnable {
 		// TODO Auto-generated method stub
 
 		// stage 0 : variables initialization
-
+		
+		initialization();
 		List<TrendRule> trList = this.getTrendRules(); // we get the trend rules in list
 		Collections.sort(trList, TrendRule.TRDurationComparator); // we sort the list, according to the duration of the
 																	// trend
@@ -134,7 +134,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 			Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime() < (ts1.getTime() - ts2.getTime());
 
 			transmittedListToCalcul.removeIf(crPredicate);
-
 
 			// stage 3 : transmit the list for calculation
 			if (transmittedListToCalcul.size() > 2) {
@@ -158,7 +157,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 			}
 		}
 
-
 		// Stage 5: transmit the list of trend for the notation
 
 		this.setNotes(new CurrencyNotes(this));
@@ -180,7 +178,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 		// Stage 6.2
 		this.setTimeRecord(DateTools.dateConvertTimestamp(DateTools.todayDate()));
-
 
 		// Final stage : prevent end thread
 		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
@@ -251,8 +248,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 			return result;
 		}
 	};
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 617;
@@ -270,11 +266,15 @@ public class CurrencyTrend extends Currency implements Runnable {
 		if (getClass() != obj.getClass())
 			return false;
 		CurrencyTrend other = (CurrencyTrend) obj;
-		
-		if (currencyRates.get(0).getId()!=other.currencyRates.get(0).getId()) {
+
+		if (currencyRates.get(0).getId() != other.currencyRates.get(0).getId()) {
 			return false;
 		}
 		return true;
+	}
+	
+	private void initialization() {
+		this.setTrendCalculs(new ArrayList<>());
 	}
 
 }

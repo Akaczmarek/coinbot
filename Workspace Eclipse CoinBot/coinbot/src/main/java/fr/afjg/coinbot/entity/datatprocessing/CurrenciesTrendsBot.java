@@ -148,27 +148,24 @@ public class CurrenciesTrendsBot implements Runnable {
 				if (CurrencyBeTreated.getCurrencyRates() == null) {
 					crs = DPService.getCurrencyRateByDurationAndCurrency(tst0, tst1, CurrencyBeTreated);
 					Collections.sort(crs, CurrencyRate.CRTimestampComparator);
-					
+
 					ct = new CurrencyTrend(crs, trs);
 
 					ct.setId(CurrencyBeTreated.getId());
 					ct.setName(CurrencyBeTreated.getName());
-					
-					
+
 					System.out.println("supression de : " + this.getCurrenciesTrends().get(0).getName()
 							+ " avec liste : " + CurrencyBeTreated.getCurrencyRates());
-					
-					
-					
+
 					this.getCurrenciesTrends().remove(0);
 					this.getCurrenciesTrends().add(ct);
 
 					System.out.println("ajout de : " + ct.getName() + " avec liste : "
 							+ ((ct.getCurrencyRates() != null) ? "plein" : "vide"));
-					
 
 				} else {
-					long lastTimeRecord = (CurrencyBeTreated.getCurrencyRates().get(CurrencyBeTreated.getCurrencyRates().size()-1).getTimeRecord().getTime()) + 1;
+					long lastTimeRecord = (CurrencyBeTreated.getCurrencyRates()
+							.get(CurrencyBeTreated.getCurrencyRates().size() - 1).getTimeRecord().getTime()) + 1;
 					Timestamp tst = new Timestamp(lastTimeRecord);
 
 					crs = CurrencyBeTreated.getCurrencyRates();
@@ -177,7 +174,6 @@ public class CurrenciesTrendsBot implements Runnable {
 
 					crs.addAll(listRecover);
 					Collections.sort(crs, CurrencyRate.CRTimestampComparator);
-					
 
 					ct = CurrencyBeTreated;
 					ct.setCurrencyRates(crs);
@@ -208,12 +204,24 @@ public class CurrenciesTrendsBot implements Runnable {
 				System.out.println(cr.getCurrencyRates());
 				System.out.println("note to buy : " + cr.getNoteCurrencyToBuy());
 				System.out.println("note to sell: " + cr.getNoteCurrencyToSell());
+
+				if (cr.getNotes() != null) {
+					for (CurrencyNote cn : cr.getNotes().getCurrencyNotesToBuy()) {
+						System.out.println("note d'achat, pour tendance " + cn.getTrendRule().getName() + " , note :"
+								+ cn.getNote());
+					}
+					for (CurrencyNote cn : cr.getNotes().getCurrencyNotesToSell()) {
+						System.out.println("note de vente, pour tendance " + cn.getTrendRule().getName() + " , note :"
+								+ cn.getNote());
+					}
+				}
+
 				System.out.println("**************************************************************");
 
 			}
 
 			try {
-				Thread.sleep(6000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
