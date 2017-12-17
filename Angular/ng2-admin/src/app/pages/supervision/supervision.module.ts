@@ -8,11 +8,11 @@ import { SupervisionComponent } from './supervision.component';
 import { routing } from './supervision.routing';
 import { PieChart } from './pieChart';
 import { PieChartService } from './pieChart/pieChart.service';
-import { TrafficChart } from 'app/pages/supervision/trafficChart';
-import { TrafficChartService } from 'app/pages/supervision/trafficChart/trafficChart.service';
-import { Tables } from 'app/pages/supervision/tables';
-import { BasicTablesService } from 'app/pages/supervision/tables/components/basicTables/basicTables.service';
-import { StripedTable } from 'app/pages/supervision/tables/components/basicTables/components/stripedTable';
+import { TrafficChart } from './trafficChart';
+import { TrafficChartService } from './trafficChart/trafficChart.service';
+import { Tables } from '../tables';
+import { BasicTablesService } from '../tables/components/basicTables/basicTables.service';
+import { StripedTable } from '../tables/components/basicTables/components/stripedTable';
 import { ContextualTable } from 'app/pages/tables/components/basicTables/components/contextualTable';
 
 
