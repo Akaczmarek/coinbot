@@ -16,6 +16,8 @@ public class CurrencyNotes {
 
 	public CurrencyNotes(CurrencyTrend currencyTrend) {
 		this.setCurrencyTrend(currencyTrend);
+		currencyNotesToSell =  new ArrayList<>();
+		currencyNotesToBuy = new ArrayList<>();
 		listOfOperations();
 
 	}
@@ -78,7 +80,7 @@ public class CurrencyNotes {
 
 			// preparation and recovery informations behind calculation note
 
-			// stage 3 : treatment line Equation
+			// stage 3 : info for treatment line Equation
 
 			// stage 3.1 : recovery the list of equation
 			List<LineEquationTrend> lets = tc.getLinesEquationsTrends();
@@ -102,7 +104,7 @@ public class CurrencyNotes {
 
 			}
 
-			// stage 4 : treatment last trend
+			// stage 4 : info for treatment last trend
 
 			// stage 3.1 : recovery the list of last trend
 			List<LastTrend> lts = tc.getLastTrends();
@@ -110,8 +112,8 @@ public class CurrencyNotes {
 			Iterator<LastTrend> iteLTS = lts.iterator();
 
 			// Stage 4.2 :data storage specific to bid or ask into two last Trend
-			LastTrend ltBid;
-			LastTrend ltAsk;
+			LastTrend ltBid = null;
+			LastTrend ltAsk = null;
 
 			while (iteLTS.hasNext()) {
 				LastTrend lt = iteLTS.next();
@@ -126,7 +128,7 @@ public class CurrencyNotes {
 
 			}
 
-			// stage 5 : treatment on last point (the youngest point)
+			// stage 5 : info for treatment on last point (the youngest point)
 			List<CurrencyRate> listCR = getCurrencyTrend().getCurrencyRates();
 			CurrencyRate lastCR = listCR.get(listCR.size() - 1);
 			PointXY lastPointBid = ParseTools.parseOneCurrencyRateInPointXY(lastCR, "bid");
@@ -138,11 +140,12 @@ public class CurrencyNotes {
 
 
 			// send data to currencyNote
-			CurrencyNote crBid = new CurrencyNote(this, letsBid, ltsBid, lastPointBid, trendRule, "bid");
+			
+			CurrencyNote crBid = new CurrencyNote(this, letsBid, ltBid, lastPointBid, trendRule, "bid");
 			Thread t = new Thread(crBid);
 			t.start();
 
-			CurrencyNote crAsk = new CurrencyNote(this, letsAsk, ltsAsk, lastPointAsk, trendRule, "ask");
+			CurrencyNote crAsk = new CurrencyNote(this, letsAsk, ltAsk, lastPointAsk, trendRule, "ask");
 			Thread t1 = new Thread(crAsk);
 			t1.start();
 
@@ -158,7 +161,14 @@ public class CurrencyNotes {
 				break;
 			}
 		}
-
+		
+		// Stage 8 : save notes in CurrencyTrend
+		
+		this.getCurrencyTrend().setNotes(this);
+		
+		// final Stage : prevent it's finished
+		
+		this.getCurrencyTrend().finishActionsChecked();
 
 	}
 

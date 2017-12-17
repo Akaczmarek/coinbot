@@ -136,7 +136,7 @@ public class LastTrend {
 			this.setValidityTrend(false);
 		}
 		
-		System.out.println("dernière tendance a = " + this.getLeadingDirect() + " , b = " + this.getOrdOrigin() + " , validité :" + this.isValidityTrend());
+		//System.out.println("dernière tendance a = " + this.getLeadingDirect() + " , b = " + this.getOrdOrigin() + " , validité :" + this.isValidityTrend());
 	}
 	
 	

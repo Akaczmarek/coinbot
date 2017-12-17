@@ -108,8 +108,7 @@ public class LineEquationTrend implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		System.out.println("calcul équation lancé-----------------------------------------");
-		
+	
 		//Stage 0 : variable initializing 
 		double pt1X = this.getAveragePt1().getX();
 		double pt1Y = this.getAveragePt1().getY();
@@ -182,11 +181,6 @@ public class LineEquationTrend implements Runnable {
 		//Stage 4 : prevent it's finished
 		
 		this.getTrendCalculation().finishActionsChecked();
-		
-		System.out.println("calcul équation terminé ///////////////////////////////////////////");
-		
-		
-		
 		
 		
 	}

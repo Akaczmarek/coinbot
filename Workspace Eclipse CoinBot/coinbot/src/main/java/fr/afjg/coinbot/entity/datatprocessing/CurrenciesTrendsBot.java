@@ -109,7 +109,6 @@ public class CurrenciesTrendsBot implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 
-
 		// Stage 0 : variables initialization
 
 		// stage 1 : recovers data and loading list currencies
@@ -117,16 +116,10 @@ public class CurrenciesTrendsBot implements Runnable {
 
 		List<CurrencyTrend> cts = this.getCurrenciesTrends();
 
-		// test**********************************************************************************
-		System.out.println("liste des devises chargée-----------------------------------");
 		for (CurrencyTrend currencyTrend : cts) {
-
-			System.out.println("liste :" + currencyTrend.getName() + " " + DateTools.dateFormat("dd/MM/yyyy",
-					DateTools.timestampConvertDate(currencyTrend.getTimeRecord())));
+			System.out.println("nom : " + currencyTrend.getName());
 		}
 
-		// test**********************************************************************************
-		int k = 0;
 		while (true) {
 
 			// Stage 2 : transmit trend calculation order at object CurrencyTrend
@@ -136,15 +129,7 @@ public class CurrenciesTrendsBot implements Runnable {
 				// Stage 3 : find the currency with oldest trend (this is the first element of
 				// list after sort)
 				Collections.sort(cts, CurrencyTrend.CTTimestampComparator);
-				Currency CurrencyBeTreated = cts.get(0);
-
-				// test**********************************************************************************
-				System.out.println("liste des devises triée-----------------------------------");
-				for (CurrencyTrend currencyTrend : cts) {
-					System.out.println("liste :" + currencyTrend.getTimeRecord());
-				}
-
-				// test**********************************************************************************
+				CurrencyTrend CurrencyBeTreated = cts.get(0);
 
 				// stage 4 : definition timestamp for request historic rate currency
 
@@ -153,42 +138,82 @@ public class CurrenciesTrendsBot implements Runnable {
 				Timestamp tst0 = new Timestamp(System.currentTimeMillis() - (duration.getSeconds() * 1000)); // date we
 																												// go
 																												// back
-				// test**********************************************************************************
-				System.out.println("date à laqelle il faut remonter-----------------------------------");
-
-				System.out.println("liste :" + tst0);
-
-				// test**********************************************************************************
-
-				// Stage 5 : transmission information for object currencyTrend and create Object
-				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst0, tst1, CurrencyBeTreated);
-				Collections.sort(crs, CurrencyRate.CRTimestampComparator);
-				
-				
-				for (CurrencyRate currencyRate : crs) {
-					System.out.println(currencyRate.getTimeRecord().getTime());
-				}
-				
-				
-
-				System.out.println("chargement de la devise à traiter-----------------------------------");
-				k++;
-				System.out.println(
-						"lacement traitement" + k + "***********************************************************");
+				// Stage 5 : transmission information for object currencyTrend and update or
+				// create Object
 
 				List<TrendRule> trs = this.getTrendRule().getTrendRules();
+				List<CurrencyRate> crs = null;
+				CurrencyTrend ct = null;
 
-				CurrencyTrend ct = new CurrencyTrend(crs, trs);
+				if (CurrencyBeTreated.getCurrencyRates() == null) {
+					crs = DPService.getCurrencyRateByDurationAndCurrency(tst0, tst1, CurrencyBeTreated);
+					Collections.sort(crs, CurrencyRate.CRTimestampComparator);
+					
+					ct = new CurrencyTrend(crs, trs);
+
+					ct.setId(CurrencyBeTreated.getId());
+					ct.setName(CurrencyBeTreated.getName());
+					
+					
+					System.out.println("supression de : " + this.getCurrenciesTrends().get(0).getName()
+							+ " avec liste : " + CurrencyBeTreated.getCurrencyRates());
+					
+					
+					
+					this.getCurrenciesTrends().remove(0);
+					this.getCurrenciesTrends().add(ct);
+
+					System.out.println("ajout de : " + ct.getName() + " avec liste : "
+							+ ((ct.getCurrencyRates() != null) ? "plein" : "vide"));
+					
+
+				} else {
+					long lastTimeRecord = (CurrencyBeTreated.getCurrencyRates().get(CurrencyBeTreated.getCurrencyRates().size()-1).getTimeRecord().getTime()) + 1;
+					Timestamp tst = new Timestamp(lastTimeRecord);
+
+					crs = CurrencyBeTreated.getCurrencyRates();
+					List<CurrencyRate> listRecover = DPService.getCurrencyRateByDurationAndCurrency(tst, tst1,
+							CurrencyBeTreated);
+
+					crs.addAll(listRecover);
+					Collections.sort(crs, CurrencyRate.CRTimestampComparator);
+					
+
+					ct = CurrencyBeTreated;
+					ct.setCurrencyRates(crs);
+					ct.setTrendRules(trs);
+					System.out.println("-------------------------------------------------------");
+					System.out.println("mise à jour " + CurrencyBeTreated.getName());
+					System.out.println("times record tendance : " + CurrencyBeTreated.getTimeRecord());
+					System.out.println("durée de temps  entre temps 1 " + tst + ", et entre temps 2 : " + tst1);
+					System.out.println(listRecover.size());
+
+					System.out.println("-------------------------------------------------------");
+				}
+				Collections.sort(crs, CurrencyRate.CRTimestampComparator);
 
 				Thread thread = new Thread(ct);
 				thread.start();
 
 				// stage 6 : prevent new thread start
 				this.setNbActifThreadsTrend(getNbActifThreadsTrend() + 1);
+
+			}
+
+			System.out.println(
+					"/////////////////////////////////////////////////////////////////////////////////////////");
+			for (CurrencyTrend cr : this.getCurrenciesTrends()) {
+				System.out.println("**************************************************************");
+				System.out.println("nom : " + cr.getName());
+				System.out.println(cr.getCurrencyRates());
+				System.out.println("note to buy : " + cr.getNoteCurrencyToBuy());
+				System.out.println("note to sell: " + cr.getNoteCurrencyToSell());
+				System.out.println("**************************************************************");
+
 			}
 
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(6000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -196,16 +221,5 @@ public class CurrenciesTrendsBot implements Runnable {
 		}
 
 	}
-
-	/*
-	 * public static void main(String[] args) {
-	 * 
-	 * TrendRulesBot tr = new TrendRulesBot(); tr.loadTrendRulesBotEnum();
-	 * 
-	 * System.out.println(tr.MaxTimeInHours());
-	 * 
-	 * 
-	 * }
-	 */
 
 }

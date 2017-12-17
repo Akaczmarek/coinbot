@@ -119,22 +119,25 @@ public class CurrencyNote implements Runnable {
 		}
 
 		// stage 1 : treatment notation last point between three lines
+		// stage 2 : treatment notation with last trend
+		// stage 3 : save in currencyNotes
 
 		switch (this.getTypeBidOrAsk()) {
 
 		case "bid":
 			treatmentNotationBid(averageLE, supportLE, ceilingLE, lastPoint);
+			treatementNotationLastTrend();
+			saveCurrencyNoteToSell();
 			break;
 		case "ask":
 			treatmentNotationAsk(averageLE, supportLE, ceilingLE, lastPoint);
+			treatementNotationLastTrend();
+			saveCurrencyNoteToBuy();
 			break;
 		default:
 			System.out.println("problème d'identification bid ou ask");
 
 		}
-		
-		// stage 2 : treatment notation by last trend
-		
 
 		// final Stage : prevent it's finished
 
@@ -167,15 +170,17 @@ public class CurrencyNote implements Runnable {
 
 		// Stage 1 : value of the gap between ceiling and support
 		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
-		System.out.println("ecart support et plafond " + gapCeilingSupport);
-		if (gapCeilingSupport < 0)
+
+		if (gapCeilingSupport < 0) {
 			System.out.println("erreur de calcul");
+		}
 
 		// Stage 2 : value of the gap between ceiling and average
 		double gapCeilingAverage = (aCeiling * xRef + bCeiling) - (aAverage * xRef + bAverage);
-		System.out.println("ecart moyenne et plafond " + gapCeilingSupport);
-		if (gapCeilingAverage < 0)
+
+		if (gapCeilingAverage < 0) {
 			System.out.println("erreur de calcul");
+		}
 
 		// Stage 3 : comparison position last point between ceiling and support
 		// gapCeilingPt<0 : last point is above ceiling line, note>1
@@ -185,7 +190,7 @@ public class CurrencyNote implements Runnable {
 		// support note=0
 
 		double gapCeilingPt = (aCeiling * xRef + bCeiling) - yPt;
-		System.out.println("ecart point et plafond " + gapCeilingPt);
+
 		if (gapCeilingPt < 0) {
 			note1 = 1 + Math.abs(gapCeilingPt) / gapCeilingSupport;
 		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) <= gapCeilingSupport) {
@@ -219,12 +224,6 @@ public class CurrencyNote implements Runnable {
 		this.setNote(globalNote);
 
 		globalNote = (note1 + note2) * multiplier;
-		System.out.println("note 1 : " + note1);
-		System.out.println("note 2 : " + note2);
-		System.out.println("globale note: " + globalNote);
-
-		// Stage 7 : save note in sell list of currency notes
-		this.getCurrencyNotes().getCurrencyNotesToSell().add(this);
 
 	}
 
@@ -254,15 +253,17 @@ public class CurrencyNote implements Runnable {
 
 		// Stage 1 : value of the gap between ceiling and support
 		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
-		System.out.println("ecart support et plafond " + gapCeilingSupport);
-		if (gapCeilingSupport < 0)
+
+		if (gapCeilingSupport < 0) {
 			System.out.println("erreur de calcul");
+		}
 
 		// Stage 2 : value of the gap between ceiling and average
 		double gapAverageSupport = (aAverage * xRef + bAverage) - (aSupport * xRef + bSupport);
-		System.out.println("ecart support et moyenne " + gapAverageSupport);
-		if (gapAverageSupport < 0)
+
+		if (gapAverageSupport < 0) {
 			System.out.println("erreur de calcul");
+		}
 
 		// Stage 3 : comparison position last point between ceiling and support
 		// gapSupportPt > 0 : last point is below support line, note>1
@@ -272,7 +273,7 @@ public class CurrencyNote implements Runnable {
 		// support note=0
 
 		double gapSupportPt = (aSupport * xRef + bSupport) - yPt;
-		System.out.println("ecart entre point et support " + gapSupportPt);
+
 		if (gapSupportPt > 0) {
 			note1 = 1 + Math.abs(gapSupportPt) / gapCeilingSupport;
 		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) <= gapCeilingSupport) {
@@ -305,13 +306,49 @@ public class CurrencyNote implements Runnable {
 
 		this.setNote(globalNote);
 
-		System.out.println("note 1 : " + note1);
-		System.out.println("note 2 : " + note2);
-		System.out.println("globale note: " + globalNote);
+	}
 
-		// Stage 7 : save note in buy list of currency notes
+	/*
+	 * note by last trend
+	 */
+	private void treatementNotationLastTrend() {
+		double note = this.getNote();
+
+		if (this.getLt() != null) {
+
+			double a = this.getLt().getLeadingDirect();
+
+			if ("bid".equals(this.getTypeBidOrAsk()) && a <= 0) {
+
+				note = note * 1;
+
+			} else if ("ask".equals(this.getTypeBidOrAsk()) && a > 0) {
+
+				note = note * 1;
+			} else {
+
+				note = note * 0;
+			}
+
+		}else {
+			note = note * 0;
+		}
+
+		this.setNote(note);
+	}
+
+	/*
+	 * Save in currencyNotes
+	 */
+	private void saveCurrencyNoteToSell() {
+		this.getCurrencyNotes().getCurrencyNotesToSell().add(this);
+	}
+
+	/*
+	 * Save in currencyNotes
+	 */
+	private void saveCurrencyNoteToBuy() {
 		this.getCurrencyNotes().getCurrencyNotesToBuy().add(this);
-
 	}
 
 	public static void main(String[] args) {

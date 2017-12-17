@@ -2,7 +2,7 @@ package fr.afjg.coinbot.pojo.database;
 
 public abstract class Currency {
 
-	private int idcurrency;
+	private int id;
 	private String name;
 	private String symbol;
 	private int rank;
@@ -14,12 +14,12 @@ public abstract class Currency {
 
 	}
 
-	public int getIdcurrency() {
-		return idcurrency;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdcurrency(int idcurrency) {
-		this.idcurrency = idcurrency;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
