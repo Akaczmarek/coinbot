@@ -27,6 +27,31 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 617;
+		int result = 1;
+		result = prime * result + ((((Integer)currencyRates.get(0).getId()) == null) ? 0 : ((Integer)currencyRates.get(0).getId()).hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Integer other = (Integer) obj;
+		if ((Integer)currencyRates.get(0).getId() == null) {
+			if ((Integer)currencyRates.get(0).getId() != null)
+				return false;
+		} else if (!((Integer)currencyRates.get(0).getId()).equals(other.(Integer)currencyRates.get(0).getId()))
+			return false;
+		return true;
+	}
+
 	public CurrencyTrend(List<CurrencyRate> currencyRates, List<TrendRule> trendRules) {
 		this.setCurrencyRates(currencyRates);
 		this.setTrendRules(trendRules);

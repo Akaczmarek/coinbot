@@ -1,6 +1,5 @@
 package fr.afjg.coinbot.entity.datatprocessing;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.util.Collections;
@@ -10,7 +9,6 @@ import fr.afjg.coinbot.pojo.database.Currency;
 import fr.afjg.coinbot.pojo.database.CurrencyRate;
 import fr.afjg.coinbot.service.impl.datatprocessing.DataProcessingServiceImpl;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
-import fr.afjg.coinbot.util.DateTools;
 
 public class CurrenciesTrendsBot implements Runnable {
 
@@ -110,7 +108,6 @@ public class CurrenciesTrendsBot implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 
-
 		// Stage 0 : variables initialization
 
 		// stage 1 : recovers data and loading list currencies
@@ -118,19 +115,9 @@ public class CurrenciesTrendsBot implements Runnable {
 
 		List<CurrencyTrend> cts = this.getCurrenciesTrends();
 
-		// test**********************************************************************************
-		System.out.println("liste des devises chargée-----------------------------------");
-		for (CurrencyTrend currencyTrend : cts) {
 
-			System.out.println("liste :" + currencyTrend.getName() + " " + DateTools.dateFormat("dd/MM/yyyy",
-					DateTools.timestampConvertDate(currencyTrend.getTimeRecord())));
-		}
-
-		// test**********************************************************************************
-		int k = 0;
 		while (true) {
-			
-			
+
 			// Stage 2 : transmit trend calculation order at object CurrencyTrend
 
 			while (this.getNbActifThreadsTrend() < this.getNBTHREADSTREND()) {
@@ -140,14 +127,6 @@ public class CurrenciesTrendsBot implements Runnable {
 				Collections.sort(cts, CurrencyTrend.CTTimestampComparator);
 				Currency CurrencyBeTreated = cts.get(0);
 
-				// test**********************************************************************************
-				System.out.println("liste des devises triée-----------------------------------");
-				for (CurrencyTrend currencyTrend : cts) {
-					System.out.println("liste :" + currencyTrend.getTimeRecord());
-				}
-
-				// test**********************************************************************************
-
 				// stage 4 : definition timestamp for request historic rate currency
 
 				Duration duration = Duration.ofHours(this.getDATARANGEINHOURS());
@@ -155,28 +134,11 @@ public class CurrenciesTrendsBot implements Runnable {
 				Timestamp tst0 = new Timestamp(System.currentTimeMillis() - (duration.getSeconds() * 1000)); // date we
 																												// go
 																												// back
-				// test**********************************************************************************
-				System.out.println("date à laqelle il faut remonter-----------------------------------");
-
-				System.out.println("liste :" + tst0);
-
-				// test**********************************************************************************
-
 				// Stage 5 : transmission information for object currencyTrend and create Object
 				List<CurrencyRate> crs = DPService.getCurrencyRateByDurationAndCurrency(tst0, tst1, CurrencyBeTreated);
 				Collections.sort(crs, CurrencyRate.CRTimestampComparator);
-				
-				
-				for (CurrencyRate currencyRate : crs) {
-					System.out.println(currencyRate.getTimeRecord().getTime());
-				}
-				
-				
 
-				System.out.println("chargement de la devise à traiter-----------------------------------");
-				k++;
-				System.out.println(
-						"lacement traitement" + k + "***********************************************************");
+
 
 				List<TrendRule> trs = this.getTrendRule().getTrendRules();
 
@@ -187,23 +149,17 @@ public class CurrenciesTrendsBot implements Runnable {
 
 				// stage 6 : prevent new thread start
 				this.setNbActifThreadsTrend(getNbActifThreadsTrend() + 1);
-				
-				
-				
 
-				
-				
 			}
-			
+
 			for (CurrencyTrend cr : this.getCurrenciesTrends()) {
 				System.out.println("**************************************************************");
+				System.out.println("nom : " + cr.getName());
 				System.out.println("note to buy : " + cr.getNoteCurrencyToBuy());
 				System.out.println("note to sell: " + cr.getNoteCurrencyToSell());
 				System.out.println("**************************************************************");
-				
-			}
-			
 
+			}
 
 			try {
 				Thread.sleep(2000);
@@ -214,7 +170,5 @@ public class CurrenciesTrendsBot implements Runnable {
 		}
 
 	}
-
-
 
 }

@@ -20,8 +20,12 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		
 		
 		// test sur courbe***************************************************************
+		
+		Currency cr1 = currency;
+		
+		
 		List<CurrencyRate> list = new ArrayList<>();
-		BufferedReader buff = new OuvertureFichierTest().contenuFichiercsvTest();
+		BufferedReader buff = new OuvertureFichierTest().contenuFichiercsvTest(cr1.getName());
 		String ligne;
 		String[] coordonnees;
 		CurrencyRate cr;
@@ -30,7 +34,6 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		try {
 			while ((ligne=buff.readLine())!=null){
 				
-				System.out.println("chargement : " + ++i);
 				cr = new CurrencyRate();
 
 				coordonnees = ligne.split(";");
@@ -98,21 +101,34 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		
 		CurrencyTrend ct1 = new CurrencyTrend();
 		ct1.setIdcurrency(1);
-		ct1.setName("test1-bitcoin");
+		ct1.setName("test1");
 		ct1.setSymbol("btc");
-		ct1.setTimeRecord(new Timestamp(1510685217229L));
-		System.out.println(ct1.getTimeRecord());
+		ct1.setTimeRecord(new Timestamp(System.currentTimeMillis()));
+
 		
 		
 		CurrencyTrend ct2 = new CurrencyTrend();
+		ct2.setIdcurrency(3);
+		ct2.setName("test3");
+		ct2.setSymbol("ltc1");
+		ct2.setTimeRecord(new Timestamp(System.currentTimeMillis()));
+
+		CurrencyTrend ct3 = new CurrencyTrend();
 		ct2.setIdcurrency(2);
-		ct2.setName("test2-litecoin");
-		ct2.setSymbol("ltc");
-		ct2.setTimeRecord(new Timestamp(1511485217229L));
-		System.out.println(ct2.getTimeRecord());
+		ct2.setName("test2");
+		ct2.setSymbol("ltc2");
+		ct2.setTimeRecord(new Timestamp(System.currentTimeMillis()));
+		
+		CurrencyTrend ct4 = new CurrencyTrend();
+		ct2.setIdcurrency(4);
+		ct2.setName("test4");
+		ct2.setSymbol("ltc3");
+		ct2.setTimeRecord(new Timestamp(System.currentTimeMillis()));
 		
 		list.add(ct1);
 		list.add(ct2);
+		list.add(ct3);
+		list.add(ct4);
 		
 		
 		// end test***************************************************
