@@ -27,36 +27,11 @@ public class CurrencyTrend extends Currency implements Runnable {
 
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 617;
-		int result = 1;
-		result = prime * result + ((((Integer)currencyRates.get(0).getId()) == null) ? 0 : ((Integer)currencyRates.get(0).getId()).hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Integer other = (Integer) obj;
-		if ((Integer)currencyRates.get(0).getId() == null) {
-			if ((Integer)currencyRates.get(0).getId() != null)
-				return false;
-		} else if (!((Integer)currencyRates.get(0).getId()).equals(other.(Integer)currencyRates.get(0).getId()))
-			return false;
-		return true;
-	}
-
 	public CurrencyTrend(List<CurrencyRate> currencyRates, List<TrendRule> trendRules) {
 		this.setCurrencyRates(currencyRates);
 		this.setTrendRules(trendRules);
 		this.setTrendCalculs(new ArrayList<>());
-		System.out.println("traitement lancé-----------------------------------");
+
 	}
 
 	// getters &
@@ -135,7 +110,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		System.out.println("calcul lancé  --------------------------------------------");
+
 		// stage 0 : variables initialization
 
 		List<TrendRule> trList = this.getTrendRules(); // we get the trend rules in list
@@ -143,13 +118,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 																	// trend
 		int numberOperation = 0;
 
-		// test*****************************************************************************
-		System.out.println("taille tableau currencuyrate : " + this.getCurrencyRates().size()
-				+ "-----------------------------------");
-
-		int i = 0;
-
-		// test*****************************************************************************
 
 		// Stage 1 : buckle to make all the trends
 		for (TrendRule trendRule : trList) {
@@ -166,11 +134,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 			Predicate<CurrencyRate> crPredicate = p -> p.getTimeRecord().getTime() < (ts1.getTime() - ts2.getTime());
 
 			transmittedListToCalcul.removeIf(crPredicate);
-			// test*****************************************************************************
-			i++;
-			System.out.println("tendance " + i + " taille tableau : " + transmittedListToCalcul.size()
-					+ "--------------------------------------------");
-			// test*****************************************************************************
+
 
 			// stage 3 : transmit the list for calculation
 			if (transmittedListToCalcul.size() > 2) {
@@ -194,29 +158,6 @@ public class CurrencyTrend extends Currency implements Runnable {
 			}
 		}
 
-		// test******************************************************************************************
-		System.out.println("********************résulats**************************résultats************** ");
-		for (TrendCalculation trendcalc : this.trendCalculs) {
-
-			for (LineEquationTrend lET : trendcalc.getLinesEquationsTrends()) {
-				System.out.println("Selon règle : " + trendcalc.getTrendRule().getName() + " et tendance de type : "
-						+ lET.getTypeBidOrAsk() + " type de ligne : " + lET.getTypeLine() + " -- a = "
-						+ lET.getLeadingDirect() + " , b = " + lET.getOrdOrigin());
-
-			}
-			if (trendcalc.getLastTrends() != null) {
-				for (LastTrend lt : trendcalc.getLastTrends()) {
-					System.out.println(
-							"dernière tendance sur courbe " + lt.getTypeBidOrAsk() + " : a = " + lt.getLeadingDirect()
-									+ " , b = " + lt.getOrdOrigin() + " , validity :" + lt.isValidityTrend());
-				}
-
-			}
-		}
-
-		System.out.println("fin résultats*****************************fin résultats***********************");
-
-		// test**************************************************************************************
 
 		// Stage 5: transmit the list of trend for the notation
 
@@ -240,15 +181,11 @@ public class CurrencyTrend extends Currency implements Runnable {
 		// Stage 6.2
 		this.setTimeRecord(DateTools.dateConvertTimestamp(DateTools.todayDate()));
 
-		// stage 7 : save in currenciesTrendsBot
-		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
-		cTB.getCurrenciesTrends().add(this);
 
 		// Final stage : prevent end thread
-
+		CurrenciesTrendsBot cTB = CurrenciesTrendsBot.getInstance();
 		cTB.setNbActifThreadsTrend(cTB.getNbActifThreadsTrend() - 1);
 
-		System.out.println("fin traitement *******************************************************");
 	}
 
 	public double calculNoteCurrencyToBuy() {
@@ -306,6 +243,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 			// TODO Auto-generated method stub
+
 			long CTTimestamp1 = CT1.getTimeRecord().getTime() / 1000;
 			long CTTimestamp2 = CT2.getTimeRecord().getTime() / 1000;
 
@@ -313,5 +251,30 @@ public class CurrencyTrend extends Currency implements Runnable {
 			return result;
 		}
 	};
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 617;
+		int result = 1;
+		result = prime * result + currencyRates.get(0).getId();
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CurrencyTrend other = (CurrencyTrend) obj;
+		
+		if (currencyRates.get(0).getId()!=other.currencyRates.get(0).getId()) {
+			return false;
+		}
+		return true;
+	}
 
 }

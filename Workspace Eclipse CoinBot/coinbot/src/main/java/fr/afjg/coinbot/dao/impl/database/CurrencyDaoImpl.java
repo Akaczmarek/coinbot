@@ -43,7 +43,10 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 				cr.setBidBTC((double)(Integer.parseInt(coordonnees[1])));
 				cr.setAskBTC((double)(Integer.parseInt(coordonnees[2])));
 				
+				if (cr.getTimeRecord().getTime()>tst0.getTime() &&  cr.getTimeRecord().getTime()<tst1.getTime()) {
 				list.add(cr);
+				}
+				
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -100,7 +103,7 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		List<CurrencyTrend> list = new ArrayList<>();
 		
 		CurrencyTrend ct1 = new CurrencyTrend();
-		ct1.setIdcurrency(1);
+		ct1.setId(1);
 		ct1.setName("test1");
 		ct1.setSymbol("btc");
 		ct1.setTimeRecord(new Timestamp(System.currentTimeMillis()));
@@ -108,22 +111,22 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		
 		
 		CurrencyTrend ct2 = new CurrencyTrend();
-		ct2.setIdcurrency(3);
+		ct2.setId(3);
 		ct2.setName("test3");
 		ct2.setSymbol("ltc1");
-		ct2.setTimeRecord(new Timestamp(System.currentTimeMillis()));
+		ct2.setTimeRecord(new Timestamp(System.currentTimeMillis()+1));
 
 		CurrencyTrend ct3 = new CurrencyTrend();
-		ct2.setIdcurrency(2);
-		ct2.setName("test2");
-		ct2.setSymbol("ltc2");
-		ct2.setTimeRecord(new Timestamp(System.currentTimeMillis()));
+		ct3.setId(2);
+		ct3.setName("test2");
+		ct3.setSymbol("ltc2");
+		ct3.setTimeRecord(new Timestamp(System.currentTimeMillis()+133));
 		
 		CurrencyTrend ct4 = new CurrencyTrend();
-		ct2.setIdcurrency(4);
-		ct2.setName("test4");
-		ct2.setSymbol("ltc3");
-		ct2.setTimeRecord(new Timestamp(System.currentTimeMillis()));
+		ct4.setId(4);
+		ct4.setName("test4");
+		ct4.setSymbol("ltc3");
+		ct4.setTimeRecord(new Timestamp(System.currentTimeMillis()+20));
 		
 		list.add(ct1);
 		list.add(ct2);
@@ -137,6 +140,19 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		
 		return list;
 	}
+	
+public static void main(String[] args) {
+	Timestamp tst1 = new Timestamp(System.currentTimeMillis()-10);
+	Timestamp tst2 = new Timestamp(System.currentTimeMillis());
+	
+	
+	
+	if (tst1.getTime()<tst2.getTime()) {
+		System.out.println("vrai");
+	}else {
+		System.out.println("faux");
+	}
+}
 	
 
 }

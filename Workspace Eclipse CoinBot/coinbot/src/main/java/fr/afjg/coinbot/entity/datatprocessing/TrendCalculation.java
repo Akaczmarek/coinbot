@@ -100,7 +100,6 @@ public class TrendCalculation implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 
-		System.out.println("trend calculation lancé-----------------------------------------");
 
 		// Stage 0 : Definition of treatment procedure
 
@@ -154,29 +153,23 @@ public class TrendCalculation implements Runnable {
 
 					if (ptn1 != null) {
 						
-						System.out.println("ptnY : " + ptn.getY() + " , ptn1Y : " + ptn1.getY() + " , soustract : "
-								+ (ptn1.getY() - ptn.getY()));
 
 						if ((ptn1.getY() - ptn.getY()) > 0 && (checkTrend == null || "up".equals(checkTrend))) {
 							checkTrend = "up";
 
-							System.out.println("test1");
 							ptn1 = ptn;
 
 						} else if ((ptn1.getY() - ptn.getY()) < 0
 								&& (checkTrend == null || "down".equals(checkTrend))) {
 							checkTrend = "down";
-							System.out.println("test2");
 							ptn1 = ptn;
 
 						} else if ((ptn1.getY() - ptn.getY()) == 0) {
 
 							// incompatible value, redo a ride
-							System.out.println("test3");
 							ptn1 = ptn;
 						} else {
 
-							System.out.println("test4");
 							LastTrend lt = new LastTrend(this, ptn0, ptn1, checkTrend,typeBidOrAsk[i]);
 							// leave the loop
 							break;
@@ -208,7 +201,6 @@ public class TrendCalculation implements Runnable {
 		// final Stage : prevent it's finished
 
 		this.getCurrencyTrend().finishActionsChecked();
-		System.out.println("TREND CALCULATION terminé ///////////////////////////////////////////");
 
 	}
 }

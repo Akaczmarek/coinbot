@@ -170,15 +170,17 @@ public class CurrencyNote implements Runnable {
 
 		// Stage 1 : value of the gap between ceiling and support
 		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
-		System.out.println("ecart support et plafond " + gapCeilingSupport);
-		if (gapCeilingSupport < 0)
+
+		if (gapCeilingSupport < 0) {
 			System.out.println("erreur de calcul");
+		}
 
 		// Stage 2 : value of the gap between ceiling and average
 		double gapCeilingAverage = (aCeiling * xRef + bCeiling) - (aAverage * xRef + bAverage);
-		System.out.println("ecart moyenne et plafond " + gapCeilingSupport);
-		if (gapCeilingAverage < 0)
+
+		if (gapCeilingAverage < 0) {
 			System.out.println("erreur de calcul");
+		}
 
 		// Stage 3 : comparison position last point between ceiling and support
 		// gapCeilingPt<0 : last point is above ceiling line, note>1
@@ -188,7 +190,7 @@ public class CurrencyNote implements Runnable {
 		// support note=0
 
 		double gapCeilingPt = (aCeiling * xRef + bCeiling) - yPt;
-		System.out.println("ecart point et plafond " + gapCeilingPt);
+
 		if (gapCeilingPt < 0) {
 			note1 = 1 + Math.abs(gapCeilingPt) / gapCeilingSupport;
 		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) <= gapCeilingSupport) {
@@ -222,10 +224,6 @@ public class CurrencyNote implements Runnable {
 		this.setNote(globalNote);
 
 		globalNote = (note1 + note2) * multiplier;
-		System.out.println("note 1 : " + note1);
-		System.out.println("note 2 : " + note2);
-		System.out.println("globale note: " + globalNote);
-		System.out.println("rule : " + this.getTrendRule().getName());
 
 	}
 
@@ -255,15 +253,17 @@ public class CurrencyNote implements Runnable {
 
 		// Stage 1 : value of the gap between ceiling and support
 		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
-		System.out.println("ecart support et plafond " + gapCeilingSupport);
-		if (gapCeilingSupport < 0)
+
+		if (gapCeilingSupport < 0) {
 			System.out.println("erreur de calcul");
+		}
 
 		// Stage 2 : value of the gap between ceiling and average
 		double gapAverageSupport = (aAverage * xRef + bAverage) - (aSupport * xRef + bSupport);
-		System.out.println("ecart support et moyenne " + gapAverageSupport);
-		if (gapAverageSupport < 0)
+
+		if (gapAverageSupport < 0) {
 			System.out.println("erreur de calcul");
+		}
 
 		// Stage 3 : comparison position last point between ceiling and support
 		// gapSupportPt > 0 : last point is below support line, note>1
@@ -273,7 +273,7 @@ public class CurrencyNote implements Runnable {
 		// support note=0
 
 		double gapSupportPt = (aSupport * xRef + bSupport) - yPt;
-		System.out.println("ecart entre point et support " + gapSupportPt);
+
 		if (gapSupportPt > 0) {
 			note1 = 1 + Math.abs(gapSupportPt) / gapCeilingSupport;
 		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) <= gapCeilingSupport) {
@@ -305,11 +305,6 @@ public class CurrencyNote implements Runnable {
 		globalNote = (note1 + note2) * multiplier;
 
 		this.setNote(globalNote);
-
-		System.out.println("note 1 : " + note1);
-		System.out.println("note 2 : " + note2);
-		System.out.println("globale note: " + globalNote);
-		System.out.println("rule : " + this.getTrendRule().getName());
 
 	}
 
