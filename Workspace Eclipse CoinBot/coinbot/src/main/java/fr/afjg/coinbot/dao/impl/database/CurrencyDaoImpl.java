@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import fr.afjg.coinbot.dao.intf.database.CurrencyDaoIntf;
 import fr.afjg.coinbot.entity.datatprocessing.CurrencyTrend;
@@ -24,7 +25,7 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		Currency cr1 = currency;
 		
 		
-		List<CurrencyRate> list = new ArrayList<>();
+		List<CurrencyRate> list = new Vector<>();
 		BufferedReader buff = new OuvertureFichierTest().contenuFichiercsvTest(cr1.getName());
 		String ligne;
 		String[] coordonnees;

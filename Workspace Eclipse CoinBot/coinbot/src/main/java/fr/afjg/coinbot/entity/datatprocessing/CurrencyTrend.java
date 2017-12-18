@@ -206,7 +206,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 		CurrencyNote cn;
 		while (ite.hasNext()) {
 			cn = ite.next();
-			note = note + cn.getNote();
+			note = note + cn.getNote(); //ERREUR R2GULI7RE JAVA null pointer
 		}
 
 		return note;
@@ -247,12 +247,16 @@ public class CurrencyTrend extends Currency implements Runnable {
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 			// TODO Auto-generated method stub
+			if (CT1 != null && CT2 != null) {
+				long CTTimestamp1 = CT1.getTimeRecord().getTime() / 1000;
+				long CTTimestamp2 = CT2.getTimeRecord().getTime() / 1000;
 
-			long CTTimestamp1 = CT1.getTimeRecord().getTime() / 1000;
-			long CTTimestamp2 = CT2.getTimeRecord().getTime() / 1000;
+				int result = ((int) (CTTimestamp1 - CTTimestamp2));
+				return result;
+			} else {
+				return 1;
+			}
 
-			int result = ((int) (CTTimestamp1 - CTTimestamp2));
-			return result;
 		}
 	};
 

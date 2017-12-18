@@ -105,6 +105,7 @@ public class CurrenciesTrendsBot implements Runnable {
 	 */
 	
 	public synchronized List<CurrencyTrend> getAllCurrenciesTrendsInOrderToBuy() {
+		
 		List<CurrencyTrend> listInOrderToBuy = this.getCurrenciesTrends();
 		Collections.sort(listInOrderToBuy,CurrencyTrend.CTNoteToBuyComparator);
 		return listInOrderToBuy;
@@ -211,6 +212,9 @@ public class CurrenciesTrendsBot implements Runnable {
 
 				// stage 6 : prevent new thread start
 				this.setNbActifThreadsTrend(getNbActifThreadsTrend() + 1);
+				
+				
+				
 
 			}
 

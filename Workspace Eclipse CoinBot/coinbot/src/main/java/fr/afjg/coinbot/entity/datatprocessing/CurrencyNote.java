@@ -242,7 +242,7 @@ public class CurrencyNote implements Runnable {
 		double bCeiling = ceilingLE.getOrdOrigin();
 		double aAverage = averageLE.getLeadingDirect();
 		double bAverage = averageLE.getOrdOrigin();
-		double aSupport = supportLE.getLeadingDirect();
+		double aSupport = supportLE.getLeadingDirect(); //erreur java null pointer exception réguliere
 		double bSupport = supportLE.getOrdOrigin();
 
 		int multiplier = this.getTrendRule().getMultiplier();
