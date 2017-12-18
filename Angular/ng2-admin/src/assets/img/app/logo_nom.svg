@@ -17,7 +17,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="logo_nom.svg"
+   sodipodi:docname="logo_nom_blanc.svg"
    inkscape:label="Fond_exemple">
   <defs
      id="defs2">
@@ -39,7 +39,7 @@
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient929"
+       xlink:href="#linearGradient991"
        id="linearGradient1078"
        gradientUnits="userSpaceOnUse"
        x1="127.51144"
@@ -48,7 +48,7 @@
        y2="145.83315" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient929"
+       xlink:href="#linearGradient991"
        id="linearGradient1080"
        gradientUnits="userSpaceOnUse"
        x1="127.51144"
@@ -100,14 +100,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="-88.78044"
-     inkscape:cy="-142.77153"
+     inkscape:cx="5.1045116"
+     inkscape:cy="-86.202983"
      inkscape:document-units="mm"
      inkscape:current-layer="svg8"
      showgrid="true"
-     inkscape:window-width="2400"
-     inkscape:window-height="1271"
-     inkscape:window-x="2391"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:snap-to-guides="false"
@@ -159,13 +159,13 @@
          id="tspan1206"
          sodipodi:role="line"><tspan
    id="tspan1208"
-   style="fill:#000000;fill-opacity:1">OIN</tspan>BOT</tspan></text>
+   style="fill:#ffffff;fill-opacity:1">OIN</tspan>BOT</tspan></text>
     <g
        transform="translate(118.03419,76.783769)"
        inkscape:label="tete_bot3"
        id="g1183">
       <path
-         style="display:inline;opacity:1;fill:#040000;fill-opacity:1;stroke:none;stroke-width:0.3206307;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0;paint-order:stroke markers fill"
+         style="display:inline;opacity:1;fill:#fffbfb;fill-opacity:1;stroke:none;stroke-width:0.3206307;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0;paint-order:stroke markers fill"
          d="m -20.851486,-63.113223 h 2.90835 v 2.645833 h -2.883545 a 6.982244,7.690949 0 0 0 6.861598,6.297289 6.982244,7.690949 0 0 0 5.7841444,-3.386872 h -4.4705304 v -8.73125 h 4.3852624 a 6.982244,7.690949 0 0 0 -5.6988764,-3.263884 6.982244,7.690949 0 0 0 -6.886403,6.438884 z"
          id="path3710-8-5"
          inkscape:connector-curvature="0"
