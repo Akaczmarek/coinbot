@@ -111,13 +111,12 @@ public class CurrencyTrend extends Currency implements Runnable {
 		// TODO Auto-generated method stub
 
 		// stage 0 : variables initialization
-		
+
 		initialization();
 		List<TrendRule> trList = this.getTrendRules(); // we get the trend rules in list
 		Collections.sort(trList, TrendRule.TRDurationComparator); // we sort the list, according to the duration of the
 																	// trend
 		int numberOperation = 0;
-
 
 		// Stage 1 : buckle to make all the trends
 		for (TrendRule trendRule : trList) {
@@ -213,29 +212,37 @@ public class CurrencyTrend extends Currency implements Runnable {
 		return note;
 	}
 
-	public final static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
+	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
 
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 			// TODO Auto-generated method stub
-			int noteCT1 = (int) (CT1.getNoteCurrencyToBuy() * 1000);
-			int noteCT2 = (int) (CT2.getNoteCurrencyToBuy() * 1000);
-			return noteCT1 - noteCT2;
+			if (CT1 != null && CT2 != null) {
+				int noteCT1 = (int) (CT1.getNoteCurrencyToBuy() * 1000);
+				int noteCT2 = (int) (CT2.getNoteCurrencyToBuy() * 1000);
+				return noteCT2 - noteCT1;
+			} else {
+				return 1;
+			}
 		}
 	};
 
-	public final static Comparator<CurrencyTrend> CTNoteToSellComparator = new Comparator<CurrencyTrend>() {
+	public volatile static Comparator<CurrencyTrend> CTNoteToSellComparator = new Comparator<CurrencyTrend>() {
 
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 			// TODO Auto-generated method stub
-			int noteCT1 = (int) (CT1.getNoteCurrencyToSell() * 1000);
-			int noteCT2 = (int) (CT2.getNoteCurrencyToSell() * 1000);
-			return noteCT1 - noteCT2;
+			if (CT1 != null && CT2 != null) {
+				int noteCT1 = (int) (CT1.getNoteCurrencyToSell() * 1000);
+				int noteCT2 = (int) (CT2.getNoteCurrencyToSell() * 1000);
+				return noteCT2 - noteCT1;
+			} else {
+				return 1;
+			}
 		}
 	};
 
-	public final static Comparator<CurrencyTrend> CTTimestampComparator = new Comparator<CurrencyTrend>() {
+	public volatile static Comparator<CurrencyTrend> CTTimestampComparator = new Comparator<CurrencyTrend>() {
 
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
@@ -272,7 +279,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 		}
 		return true;
 	}
-	
+
 	private void initialization() {
 		this.setTrendCalculs(new ArrayList<>());
 	}
