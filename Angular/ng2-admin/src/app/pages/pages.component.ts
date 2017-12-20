@@ -18,7 +18,7 @@ import { PAGES_MENU } from './pages.menu';
     <footer class="al-footer clearfix">
       <div class="al-footer-right" translate>{{'general.created_with'}} <i class="ion-heart"></i></div>
       <div class="al-footer-main clearfix">
-        <div class="al-copy">&copy; <a href="http://akveo.com" translate>{{'coinbot'}}</a> 2017</div>
+        <div class="al-copy">&copy;{{'Coinbot'}} 2017</div>
    
       </div>
     </footer>

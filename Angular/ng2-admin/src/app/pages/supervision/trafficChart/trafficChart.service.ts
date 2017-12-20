@@ -15,9 +15,7 @@ export class TrafficChartService {
 
   getSumValues() {
     for(let entry of this.superServ.mock){
-
       this.sum+=entry;
-      console.log(this.sum);
 
     }
   }
