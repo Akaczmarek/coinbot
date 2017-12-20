@@ -1,5 +1,6 @@
-package fr.afjg.coinbot.calculation;
+package fr.afjg.coinbot.trend2;
 
+import fr.afjg.coinbot.calculation.CurrenciesTrendsBot;
 import fr.afjg.coinbot.entity.CurrencyTrend;
 
 public class test {
@@ -28,6 +29,12 @@ public class test {
 		ct3.setNoteToSell(3.0);
 		
 		
+		CurrencyTrend ct4 = new CurrencyTrend();
+		ct4.setId(3);
+		ct4.setName("alt4");
+		ct4.setNoteToBuy(11.0);
+		ct4.setNoteToSell(3.0);
+		
 		ctb.getCurrenciesTrends().add(ct3);
 		ctb.getCurrenciesTrends().add(ct1);
 		ctb.getCurrenciesTrends().add(ct2);
@@ -41,15 +48,35 @@ public class test {
 		}
 		
 		try {
-			Thread.sleep(100);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		Affichage1 af = new Affichage1();
-		Thread t = new Thread(af);
-		t.start();
+		Affichage1 af1 = new Affichage1("thread1");
+		Thread t1 = new Thread(af1);
+		t1.start();
+		
+		Affichage1 af2 = new Affichage1("thread2");
+		Thread t2 = new Thread(af2);
+		t2.start();
+		
+		
+		Affichage1 af3 = new Affichage1("thread3");
+		Thread t3 = new Thread(af3);
+		t3.start();
+		
+		
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		ctb.getCurrenciesTrends().add(ct4);
 		
 		
 	}
