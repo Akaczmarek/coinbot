@@ -1,0 +1,1 @@
+export * from './stripped-user-actions.component';

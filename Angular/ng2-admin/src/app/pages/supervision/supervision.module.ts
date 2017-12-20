@@ -14,6 +14,7 @@ import { Tables } from '../tables';
 import { BasicTablesService } from '../tables/components/basicTables/basicTables.service';
 import { StripedTable } from '../tables/components/basicTables/components/stripedTable';
 import { ContextualTable } from 'app/pages/tables/components/basicTables/components/contextualTable';
+import { StrippedUserActions} from '../tables/components/basicTables/components/stripped-user-actions';
 
 import{ SupervisionService} from '../../services/supervision.service'
 
@@ -31,6 +32,7 @@ import{ SupervisionService} from '../../services/supervision.service'
     Tables,
     StripedTable,
     ContextualTable,
+    StrippedUserActions,
     SupervisionComponent
   ],
 

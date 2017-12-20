@@ -14,12 +14,12 @@
     <tbody>
     <tr *ngFor="let item of smartTableData">
       <td class="table-id">{{ item.id }}</td>
-      <td>{{ item.firstName }}</td>
-      <td>{{ item.lastName }}</td>
-      <td>{{ item.username }}</td>
-      <td><a class="email-link" href="mailto:{{ item.email }}">{{ item.email }}</a></td>
-      <td>{{ item.age }}</td>
-      <td>{{ item.age }}</td>
+      <td>{{ item.typeOrdre }}</td>
+      <td>{{ item.cryptomonnaie }}</td>
+      <td>{{ item.volume }}</td>
+      <td>{{ item.date | date: 'dd/MM/yyyy'}}</td>
+      <td>{{ item.etat }}</td>
+      <td>{{ item.valeurGain }}</td>
     </tr>
     </tbody>
   </table>

@@ -1,0 +1,22 @@
+<div class="vertical-scroll">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Type d’action  </th>
+        <th>Commentaire</th>
+        <th>Date</th>
+        <th>Etat</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of smartTableData">
+        <td>{{ item.typeAction }}</td>
+        <td>{{ item.commentaire }}</td>
+        <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ item.etat}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  
