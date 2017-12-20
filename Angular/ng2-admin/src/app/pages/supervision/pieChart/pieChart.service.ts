@@ -12,14 +12,12 @@ export class PieChartService {
     return [
       {
         color: pieColor,
-        description: 'Achats',
-        stats: '57,820 €',
-        icon: 'money',
+        description: 'Gain BTC',
+        stats: '57,820 €'
       }, {
         color: pieColor,
-        description: 'Ventes',
-        stats: '89,745 €',
-        icon: 'money',
+        description: 'Gain Euros',
+        stats: '89,745 €'
       }, 
     ];
   }
