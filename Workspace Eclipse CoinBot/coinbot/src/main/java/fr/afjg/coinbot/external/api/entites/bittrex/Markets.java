@@ -3,25 +3,25 @@ package fr.afjg.coinbot.external.api.entites.bittrex;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Market {
+public class Markets {
 
 	private boolean success;
 	private String message;
-	private List<Result> listResult;
+	private List<Results> listResult;
 
-	public Market() {
+	public Markets() {
 		this(false);
 	}
 	
-	public Market(boolean success) {
+	public Markets(boolean success) {
 		this(success, "");
 	}
 	
-	public Market(boolean success, String message) {
+	public Markets(boolean success, String message) {
 		this(success, message, null);
 	}
 	
-	public Market(boolean success, String message, List<Result> listResult) {
+	public Markets(boolean success, String message, List<Results> listResult) {
 		super();
 		this.setSuccess(success);
 		this.setMessage(message);
@@ -44,7 +44,7 @@ public class Market {
 		this.message = message;
 	}
 	
-	public void addResult(Result result) {
+	public void addResult(Results result) {
 		if(getListResult() == null) {
 			listResult = new ArrayList<>();
 			listResult.add(result);
@@ -53,11 +53,11 @@ public class Market {
 		}
 	}
 
-	public List<Result> getListResult() {
+	public List<Results> getListResult() {
 		return listResult;
 	}
 
-	public void setListResult(List<Result> listResult) {
+	public void setListResult(List<Results> listResult) {
 		this.listResult = listResult;
 	}
 

@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class CurrencyRate extends Currency{
 
-	private long idCurrencyRate;
+	private long id;
 	private Timestamp timeRecord;
 	private double bidBTC;
 	private double askBTC;

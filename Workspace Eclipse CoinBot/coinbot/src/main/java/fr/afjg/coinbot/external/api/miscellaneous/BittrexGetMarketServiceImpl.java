@@ -4,31 +4,31 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import fr.afjg.coinbot.external.api.BittrexPublic;
-import fr.afjg.coinbot.external.api.entites.bittrex.Market;
-import fr.afjg.coinbot.external.api.entites.bittrex.Result;
-import fr.afjg.coinbot.external.api.intf.BittrexPublicIntf;
+import fr.afjg.coinbot.external.api.entites.bittrex.Markets;
+import fr.afjg.coinbot.external.api.entites.bittrex.Results;
+import fr.afjg.coinbot.external.api.intf.IBittrexPublic;
 import fr.afjg.coinbot.external.api.miscellaneous.intf.IBittrexGetMarketService;
 
 public class BittrexGetMarketServiceImpl implements IBittrexGetMarketService {
 
-	BittrexPublicIntf bittrexDao;
+	IBittrexPublic bittrexPublic;
 
 	public BittrexGetMarketServiceImpl() {
 		super();
-		this.setBittrexDao(new BittrexPublic());
+		this.setBittrexPublic(new BittrexPublic());
 	}
 
-	public Market getMarket(){
+	public Markets getMarket(){
 		
-		JSONObject jsonObj = new JSONObject( bittrexDao.getMarket().toString() );
-		Market market = new Market();
+		JSONObject jsonObj = new JSONObject( bittrexPublic.getMarket().toString() );
+		Markets market = new Markets();
 		JSONArray jsonArray = jsonObj.getJSONArray("result");
 
 		market.setSuccess(jsonObj.getBoolean("success"));
 		market.setMessage(jsonObj.getString("message"));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			Result result = new Result();
+			Results result = new Results();
 			jsonObj = (JSONObject) jsonArray.get(i);
 
 			if (jsonObj.isNull("MarketName")) {
@@ -105,8 +105,8 @@ public class BittrexGetMarketServiceImpl implements IBittrexGetMarketService {
 	}
 	
 
-	private void setBittrexDao(BittrexPublicIntf bittrexDao) {
-		this.bittrexDao = bittrexDao;
+	private void setBittrexPublic(IBittrexPublic ittrexPublic) {
+		this.bittrexPublic = ittrexPublic;
 	}
 
 }

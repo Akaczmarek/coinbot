@@ -3,9 +3,9 @@ package fr.afjg.coinbot.external.api;
 import java.io.IOException;
 
 import fr.afjg.coinbot.external.api.ConnexionPublic;
-import fr.afjg.coinbot.external.api.intf.BittrexPublicIntf;
+import fr.afjg.coinbot.external.api.intf.IBittrexPublic;
 
-public class BittrexPublic implements BittrexPublicIntf{
+public class BittrexPublic implements IBittrexPublic{
 	
 	public ConnexionPublic api;
 	
@@ -13,7 +13,7 @@ public class BittrexPublic implements BittrexPublicIntf{
 		super();
 	}
 	
-	public StringBuffer getMarket() {
+	public StringBuffer getMarkets() {
 		
 		String url = "https://bittrex.com/api/v1.1/public/getmarkets";
 		try {

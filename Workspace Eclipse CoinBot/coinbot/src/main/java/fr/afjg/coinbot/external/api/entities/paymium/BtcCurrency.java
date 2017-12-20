@@ -1,7 +1,5 @@
 package fr.afjg.coinbot.external.api.entities.paymium;
 
-import java.sql.Timestamp;
-
 public class BtcCurrency {
 	private double high;
 	private double low;
@@ -10,12 +8,12 @@ public class BtcCurrency {
 	private double ask;
 	private double midpoint;
 	private double vwap;
-	private Timestamp at;
+	private int at;
 	private double price;
 	private double open;
 	private int variation;
 	private String currency;
-	private String trade_id;
+	private String tradeId;
 	private double size;
 
 	public BtcCurrency() {
@@ -23,7 +21,7 @@ public class BtcCurrency {
 	}
 
 	public BtcCurrency(double high, double low, double volume, double bid, double ask, double midpoint, double vwap,
-			Timestamp at, double price, double open, int variation, String currency, String trade_id, double size) {
+			int at, double price, double open, int variation, String currency, String tradeId, double size) {
 		super();
 		this.high = high;
 		this.low = low;
@@ -37,7 +35,7 @@ public class BtcCurrency {
 		this.open = open;
 		this.variation = variation;
 		this.currency = currency;
-		this.trade_id = trade_id;
+		this.tradeId = tradeId;
 		this.size = size;
 	}
 
@@ -97,11 +95,11 @@ public class BtcCurrency {
 		this.vwap = vwap;
 	}
 
-	public Timestamp getAt() {
+	public int getAt() {
 		return at;
 	}
 
-	public void setAt(Timestamp at) {
+	public void setAt(int at) {
 		this.at = at;
 	}
 
@@ -137,12 +135,12 @@ public class BtcCurrency {
 		this.currency = currency;
 	}
 
-	public String getTrade_id() {
-		return trade_id;
+	public String getTradeId() {
+		return tradeId;
 	}
 
-	public void setTrade_id(String trade_id) {
-		this.trade_id = trade_id;
+	public void setTradeId(String tradeId) {
+		this.tradeId = tradeId;
 	}
 
 	public double getSize() {
@@ -180,8 +178,8 @@ public class BtcCurrency {
 		builder.append(variation);
 		builder.append(", currency=");
 		builder.append(currency);
-		builder.append(", trade_id=");
-		builder.append(trade_id);
+		builder.append(", tradeId=");
+		builder.append(tradeId);
 		builder.append(", size=");
 		builder.append(size);
 		builder.append("]");
@@ -195,7 +193,7 @@ public class BtcCurrency {
 		long temp;
 		temp = Double.doubleToLongBits(ask);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((at == null) ? 0 : at.hashCode());
+		result = prime * result + at;
 		temp = Double.doubleToLongBits(bid);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((currency == null) ? 0 : currency.hashCode());
@@ -211,7 +209,7 @@ public class BtcCurrency {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(size);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((trade_id == null) ? 0 : trade_id.hashCode());
+		result = prime * result + ((tradeId == null) ? 0 : tradeId.hashCode());
 		result = prime * result + variation;
 		temp = Double.doubleToLongBits(volume);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -231,10 +229,7 @@ public class BtcCurrency {
 		BtcCurrency other = (BtcCurrency) obj;
 		if (Double.doubleToLongBits(ask) != Double.doubleToLongBits(other.ask))
 			return false;
-		if (at == null) {
-			if (other.at != null)
-				return false;
-		} else if (!at.equals(other.at))
+		if (at != other.at)
 			return false;
 		if (Double.doubleToLongBits(bid) != Double.doubleToLongBits(other.bid))
 			return false;
@@ -255,10 +250,10 @@ public class BtcCurrency {
 			return false;
 		if (Double.doubleToLongBits(size) != Double.doubleToLongBits(other.size))
 			return false;
-		if (trade_id == null) {
-			if (other.trade_id != null)
+		if (tradeId == null) {
+			if (other.tradeId != null)
 				return false;
-		} else if (!trade_id.equals(other.trade_id))
+		} else if (!tradeId.equals(other.tradeId))
 			return false;
 		if (variation != other.variation)
 			return false;
