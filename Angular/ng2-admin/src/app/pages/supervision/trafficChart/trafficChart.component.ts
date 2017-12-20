@@ -13,9 +13,12 @@ import * as Chart from 'chart.js';
 export class TrafficChart {
 
   public doughnutData: Array<Object>;
+  public sum : number;
 
   constructor(private trafficChartService:TrafficChartService) {
     this.doughnutData = trafficChartService.getData();
+    this.sum = this.trafficChartService.sum;
+
   }
 
   ngAfterViewInit() {

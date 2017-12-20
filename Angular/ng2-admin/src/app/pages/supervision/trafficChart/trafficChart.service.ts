@@ -1,52 +1,62 @@
 import {Injectable} from '@angular/core';
 import {BaThemeConfigProvider, colorHelper} from '../../../theme';
+import { forEach } from '@angular/router/src/utils/collection';
+import { SupervisionService} from '../../../services/supervision.service'
 
 @Injectable()
 export class TrafficChartService {
 
-  constructor(private _baConfig:BaThemeConfigProvider) {
+  public sum : number = 0;
+
+  constructor(private _baConfig:BaThemeConfigProvider, public superServ : SupervisionService) {
+    this.getSumValues();
+    
   }
+
+  getSumValues(){
+    for(let entry of this.superServ.mock){
+
+      this.sum+=entry;
+      console.log(this.sum);
+
+    }
+  }
+
+  getPercentage(number : number){
+    return  number = (number / this.sum) * 100
+
+  }
+
 
 
   getData() {
     let dashboardColors = this._baConfig.get().colors.dashboard;
+
+    
+
     return [
       {
-        value: 2000,
+        value: this.superServ.mock[0],
         color: dashboardColors.white,
         highlight: colorHelper.shade(dashboardColors.white, 15),
-        label: 'Caca',
-        percentage: 87,
+        label: 'Mise de départ',
+        percentage: this.getPercentage(this.superServ.mock[0]),
         order: 1,
       }, {
-        value: 1500,
+        value: this.superServ.mock[1],
         color: dashboardColors.gossip,
         highlight: colorHelper.shade(dashboardColors.gossip, 15),
-        label: 'Prout',
-        percentage: 22,
-        order: 4,
-      }, {
-        value: 1000,
-        color: dashboardColors.silverTree,
-        highlight: colorHelper.shade(dashboardColors.silverTree, 15),
-        label: 'Pipi',
-        percentage: 70,
-        order: 3,
-      }, {
-        value: 1200,
-        color: dashboardColors.surfieGreen,
-        highlight: colorHelper.shade(dashboardColors.surfieGreen, 15),
-        label: 'Zizi',
-        percentage: 38,
+        label: 'Gain sécurisé',
+        percentage:this.getPercentage(this.superServ.mock[1]),
         order: 2,
       }, {
-        value: 400,
-        color: dashboardColors.blueStone,
-        highlight: colorHelper.shade(dashboardColors.blueStone, 15),
-        label: 'Vagin',
-        percentage: 17,
-        order: 0,
-      },
+        value: this.superServ.mock[2],
+        color: dashboardColors.silverTree,
+        highlight: colorHelper.shade(dashboardColors.silverTree, 15),
+        label: 'Gain non securisé',
+        percentage: this.getPercentage(this.superServ.mock[2]),
+        order: 3,
+      }
     ];
   }
 }

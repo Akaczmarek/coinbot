@@ -15,6 +15,8 @@ import { BasicTablesService } from '../tables/components/basicTables/basicTables
 import { StripedTable } from '../tables/components/basicTables/components/stripedTable';
 import { ContextualTable } from 'app/pages/tables/components/basicTables/components/contextualTable';
 
+import{ SupervisionService} from '../../services/supervision.service'
+
 
 @NgModule({
   imports: [
@@ -33,7 +35,7 @@ import { ContextualTable } from 'app/pages/tables/components/basicTables/compone
   ],
 
   providers :[
-    PieChartService, TrafficChartService, BasicTablesService
+    PieChartService, TrafficChartService, BasicTablesService,SupervisionService
   ]
 })
 export class SupervisionModule {}
