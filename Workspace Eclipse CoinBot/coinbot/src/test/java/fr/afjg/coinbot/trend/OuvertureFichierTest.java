@@ -12,8 +12,8 @@ public class OuvertureFichierTest {
 	public BufferedReader contenuFichiercsvTest(String nameCurrency) {
 		BufferedReader buff = null;
 	try{
-		//InputStream flux=new FileInputStream("C:/Users/asus/Desktop/COINBOT/Recherche maths/"+nameCurrency +".csv"); 
-		InputStream flux=new FileInputStream("C:/Users/ghislain/Desktop/COINBOT/test maths/"+nameCurrency +".csv"); 
+		InputStream flux=new FileInputStream("C:/Users/asus/Desktop/COINBOT/Recherche maths/"+nameCurrency +".csv"); 
+		//InputStream flux=new FileInputStream("C:/Users/ghislain/Desktop/COINBOT/test maths/"+nameCurrency +".csv"); 
 		InputStreamReader lecture=new InputStreamReader(flux);
 		buff=new BufferedReader(lecture);
 

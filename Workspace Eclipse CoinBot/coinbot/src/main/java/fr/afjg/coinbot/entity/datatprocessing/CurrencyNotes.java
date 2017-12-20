@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import fr.afjg.coinbot.pojo.database.CurrencyRate;
+import fr.afjg.coinbot.entity.CurrencyRate;
 import fr.afjg.coinbot.util.ParseTools;
 
 public class CurrencyNotes {
@@ -16,7 +16,7 @@ public class CurrencyNotes {
 
 	public CurrencyNotes(CurrencyTrend currencyTrend) {
 		this.setCurrencyTrend(currencyTrend);
-		currencyNotesToSell =  new ArrayList<>();
+		currencyNotesToSell = new ArrayList<>();
 		currencyNotesToBuy = new ArrayList<>();
 		listOfOperations();
 
@@ -32,8 +32,6 @@ public class CurrencyNotes {
 	public void setCurrencyTrend(CurrencyTrend currencyTrend) {
 		this.currencyTrend = currencyTrend;
 	}
-
-
 
 	public List<CurrencyNote> getCurrencyNotesToSell() {
 		return currencyNotesToSell;
@@ -83,7 +81,8 @@ public class CurrencyNotes {
 			// stage 3 : info for treatment line Equation
 
 			// stage 3.1 : recovery the list of equation
-			List<LineEquationTrend> lets = tc.getLinesEquationsTrends();
+			if(tc!=null) {
+			List<LineEquationTrend> lets = tc.getLinesEquationsTrends(); // erreur javanullpointer ex
 
 			Iterator<LineEquationTrend> iteLETS = lets.iterator();
 
@@ -95,7 +94,7 @@ public class CurrencyNotes {
 				LineEquationTrend let = iteLETS.next();
 
 				// note for type of trend (bid => value to sell or ask=> value to buy)
-				if ("bid".equals(let.getTypeBidOrAsk())) {
+				if ("bid".equals(let.getTypeBidOrAsk())) {//erreur javanullpointer
 					letsBid.add(let);
 
 				} else if ("ask".equals(let.getTypeBidOrAsk())) {
@@ -120,10 +119,10 @@ public class CurrencyNotes {
 
 				// note for type of trend (bid => value to sell or ask=> value to buy)
 				if ("bid".equals(lt.getTypeBidOrAsk())) {
-					ltBid= lt;
+					ltBid = lt;
 
 				} else if ("ask".equals(lt.getTypeBidOrAsk())) {
-					ltAsk=lt;
+					ltAsk = lt;
 				}
 
 			}
@@ -136,11 +135,9 @@ public class CurrencyNotes {
 
 			// stage 6 : information of associate trendrule
 			TrendRule trendRule = tc.getTrendRule();
-			
-
 
 			// send data to currencyNote
-			
+
 			CurrencyNote crBid = new CurrencyNote(this, letsBid, ltBid, lastPointBid, trendRule, "bid");
 			Thread t = new Thread(crBid);
 			t.start();
@@ -150,7 +147,7 @@ public class CurrencyNotes {
 			t1.start();
 
 			numberOperation += 2;
-
+		}
 		}
 
 		// Stage 7 : control as every operation of notation is finished and begin
@@ -161,13 +158,13 @@ public class CurrencyNotes {
 				break;
 			}
 		}
-		
+
 		// Stage 8 : save notes in CurrencyTrend
-		
+
 		this.getCurrencyTrend().setNotes(this);
-		
+
 		// final Stage : prevent it's finished
-		
+
 		this.getCurrencyTrend().finishActionsChecked();
 
 	}

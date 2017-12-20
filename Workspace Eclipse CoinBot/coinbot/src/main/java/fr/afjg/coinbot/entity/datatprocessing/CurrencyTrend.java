@@ -8,8 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import fr.afjg.coinbot.pojo.database.Currency;
-import fr.afjg.coinbot.pojo.database.CurrencyRate;
+import fr.afjg.coinbot.entity.Currency;
+import fr.afjg.coinbot.entity.CurrencyRate;
 import fr.afjg.coinbot.util.DateTools;
 
 public class CurrencyTrend extends Currency implements Runnable {
@@ -36,11 +36,11 @@ public class CurrencyTrend extends Currency implements Runnable {
 	// getters &
 	// Setters------------------------------------------------------------------
 
-	public List<CurrencyRate> getCurrencyRates() {
+	public synchronized List<CurrencyRate> getCurrencyRates() {
 		return currencyRates;
 	}
 
-	public void setCurrencyRates(List<CurrencyRate> currencyRates) {
+	public synchronized void setCurrencyRates(List<CurrencyRate> currencyRates) {
 		this.currencyRates = currencyRates;
 	}
 
@@ -192,7 +192,9 @@ public class CurrencyTrend extends Currency implements Runnable {
 		CurrencyNote cn;
 		while (ite.hasNext()) {
 			cn = ite.next();
-			note = note + cn.getNote();
+			if (cn != null) {
+				note = note + cn.getNote(); // erreur nullpointer
+			}
 		}
 
 		return note;
@@ -206,7 +208,7 @@ public class CurrencyTrend extends Currency implements Runnable {
 		CurrencyNote cn;
 		while (ite.hasNext()) {
 			cn = ite.next();
-			note = note + cn.getNote(); //ERREUR R2GULI7RE JAVA null pointer
+			note = note + cn.getNote(); // ERREUR R2GULI7RE JAVA null pointer
 		}
 
 		return note;

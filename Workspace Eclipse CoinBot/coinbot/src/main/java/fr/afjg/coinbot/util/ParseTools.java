@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import fr.afjg.coinbot.entity.CurrencyRate;
 import fr.afjg.coinbot.entity.datatprocessing.PointXY;
-import fr.afjg.coinbot.pojo.database.CurrencyRate;
 
 public class ParseTools {
 

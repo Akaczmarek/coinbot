@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
-import fr.afjg.coinbot.pojo.database.CurrencyRate;
+import fr.afjg.coinbot.entity.CurrencyRate;
 import fr.afjg.coinbot.util.MathTools;
 import fr.afjg.coinbot.util.ParseTools;
 

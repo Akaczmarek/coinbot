@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Vector;
 
 import fr.afjg.coinbot.dao.intf.database.CurrencyDaoIntf;
+import fr.afjg.coinbot.entity.Currency;
+import fr.afjg.coinbot.entity.CurrencyRate;
 import fr.afjg.coinbot.entity.datatprocessing.CurrencyTrend;
-import fr.afjg.coinbot.pojo.database.Currency;
-import fr.afjg.coinbot.pojo.database.CurrencyRate;
 import fr.afjg.coinbot.trend.OuvertureFichierTest;
 
 public class CurrencyDaoImpl implements CurrencyDaoIntf{

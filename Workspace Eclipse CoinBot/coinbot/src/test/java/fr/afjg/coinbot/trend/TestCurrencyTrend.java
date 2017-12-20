@@ -16,13 +16,13 @@ public class TestCurrencyTrend {
 		Thread t = new Thread(cTB);
 		t.start();
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
 		for(int i = 0 ; i<10; i++) {
 			
 			List<CurrencyTrend> list = cTB.getAllCurrenciesTrendsInOrderToBuy();

@@ -3,7 +3,7 @@ package fr.afjg.coinbot.entity.datatprocessing;
 import java.sql.Timestamp;
 import java.util.Comparator;
 
-import fr.afjg.coinbot.pojo.database.CurrencyRate;
+import fr.afjg.coinbot.entity.CurrencyRate;
 
 /**
  * for point in graphic function of time

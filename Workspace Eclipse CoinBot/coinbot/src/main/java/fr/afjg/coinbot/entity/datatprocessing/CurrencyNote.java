@@ -13,6 +13,9 @@ public class CurrencyNote implements Runnable {
 	private TrendRule trendRule;
 	private double note;
 
+	{
+		note = 0.0;
+	}
 	public CurrencyNote() {
 
 	}
@@ -155,11 +158,11 @@ public class CurrencyNote implements Runnable {
 		// stage 0 : variables initialization
 		double yPt = lastPoint.getY();
 		long xRef = lastPoint.getX();
-		double aCeiling = ceilingLE.getLeadingDirect();
+		double aCeiling = ceilingLE.getLeadingDirect(); // erreur null pointer
 		double bCeiling = ceilingLE.getOrdOrigin();
-		double aAverage = averageLE.getLeadingDirect();
+		double aAverage = averageLE.getLeadingDirect();// erreur null pointer
 		double bAverage = averageLE.getOrdOrigin();
-		double aSupport = supportLE.getLeadingDirect();
+		double aSupport = supportLE.getLeadingDirect();// erreur null pointer
 		double bSupport = supportLE.getOrdOrigin();
 
 		int multiplier = this.getTrendRule().getMultiplier();
@@ -238,12 +241,14 @@ public class CurrencyNote implements Runnable {
 		// stage 0 : variables initialization
 		double yPt = lastPoint.getY();
 		long xRef = lastPoint.getX();
+		try {
 		double aCeiling = ceilingLE.getLeadingDirect();
 		double bCeiling = ceilingLE.getOrdOrigin();
 		double aAverage = averageLE.getLeadingDirect();
 		double bAverage = averageLE.getOrdOrigin();
 		double aSupport = supportLE.getLeadingDirect(); //erreur java null pointer exception réguliere
 		double bSupport = supportLE.getOrdOrigin();
+
 
 		int multiplier = this.getTrendRule().getMultiplier();
 
@@ -305,6 +310,10 @@ public class CurrencyNote implements Runnable {
 		globalNote = (note1 + note2) * multiplier;
 
 		this.setNote(globalNote);
+		
+		}catch (NullPointerException e) {
+			System.out.println("Null pointer---------------------------------------------------------------------");
+		}
 
 	}
 

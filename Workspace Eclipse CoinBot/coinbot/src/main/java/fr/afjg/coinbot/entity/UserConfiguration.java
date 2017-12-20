@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.pojo.database;
+package fr.afjg.coinbot.entity;
 
 public class UserConfiguration {
 	

@@ -19,6 +19,11 @@ public class LineEquationTrend implements Runnable {
 	private TrendCalculation trendCalculation;
 	private List<PointXY> ptList;
 	
+	{
+		leadingDirect =0.0;
+		ordOrigin = 0.0;
+	}
+	
 	public LineEquationTrend() {
 		
 	}

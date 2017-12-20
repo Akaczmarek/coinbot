@@ -3,9 +3,9 @@ package fr.afjg.coinbot.service.intf.datatprocessing;
 import java.sql.Timestamp;
 import java.util.List;
 
+import fr.afjg.coinbot.entity.Currency;
+import fr.afjg.coinbot.entity.CurrencyRate;
 import fr.afjg.coinbot.entity.datatprocessing.CurrencyTrend;
-import fr.afjg.coinbot.pojo.database.Currency;
-import fr.afjg.coinbot.pojo.database.CurrencyRate;
 
 public interface DataProcessingServiceIntf {
 

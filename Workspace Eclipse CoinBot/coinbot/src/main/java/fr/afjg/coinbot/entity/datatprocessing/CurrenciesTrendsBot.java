@@ -5,8 +5,9 @@ import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
 
-import fr.afjg.coinbot.pojo.database.CurrencyRate;
+import fr.afjg.coinbot.entity.CurrencyRate;
 import fr.afjg.coinbot.service.impl.datatprocessing.DataProcessingServiceImpl;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
 
@@ -103,40 +104,45 @@ public class CurrenciesTrendsBot implements Runnable {
 	/*
 	 * Methods----------------------------------------------------------------------
 	 */
-	
+
 	public synchronized List<CurrencyTrend> getAllCurrenciesTrendsInOrderToBuy() {
-		
-		List<CurrencyTrend> listInOrderToBuy = this.getCurrenciesTrends();
-		Collections.sort(listInOrderToBuy,CurrencyTrend.CTNoteToBuyComparator);
-		return listInOrderToBuy;
+		if (this.getCurrenciesTrends() != null) {
+			List<CurrencyTrend> listInOrderToBuy = new Vector<CurrencyTrend>(this.getCurrenciesTrends());
+			Collections.sort(listInOrderToBuy, CurrencyTrend.CTNoteToBuyComparator);
+			return listInOrderToBuy;
+		} else {
+			List<CurrencyTrend> listInOrderToBuy = new Vector<CurrencyTrend>();
+			return listInOrderToBuy;
+		}
+
 	}
-	
+
 	public synchronized List<CurrencyTrend> getAllCurrenciesTrendsInOrderToSell() {
-		List<CurrencyTrend> listInOrderToSell = this.getCurrenciesTrends();
-		Collections.sort(listInOrderToSell,CurrencyTrend.CTNoteToSellComparator);
+		List<CurrencyTrend> listInOrderToSell = new Vector<CurrencyTrend>(this.getCurrenciesTrends());
+		Collections.sort(listInOrderToSell, CurrencyTrend.CTNoteToSellComparator);
 		return listInOrderToSell;
 	}
-	
+
 	public synchronized List<CurrencyTrend> getXFirstCurrenciesTrendsInOrderToBuy(int x) {
-		List<CurrencyTrend> listInOrderToBuy = this.getCurrenciesTrends();
-		Collections.sort(listInOrderToBuy,CurrencyTrend.CTNoteToBuyComparator);
-		listInOrderToBuy = listInOrderToBuy.subList(0, (x-1));
+		List<CurrencyTrend> listInOrderToBuy = new Vector<CurrencyTrend>(this.getCurrenciesTrends());
+		Collections.sort(listInOrderToBuy, CurrencyTrend.CTNoteToBuyComparator);
+		listInOrderToBuy = listInOrderToBuy.subList(0, (x - 1));
 		return listInOrderToBuy;
 	}
-	
+
 	public synchronized List<CurrencyTrend> getXFirstCurrenciesTrendsInOrderToSell(int x) {
-		List<CurrencyTrend> listInOrderToSell = this.getCurrenciesTrends();
-		Collections.sort(listInOrderToSell,CurrencyTrend.CTNoteToSellComparator);
-		listInOrderToSell = listInOrderToSell.subList(0, (x-1));
+		List<CurrencyTrend> listInOrderToSell = new Vector<CurrencyTrend>(this.getCurrenciesTrends());
+		Collections.sort(listInOrderToSell, CurrencyTrend.CTNoteToSellComparator);
+		listInOrderToSell = listInOrderToSell.subList(0, (x - 1));
 		return listInOrderToSell;
 	}
-	
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 
 		// Stage 0 : variables initialization
-
+		int i = 0;
 		// stage 1 : recovers data and loading list currencies
 		this.setCurrenciesTrends(DPService.getAllLastCurrenciesTrends()); // loading list of all currencies
 
@@ -156,6 +162,7 @@ public class CurrenciesTrendsBot implements Runnable {
 				// list after sort)
 				Collections.sort(cts, CurrencyTrend.CTTimestampComparator);
 				CurrencyTrend CurrencyBeTreated = cts.get(0);
+				cts.get(0).setTimeRecord(new Timestamp(System.currentTimeMillis()));
 
 				// stage 4 : definition timestamp for request historic rate currency
 
@@ -170,7 +177,7 @@ public class CurrenciesTrendsBot implements Runnable {
 				List<TrendRule> trs = this.getTrendRule().getTrendRules();
 				List<CurrencyRate> crs = null;
 				CurrencyTrend ct = null;
-				//create new trend
+				// create new trend
 				if (CurrencyBeTreated.getCurrencyRates() == null) {
 					crs = DPService.getCurrencyRateByDurationAndCurrency(tst0, tst1, CurrencyBeTreated);
 					Collections.sort(crs, CurrencyRate.CRTimestampComparator);
@@ -180,14 +187,12 @@ public class CurrenciesTrendsBot implements Runnable {
 					ct.setId(CurrencyBeTreated.getId());
 					ct.setName(CurrencyBeTreated.getName());
 
-
 					this.getCurrenciesTrends().remove(0);
 					this.getCurrenciesTrends().add(ct);
 
+				}
 
-				} 
-				
-				//udapte trend
+				// udapte trend
 				else {
 					long lastTimeRecord = (CurrencyBeTreated.getCurrencyRates()
 							.get(CurrencyBeTreated.getCurrencyRates().size() - 1).getTimeRecord().getTime()) + 1;
@@ -212,16 +217,11 @@ public class CurrenciesTrendsBot implements Runnable {
 
 				// stage 6 : prevent new thread start
 				this.setNbActifThreadsTrend(getNbActifThreadsTrend() + 1);
-				
-				
-				
 
 			}
-
-		
-
+System.out.println("calcul " + i++);
 			try {
-				Thread.sleep(10);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
