@@ -6,13 +6,13 @@ import org.json.JSONException;
 
 import fr.afjg.coinbot.external.api.entites.bittrex.Market;
 import fr.afjg.coinbot.external.api.miscellaneous.BittrexGetMarketServiceImpl;
-import fr.afjg.coinbot.external.api.miscellaneous.intf.BittrexGetMarketServiceIntf;
+import fr.afjg.coinbot.external.api.miscellaneous.intf.IBittrexGetMarketService;
 
 public class BittrexTest {
 
 	public static void main(String[] args) {
 		
-		BittrexGetMarketServiceIntf bittrexService = new BittrexGetMarketServiceImpl();
+		IBittrexGetMarketService bittrexService = new BittrexGetMarketServiceImpl();
 		Market market = bittrexService.getMarket();
 		System.out.println(market.toString());
 

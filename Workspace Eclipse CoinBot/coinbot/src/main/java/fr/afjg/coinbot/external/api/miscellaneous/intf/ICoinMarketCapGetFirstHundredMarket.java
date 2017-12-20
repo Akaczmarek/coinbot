@@ -7,7 +7,7 @@ import org.json.JSONException;
 
 import fr.afjg.coinbot.external.api.entities.coinmarketcap.Market;
 
-public interface CoinMarketCapGetFirstHundredMarketIntf {
+public interface ICoinMarketCapGetFirstHundredMarket {
 	
 	public Set<Market> getMarket() throws IOException, JSONException;
 

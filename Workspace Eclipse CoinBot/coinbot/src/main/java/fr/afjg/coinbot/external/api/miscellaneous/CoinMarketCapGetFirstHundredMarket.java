@@ -12,9 +12,9 @@ import org.json.JSONObject;
 import fr.afjg.coinbot.external.api.CoinMarketCapPublic;
 import fr.afjg.coinbot.external.api.entities.coinmarketcap.Market;
 import fr.afjg.coinbot.external.api.intf.CoinMarketCapPublicIntf;
-import fr.afjg.coinbot.external.api.miscellaneous.intf.CoinMarketCapGetFirstHundredMarketIntf;
+import fr.afjg.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
 
-public class CoinMarketCapGetFirstHundredMarket implements CoinMarketCapGetFirstHundredMarketIntf{
+public class CoinMarketCapGetFirstHundredMarket implements ICoinMarketCapGetFirstHundredMarket{
 	
 	CoinMarketCapPublicIntf CmcDao;
 

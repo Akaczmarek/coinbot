@@ -7,13 +7,13 @@ import org.json.JSONException;
 
 import fr.afjg.coinbot.external.api.entities.coinmarketcap.Market;
 import fr.afjg.coinbot.external.api.miscellaneous.CoinMarketCapGetFirstHundredMarket;
-import fr.afjg.coinbot.external.api.miscellaneous.intf.CoinMarketCapGetFirstHundredMarketIntf;
+import fr.afjg.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
 
 public class CoinMarketCapTest {
 
 	public static void main(String[] args) {
 		
-		CoinMarketCapGetFirstHundredMarketIntf cmc = new CoinMarketCapGetFirstHundredMarket();
+		ICoinMarketCapGetFirstHundredMarket cmc = new CoinMarketCapGetFirstHundredMarket();
 		try {
 			Set<Market> listMarket = cmc.getMarket();
 			for(Market market : listMarket) {

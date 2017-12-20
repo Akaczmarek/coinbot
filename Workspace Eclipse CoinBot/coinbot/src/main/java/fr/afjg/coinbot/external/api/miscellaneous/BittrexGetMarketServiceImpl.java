@@ -7,9 +7,9 @@ import fr.afjg.coinbot.external.api.BittrexPublic;
 import fr.afjg.coinbot.external.api.entites.bittrex.Market;
 import fr.afjg.coinbot.external.api.entites.bittrex.Result;
 import fr.afjg.coinbot.external.api.intf.BittrexPublicIntf;
-import fr.afjg.coinbot.external.api.miscellaneous.intf.BittrexGetMarketServiceIntf;
+import fr.afjg.coinbot.external.api.miscellaneous.intf.IBittrexGetMarketService;
 
-public class BittrexGetMarketServiceImpl implements BittrexGetMarketServiceIntf {
+public class BittrexGetMarketServiceImpl implements IBittrexGetMarketService {
 
 	BittrexPublicIntf bittrexDao;
 
