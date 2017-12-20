@@ -1,30 +1,26 @@
 package fr.afjg.coinbot.external.api.miscellaneous;
 
-import java.io.IOException;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.afjg.coinbot.dao.impl.api.BittrexDaoImpl;
+import fr.afjg.coinbot.external.api.BittrexPublic;
 import fr.afjg.coinbot.external.api.entites.bittrex.Market;
 import fr.afjg.coinbot.external.api.entites.bittrex.Result;
-import fr.afjg.coinbot.external.api.intf.BittrexDaoIntf;
+import fr.afjg.coinbot.external.api.intf.BittrexPublicIntf;
 import fr.afjg.coinbot.external.api.miscellaneous.intf.BittrexGetMarketServiceIntf;
 
 public class BittrexGetMarketServiceImpl implements BittrexGetMarketServiceIntf {
 
-	BittrexDaoIntf bittrexDao;
+	BittrexPublicIntf bittrexDao;
 
 	public BittrexGetMarketServiceImpl() {
 		super();
-		this.setBittrexDao(new BittrexDaoImpl());
+		this.setBittrexDao(new BittrexPublic());
 	}
 
-	public Market getMarket() throws IOException, JSONException {
-
-		StringBuffer sb = bittrexDao.getMarket();
-		JSONObject jsonObj = new JSONObject(sb.toString());
+	public Market getMarket(){
+		
+		JSONObject jsonObj = new JSONObject( bittrexDao.getMarket().toString() );
 		Market market = new Market();
 		JSONArray jsonArray = jsonObj.getJSONArray("result");
 
@@ -109,7 +105,7 @@ public class BittrexGetMarketServiceImpl implements BittrexGetMarketServiceIntf 
 	}
 	
 
-	private void setBittrexDao(BittrexDaoIntf bittrexDao) {
+	private void setBittrexDao(BittrexPublicIntf bittrexDao) {
 		this.bittrexDao = bittrexDao;
 	}
 
