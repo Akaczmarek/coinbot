@@ -108,8 +108,18 @@ public class CurrenciesTrendsBot implements Runnable{
 		 * 4) on met à jour les listes ordonnées
 		 * 
 		 */
-		
+		// boucle principale, boucle sur toutes les actions ci dessus
 		while(true) {
+			
+			
+			//étape 1 : chercher si il y a une ou des nouvelles devises
+			//mettre à jour 1  fois par jour;
+			DPService.getAllCurrencies();
+			List<CurrencyTrend> cr = new ArrayList<>();
+			List<CurrencyTrend> currencies = new ArrayList<>();
+			currencies = DPService.getAllCurrencies();
+			
+			
 			
 			
 			
@@ -121,6 +131,8 @@ public class CurrenciesTrendsBot implements Runnable{
 			//mise à jour des listes ordonnées
 			this.updateCurrenciesTrendsOrderByNoteToBuy();
 			this.updateCurrenciesTrendsOrderByNoteToSell();
+			
+			
 			
 			try {
 				Thread.sleep(100);

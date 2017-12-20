@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.api;
+package fr.afjg.coinbot.api.test;
 
 import java.io.IOException;
 import java.util.Set;
@@ -9,7 +9,7 @@ import fr.afjg.coinbot.external.api.entities.coinmarketcap.Market;
 import fr.afjg.coinbot.external.api.miscellaneous.CoinMarketCapGetFirstHundredMarket;
 import fr.afjg.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
 
-public class CoinMarketCapTest {
+public class CoinMarketCap {
 
 	public static void main(String[] args) {
 		

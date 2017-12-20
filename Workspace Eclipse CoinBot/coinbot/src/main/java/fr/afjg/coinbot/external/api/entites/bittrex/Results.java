@@ -1,6 +1,6 @@
 package fr.afjg.coinbot.external.api.entites.bittrex;
 
-public class Result {
+public class Results {
 	
 	private String marketCurrency;
 	private String baseCurrency;
@@ -14,11 +14,11 @@ public class Result {
 	private boolean isSponsored;
 	private String logoUrl;
 	
-	public Result() {
+	public Results() {
 		this("", "", "", "", 0, "", false, "", "", false, "");
 	}
 
-	public Result(String marketCurrency, String baseCurrency, String marketCurrencyLong,
+	public Results(String marketCurrency, String baseCurrency, String marketCurrencyLong,
 			String baseCurrencyLong, long minTradeSize, String marketName, boolean isActive, String created,
 			String notice, boolean isSponsored, String logoUrl) {
 		super();

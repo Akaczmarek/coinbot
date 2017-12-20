@@ -1,8 +1,8 @@
 package fr.afjg.coinbot.external.api.intf;
 
-public interface BittrexPublicIntf {
+public interface IBittrexPublic {
 	
-	public StringBuffer getMarket();
+	public StringBuffer getMarkets();
 	
 	public StringBuffer getMarketSummary(String market);
 	

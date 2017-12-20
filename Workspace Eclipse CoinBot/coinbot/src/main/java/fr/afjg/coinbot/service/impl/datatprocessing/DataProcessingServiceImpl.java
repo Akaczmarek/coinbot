@@ -7,7 +7,7 @@ import fr.afjg.coinbot.dao.impl.database.CurrencyDaoImpl;
 import fr.afjg.coinbot.dao.intf.database.CurrencyDaoIntf;
 import fr.afjg.coinbot.entity.Currency;
 import fr.afjg.coinbot.entity.CurrencyRate;
-import fr.afjg.coinbot.entity.datatprocessing.CurrencyTrend;
+import fr.afjg.coinbot.entity.CurrencyTrend;
 import fr.afjg.coinbot.service.intf.datatprocessing.DataProcessingServiceIntf;
 
 public class DataProcessingServiceImpl implements DataProcessingServiceIntf{
@@ -30,6 +30,15 @@ public class DataProcessingServiceImpl implements DataProcessingServiceIntf{
 
 		return DataProcessing.getAllLastCurrenciesTrends();
 	}
+
+	@Override
+	public List<CurrencyTrend> getAllCurrencies() {
+		// TODO Auto-generated method stub
+		return DataProcessing.getAllLastCurrenciesTrends();// a modifier pour récupérer toutes les currencies 
+	}
+	
+	
+	
 
 	
 	

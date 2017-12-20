@@ -10,7 +10,7 @@ import java.util.Vector;
 import fr.afjg.coinbot.dao.intf.database.CurrencyDaoIntf;
 import fr.afjg.coinbot.entity.Currency;
 import fr.afjg.coinbot.entity.CurrencyRate;
-import fr.afjg.coinbot.entity.datatprocessing.CurrencyTrend;
+import fr.afjg.coinbot.entity.CurrencyTrend;
 import fr.afjg.coinbot.trend.OuvertureFichierTest;
 
 public class CurrencyDaoImpl implements CurrencyDaoIntf{
@@ -107,7 +107,7 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		ct1.setId(1);
 		ct1.setName("test1");
 		ct1.setSymbol("btc");
-		ct1.setTimeRecord(new Timestamp(System.currentTimeMillis()));
+		//ct1.setTimeRecord(new Timestamp(System.currentTimeMillis()));
 
 		
 		
@@ -115,19 +115,19 @@ public class CurrencyDaoImpl implements CurrencyDaoIntf{
 		ct2.setId(3);
 		ct2.setName("test3");
 		ct2.setSymbol("ltc1");
-		ct2.setTimeRecord(new Timestamp(System.currentTimeMillis()+1));
+		//ct2.setTimeRecord(new Timestamp(System.currentTimeMillis()+1));
 
 		CurrencyTrend ct3 = new CurrencyTrend();
 		ct3.setId(2);
 		ct3.setName("test2");
 		ct3.setSymbol("ltc2");
-		ct3.setTimeRecord(new Timestamp(System.currentTimeMillis()+133));
+		//ct3.setTimeRecord(new Timestamp(System.currentTimeMillis()+133));
 		
 		CurrencyTrend ct4 = new CurrencyTrend();
 		ct4.setId(4);
 		ct4.setName("test4");
 		ct4.setSymbol("ltc3");
-		ct4.setTimeRecord(new Timestamp(System.currentTimeMillis()+20));
+		//ct4.setTimeRecord(new Timestamp(System.currentTimeMillis()+20));
 		
 		list.add(ct1);
 		list.add(ct2);
@@ -155,5 +155,8 @@ public static void main(String[] args) {
 	}
 }
 	
+
+
+
 
 }
