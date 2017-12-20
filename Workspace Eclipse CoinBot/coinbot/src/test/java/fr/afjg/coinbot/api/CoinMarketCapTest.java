@@ -5,9 +5,9 @@ import java.util.Set;
 
 import org.json.JSONException;
 
-import fr.afjg.coinbot.pojo.api.coinmarketcap.Market;
-import fr.afjg.coinbot.service.impl.api.CoinMarketCapGetFirstHundredMarket;
-import fr.afjg.coinbot.service.intf.api.CoinMarketCapGetFirstHundredMarketIntf;
+import fr.afjg.coinbot.external.api.entities.coinmarketcap.Market;
+import fr.afjg.coinbot.external.api.miscellaneous.CoinMarketCapGetFirstHundredMarket;
+import fr.afjg.coinbot.external.api.miscellaneous.intf.CoinMarketCapGetFirstHundredMarketIntf;
 
 public class CoinMarketCapTest {
 

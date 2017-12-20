@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import org.json.JSONException;
 
-import fr.afjg.coinbot.pojo.api.bittrex.Market;
-import fr.afjg.coinbot.service.impl.api.BittrexGetMarketServiceImpl;
-import fr.afjg.coinbot.service.intf.api.BittrexGetMarketServiceIntf;
+import fr.afjg.coinbot.external.api.entites.bittrex.Market;
+import fr.afjg.coinbot.external.api.miscellaneous.BittrexGetMarketServiceImpl;
+import fr.afjg.coinbot.external.api.miscellaneous.intf.BittrexGetMarketServiceIntf;
 
 public class BittrexTest {
 

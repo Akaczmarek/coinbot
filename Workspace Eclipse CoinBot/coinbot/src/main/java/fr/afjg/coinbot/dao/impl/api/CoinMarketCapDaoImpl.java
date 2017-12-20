@@ -2,8 +2,8 @@ package fr.afjg.coinbot.dao.impl.api;
 
 import java.io.IOException;
 
-import fr.afjg.coinbot.api.ConnexionPublic;
-import fr.afjg.coinbot.dao.intf.api.CoinMarketCapDaoIntf;
+import fr.afjg.coinbot.external.api.ConnexionPublic;
+import fr.afjg.coinbot.external.api.intf.CoinMarketCapDaoIntf;
 
 public class CoinMarketCapDaoImpl implements CoinMarketCapDaoIntf{
 
