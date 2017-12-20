@@ -13,7 +13,7 @@ export class TrafficChartService {
     
   }
 
-  getSumValues(){
+  getSumValues() {
     for(let entry of this.superServ.mock){
 
       this.sum+=entry;
@@ -44,15 +44,15 @@ export class TrafficChartService {
         order: 1,
       }, {
         value: this.superServ.mock[1],
-        color: dashboardColors.gossip,
-        highlight: colorHelper.shade(dashboardColors.gossip, 15),
+        color: dashboardColors.green,
+        highlight: colorHelper.shade(dashboardColors.green, 15),
         label: 'Gain sécurisé',
         percentage:this.getPercentage(this.superServ.mock[1]),
         order: 2,
       }, {
         value: this.superServ.mock[2],
-        color: dashboardColors.silverTree,
-        highlight: colorHelper.shade(dashboardColors.silverTree, 15),
+        color: dashboardColors.red,
+        highlight: colorHelper.shade(dashboardColors.red, 15),
         label: 'Gain non securisé',
         percentage: this.getPercentage(this.superServ.mock[2]),
         order: 3,

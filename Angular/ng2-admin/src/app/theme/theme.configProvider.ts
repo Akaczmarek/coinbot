@@ -35,6 +35,8 @@ export class BaThemeConfigProvider {
       silverTree: '#1b70ef',
       gossip: '#3c4eb9',
       white: '#ffffff',
+      red: '#ff0000',
+      green: '#5bd75b',
     };
 
     this.conf = {
@@ -71,6 +73,8 @@ export class BaThemeConfigProvider {
           silverTree: this.dashboardColors.silverTree,
           gossip: this.dashboardColors.gossip,
           white: this.dashboardColors.white,
+          red: this.dashboardColors.red,
+          green : this.dashboardColors.green,
         },
 
         custom: {
