@@ -1,6 +1,6 @@
 package fr.afjg.coinbot.entity;
 
-public abstract class Currency {
+public class Currency {
 
 	private int id;
 	private String name;

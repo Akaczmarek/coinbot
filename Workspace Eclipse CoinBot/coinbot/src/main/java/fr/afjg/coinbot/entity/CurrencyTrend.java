@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 public class CurrencyTrend extends Currency{
 
+	private long idCurrencyTrend;
 	private double lastValueBid;
 	private double lastValueAsk;
 	private Timestamp timeRecord;
