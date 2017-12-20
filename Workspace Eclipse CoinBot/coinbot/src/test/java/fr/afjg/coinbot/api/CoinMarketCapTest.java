@@ -5,15 +5,15 @@ import java.util.Set;
 
 import org.json.JSONException;
 
-import fr.afjg.coinbot.pojo.api.coinmarketcap.Market;
-import fr.afjg.coinbot.service.impl.api.CoinMarketCapGetFirstHundredMarket;
-import fr.afjg.coinbot.service.intf.api.CoinMarketCapGetFirstHundredMarketIntf;
+import fr.afjg.coinbot.external.api.entities.coinmarketcap.Market;
+import fr.afjg.coinbot.external.api.miscellaneous.CoinMarketCapGetFirstHundredMarket;
+import fr.afjg.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
 
 public class CoinMarketCapTest {
 
 	public static void main(String[] args) {
 		
-		CoinMarketCapGetFirstHundredMarketIntf cmc = new CoinMarketCapGetFirstHundredMarket();
+		ICoinMarketCapGetFirstHundredMarket cmc = new CoinMarketCapGetFirstHundredMarket();
 		try {
 			Set<Market> listMarket = cmc.getMarket();
 			for(Market market : listMarket) {

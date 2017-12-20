@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.api;
+package fr.afjg.coinbot.external.api;
 
 import java.io.BufferedReader;
 import java.io.IOException;

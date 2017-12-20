@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.service.impl.api;
+package fr.afjg.coinbot.external.api.miscellaneous;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,26 +9,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.afjg.coinbot.dao.impl.api.CoinMarketCapDaoImpl;
-import fr.afjg.coinbot.dao.intf.api.CoinMarketCapDaoIntf;
-import fr.afjg.coinbot.pojo.api.coinmarketcap.Market;
-import fr.afjg.coinbot.service.intf.api.CoinMarketCapGetFirstHundredMarketIntf;
+import fr.afjg.coinbot.external.api.CoinMarketCapPublic;
+import fr.afjg.coinbot.external.api.entities.coinmarketcap.Market;
+import fr.afjg.coinbot.external.api.intf.CoinMarketCapPublicIntf;
+import fr.afjg.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
 
-public class CoinMarketCapGetFirstHundredMarket implements CoinMarketCapGetFirstHundredMarketIntf{
+public class CoinMarketCapGetFirstHundredMarket implements ICoinMarketCapGetFirstHundredMarket{
 	
-	CoinMarketCapDaoIntf CmcDao;
+	CoinMarketCapPublicIntf CmcDao;
 
 	public CoinMarketCapGetFirstHundredMarket() {
 		super();
-		this.setCmcDao(new CoinMarketCapDaoImpl());
+		this.setCmcDao(new CoinMarketCapPublic());
 	}
 
 	public Set<Market> getMarket() throws IOException, JSONException {
 
-		StringBuffer sb = CmcDao.getFirstHundredMarket();
-		System.out.println(sb);
 		Set<Market> listMarket = new HashSet<>();
-		JSONObject jsonObj = new JSONObject(sb.toString());
+		JSONObject jsonObj = new JSONObject( "{ \"result\" : " + CmcDao.getFirstHundredMarket() + " } ");
 		
 		JSONArray jsonArray = jsonObj.getJSONArray("result");
 		
@@ -153,7 +151,7 @@ public class CoinMarketCapGetFirstHundredMarket implements CoinMarketCapGetFirst
 	}
 	
 
-	private void setCmcDao(CoinMarketCapDaoIntf CmcDao) {
+	private void setCmcDao(CoinMarketCapPublicIntf CmcDao) {
 		this.CmcDao = CmcDao;
 	}
 

@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.pojo.api.bittrex;
+package fr.afjg.coinbot.external.api.entites.bittrex;
 
 public class Result {
 	
