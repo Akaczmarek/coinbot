@@ -20,7 +20,7 @@ public class BittrexGetMarketServiceImpl implements IBittrexGetMarketService {
 
 	public Markets getMarket(){
 		
-		JSONObject jsonObj = new JSONObject( bittrexPublic.getMarket().toString() );
+		JSONObject jsonObj = new JSONObject( bittrexPublic.getMarkets().toString() );
 		Markets market = new Markets();
 		JSONArray jsonArray = jsonObj.getJSONArray("result");
 
