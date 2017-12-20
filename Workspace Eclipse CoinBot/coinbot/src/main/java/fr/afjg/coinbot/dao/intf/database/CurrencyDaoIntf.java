@@ -5,7 +5,7 @@ import java.util.List;
 
 import fr.afjg.coinbot.entity.Currency;
 import fr.afjg.coinbot.entity.CurrencyRate;
-import fr.afjg.coinbot.entity.datatprocessing.CurrencyTrend;
+import fr.afjg.coinbot.entity.CurrencyTrend;
 
 public interface CurrencyDaoIntf {
 	public List<CurrencyRate> getCurrencyRateByDurationAndCurrency(Timestamp tst0,Timestamp tst1, Currency currency);
