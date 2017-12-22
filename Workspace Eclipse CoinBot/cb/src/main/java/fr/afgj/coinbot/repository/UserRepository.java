@@ -20,4 +20,5 @@ import fr.afgj.coinbot.entity.User;
 public interface UserRepository extends CrudRepository<User, Integer>, Serializable {
 
 	List<User> findByLastname(@Param("lastname") String lastname);
+	
 }

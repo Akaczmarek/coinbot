@@ -35,6 +35,8 @@ public class ConnexionServeurCoinbotApplication {
 				log.info(user.toString());
 				System.out.println(user.getId() + " " + user.getFirstname() + " " + user.getLastname());
 			}
+			
+
 			log.info("");
 			//System.out.println(log.toString());
 

@@ -1,7 +1,9 @@
 package fr.afgj.coinbot.entity;
 // Generated 21 d�c. 2017 09:38:56 by Hibernate Tools 5.1.6.Final
 
+import java.util.Comparator;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -138,5 +140,32 @@ public class CurrencyTrend implements java.io.Serializable {
 	public void setValueaskbtc(Double valueaskbtc) {
 		this.valueaskbtc = valueaskbtc;
 	}
+	
+	// methods ----------------------------------------------------------------------
+	
+	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
+
+		@Override
+		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
+			// TODO Auto-generated method stub
+
+				int noteCT1 = (int) (CT1.getNotetobuy() * 1000);
+				int noteCT2 = (int) (CT2.getNotetobuy() * 1000);
+				return noteCT2 - noteCT1;
+		}
+	};
+
+	public volatile static Comparator<CurrencyTrend> CTNoteToSellComparator = new Comparator<CurrencyTrend>() {
+
+		@Override
+		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
+
+				int noteCT1 = (int) (CT1.getNotetosell() * 1000);
+				int noteCT2 = (int) (CT2.getNotetosell() * 1000);
+				return noteCT2 - noteCT1;
+
+		}
+	};
+	
 
 }
