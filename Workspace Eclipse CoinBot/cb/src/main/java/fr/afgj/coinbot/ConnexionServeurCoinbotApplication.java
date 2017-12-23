@@ -7,11 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.User;
-import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserRepository;
-import fr.afgj.coinbot.test.calculation.InsertMock;
 
 @SpringBootApplication
 public class ConnexionServeurCoinbotApplication {
@@ -21,16 +18,28 @@ public class ConnexionServeurCoinbotApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ConnexionServeurCoinbotApplication.class, args);
 		
-		//chargement mock
-		
-		
-		InsertMock im = new InsertMock();
 
 	}
 	
 	
+
 	
 	
+	
+//	@Bean
+//	public CommandLineRunner saveMockCurrency(CurrencyRepository repository) {
+//		return (args) -> {
+//
+//
+//			
+//			repository.save(new Currency(2, "mock currency 2", "mck2", false, 10001, 0.02, 0.022, 32.0));
+//			repository.save(new Currency(3, "mock currency 3", "mck3", false, 10002, 0.03, 0.033, 33.0));
+//			repository.save(new Currency(4, "mock currency 4", "mck4", false, 10003, 0.04, 0.044, 34.0));
+//			repository.save(new Currency(5, "mock currency 5", "mck5", false, 10004, 0.05, 0.055, 35.0));
+//			repository.save(new Currency(6, "mock currency 6", "mck6", false, 10005, 0.06, 0.066, 36.0));
+//
+//		};
+//	}
 	
 	
 	

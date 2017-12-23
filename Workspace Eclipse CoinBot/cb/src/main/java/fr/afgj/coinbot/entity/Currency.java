@@ -40,6 +40,21 @@ public class Currency implements java.io.Serializable {
 		this.idcurrency = idcurrency;
 		this.refcurrency = refcurrency;
 	}
+	
+	
+
+	public Currency(int idcurrency, String name, String symbol, boolean refcurrency, Integer rank, Double volumeeur,
+			Double volumeusd, Double humannote) {
+		super();
+		this.idcurrency = idcurrency;
+		this.name = name;
+		this.symbol = symbol;
+		this.refcurrency = refcurrency;
+		this.rank = rank;
+		this.volumeeur = volumeeur;
+		this.volumeusd = volumeusd;
+		this.humannote = humannote;
+	}
 
 	public Currency(int idcurrency, String name, String symbol, boolean refcurrency, Integer rank, Double volumeeur,
 			Double volumeusd, Double humannote, Set<OrderHistoryBot> orderhistorybots, Set<CurrencyRate> currencyrates,
