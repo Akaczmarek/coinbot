@@ -1,6 +1,7 @@
 package fr.afgj.coinbot.test.calculation;
 
 import fr.afgj.coinbot.calculation.CurrenciesTrendsBot;
+import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyTrend;
 
 
@@ -18,31 +19,41 @@ public class CurrenciesTrendBotsTest1 {
 
 		Thread.sleep(100);
 
+		
 		CurrenciesTrendsBot ctb = CurrenciesTrendsBot.getInstance();
 		Thread t1 = new Thread(ctb);
 		t1.start();
 
 		CurrencyTrend ct1 = new CurrencyTrend();
-		ct1.setIdcurrency(1);
-		ct1.setName("ct1");
+		
+		Currency cr1 = new Currency();
+		cr1.setName("cr1");
+		cr1.setIdcurrency(1);
+		ct1.setCurrency(cr1);
 		ct1.setNotetobuy(12.0);
 		ct1.setNotetosell(5.0);
 
 		CurrencyTrend ct2 = new CurrencyTrend();
-		ct2.setIdcurrency(1);
-		ct2.setName("ct2");
+		Currency cr2 = new Currency();
+		cr2.setName("cr2");
+		cr2.setIdcurrency(2);
+		ct2.setCurrency(cr2);
 		ct2.setNotetobuy(10.0);
 		ct2.setNotetosell(6.0);
 
 		CurrencyTrend ct3 = new CurrencyTrend();
-		ct3.setIdcurrency(1);
-		ct3.setName("ct3");
+		Currency cr3 = new Currency();
+		cr3.setName("cr3");
+		cr3.setIdcurrency(3);
+		ct3.setCurrency(cr3);
 		ct3.setNotetobuy(15.0);
 		ct3.setNotetosell(3.0);
 
 		CurrencyTrend ct4 = new CurrencyTrend();
-		ct4.setIdcurrency(1);
-		ct4.setName("ct4");
+		Currency cr4 = new Currency();
+		cr4.setName("cr4");
+		cr4.setIdcurrency(4);
+		ct4.setCurrency(cr4);
 		ct4.setNotetobuy(8.0);
 		ct4.setNotetosell(7.0);
 

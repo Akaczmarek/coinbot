@@ -8,7 +8,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,14 +24,14 @@ import fr.afgj.coinbot.calculation.OperationsOnCurrencyTrend;
 
 @Entity
 @Table(name = "currencytrend", schema = "public")
-public class CurrencyTrend extends Currency implements java.io.Serializable {
+public class CurrencyTrend implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private int idtrend;
-	// private Currency currency;
+	private Currency currency;
 	private Boolean lasttrendgrowing;
 	private Integer lasttrendweight;
 	private Date timerecord;
@@ -48,7 +51,7 @@ public class CurrencyTrend extends Currency implements java.io.Serializable {
 	public CurrencyTrend(int idtrend, Currency currency, Boolean lasttrendgrowing, Integer lasttrendweight,
 			Date timerecord, Double notetobuy, Double notetosell, Double valuebidbtc, Double valueaskbtc) {
 		this.idtrend = idtrend;
-		// this.currency = currency;
+		this.currency = currency;
 		this.lasttrendgrowing = lasttrendgrowing;
 		this.lasttrendweight = lasttrendweight;
 		this.timerecord = timerecord;
@@ -69,15 +72,15 @@ public class CurrencyTrend extends Currency implements java.io.Serializable {
 		this.idtrend = idtrend;
 	}
 
-	// @ManyToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(name = "idcurrency", nullable = false)
-	// public Currency getCurrency() {
-	// return this.currency;
-	// }
+	 @ManyToOne(fetch = FetchType.LAZY)
+	 @JoinColumn(name = "idcurrency", nullable = false)
+	 public Currency getCurrency() {
+	 return this.currency;
+	 }
 
-	// public void setCurrency(Currency currency) {
-	// this.currency = currency;
-	// }
+	 public void setCurrency(Currency currency) {
+	 this.currency = currency;
+	 }
 
 	@Column(name = "lasttrendgrowing")
 	public Boolean getLasttrendgrowing() {
@@ -153,7 +156,7 @@ public class CurrencyTrend extends Currency implements java.io.Serializable {
 	 * 
 	 */
 	public boolean updateCT() {
-		List<CurrencyRate> crs = new ArrayList<>(this.getCurrencyrates());
+		List<CurrencyRate> crs = new ArrayList<>();
 		OperationsOnCurrencyTrend ooct = new OperationsOnCurrencyTrend(crs, this);
 		
 		return false;

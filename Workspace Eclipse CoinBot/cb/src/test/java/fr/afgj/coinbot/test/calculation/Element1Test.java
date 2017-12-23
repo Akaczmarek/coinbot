@@ -35,12 +35,13 @@ public class Element1Test implements Runnable {
 
 		for (int i = 0; i < 150; i++) {
 			System.out.println("------------------------------------");
-			int x=1;
+			int x = 1;
 			for (CurrencyTrend ct : getCtb().getCurrenciesTrendsOrderByNoteToBuy()) {
-				System.out.println(x + ". nom test : " + this.getName() + " , nom élément liste : " + ct.getName()
-						+ " , note : " + ct.getNotetobuy());
-				x++;
-
+				if (ct.getCurrency() != null) {
+					System.out.println(x + ". nom test : " + this.getName() + " , nom élément liste : "
+							+ ct.getCurrency().getName() + " , note : " + ct.getNotetobuy());
+					x++;
+				}
 				try {
 					Thread.sleep(5);
 				} catch (InterruptedException e) {
