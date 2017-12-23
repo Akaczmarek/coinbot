@@ -1,5 +1,10 @@
 package fr.afgj.coinbot;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.CommandLineRunner;
@@ -7,7 +12,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fr.afgj.coinbot.entity.Currency;
+import fr.afgj.coinbot.entity.CurrencyRate;
 import fr.afgj.coinbot.entity.User;
+import fr.afgj.coinbot.repository.CurrencyRateRepository;
+import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserRepository;
 
 @SpringBootApplication
@@ -22,16 +31,47 @@ public class ConnexionServeurCoinbotApplication {
 	}
 	
 	
+// ajout des currency rate mockés
+		@Bean
+		public CommandLineRunner saveMockCurrency(CurrencyRateRepository repository) {
+			return (args) -> {
 
+				// création des mock
+				
+				// création de l'objet currency rate
+				Currency cr = new Currency(1, "mock currency 1", "mck1", false, 10000, 0.01, 0.02, 30.0);
+				Long timeLong = 1514050791000L;
+				Date timerecord = new Date(timeLong);
+				double bidbtc = 15;
+				double askbtc = 12;
+				CurrencyRate crr = new CurrencyRate( cr, timerecord, bidbtc, askbtc);
+
+				repository.save(crr);
+				
+				PrintWriter writer;
+				try {
+					writer = new PrintWriter("test2.csv", "UTF-8");
+					writer.println(timeLong+";"+ bidbtc + ";" + askbtc);
+					writer.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			};
+		}
 	
 	
-	
-//	@Bean
+// ajout des currency
+//@Bean //le bean fait que ça s'éxécute au démarrage
 //	public CommandLineRunner saveMockCurrency(CurrencyRepository repository) {
 //		return (args) -> {
 //
 //
-//			
+//			repository.save(new Currency(1, "mock currency 1", "mck1", false, 10000, 0.01, 0.02, 30.0));
 //			repository.save(new Currency(2, "mock currency 2", "mck2", false, 10001, 0.02, 0.022, 32.0));
 //			repository.save(new Currency(3, "mock currency 3", "mck3", false, 10002, 0.03, 0.033, 33.0));
 //			repository.save(new Currency(4, "mock currency 4", "mck4", false, 10003, 0.04, 0.044, 34.0));

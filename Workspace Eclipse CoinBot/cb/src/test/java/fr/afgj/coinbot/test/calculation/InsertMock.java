@@ -1,26 +1,25 @@
 package fr.afgj.coinbot.test.calculation;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-
-import fr.afgj.coinbot.entity.Currency;
-import fr.afgj.coinbot.repository.CurrencyRepository;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 public class InsertMock {
 
-	private static final Logger log = LogManager.getLogger();
+	public static void main(String[] args) {
 
-	@Bean
-	public CommandLineRunner saveMockCurrency(CurrencyRepository repository) {
-		return (args) -> {
+		Date timerecord = new Date(1511458791000L);
+		
+		System.out.println(timerecord);
+		Date timerecord2 = new Date(1511458791000L + 3600000);
+		
+		System.out.println(timerecord2);
 
-
-			
-			repository.save(new Currency(1, "mock currency 1", "mck1", false, 10000, 0.01, 0.02, 30.0));
-
-		};
 	}
 
 }

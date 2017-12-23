@@ -41,6 +41,15 @@ public class CurrencyRate implements java.io.Serializable {
 		this.currency = currency;
 	}
 
+	public CurrencyRate( Currency currency, Date timerecord, Double bidbtc, Double askbtc) {
+		super();
+		
+		this.currency = currency;
+		this.timerecord = timerecord;
+		this.bidbtc = bidbtc;
+		this.askbtc = askbtc;
+	}
+
 	public CurrencyRate(int idcurrencyrate, Currency currency, Date timerecord, Double bidbtc, Double askbtc,
 			Double bidusd, Double askusd, Double bideur, Double askeur) {
 		this.idcurrencyrate = idcurrencyrate;
