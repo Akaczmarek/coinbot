@@ -12,5 +12,6 @@ import fr.afgj.coinbot.entity.Currency;
 @CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "currency", path = "currency")
 public interface  CurrencyRepository extends CrudRepository<Currency, Integer>, Serializable{
+	
 
 }
