@@ -1,15 +1,13 @@
 package fr.afgj.coinbot;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import fr.afgj.coinbot.entity.Currency;
@@ -26,77 +24,141 @@ public class ConnexionServeurCoinbotApplication {
 	private static final Logger log = LogManager.getLogger();
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConnexionServeurCoinbotApplication.class, args);
-
+		ApplicationContext ctx = SpringApplication.run(ConnexionServeurCoinbotApplication.class, args);
+		CurrencyRepository currencyRep = ctx.getBean(CurrencyRepository.class);
+		CurrencyRateRepository currencyRateRep = ctx.getBean(CurrencyRateRepository.class);
+		
+		Currency cr = currencyRep.findOne(1);
+		
+		System.out.println("currency trouvé" + cr.getName() +  " (id = " + cr.getIdcurrency() + ")");
+		
+		
+		System.out.println("----------------");
+		
+		List<CurrencyRate> CurrencyRates = currencyRateRep.findByCurrency(cr);
+		int i = 0;
+		for (CurrencyRate currencyRate : CurrencyRates) {
+			System.out.println(i + ". currency rate (id = " + currencyRate.getIdcurrencyrate() + ") valeur bid :" + currencyRate.getBidbtc());
+			i++;
+		}
+		
 	}
-
-	// ajout des currency rate mockés
-	@Bean
-	public CommandLineRunner saveMockCurrency(CurrencyRateRepository repository) {
+	
+	
+	public CommandLineRunner chargementDonnéesCurrency(CurrencyRateRepository repository) {
 		return (args) -> {
+			// save a couple of users
+			// repository.save(new User("francois", "l'embrouille", "fe",
+			// "francois@embrouille.com", "123", null, null, null));
 
-			// Sauvegarde des mocks
+			// fetch all users
 
-			PrintWriter writer;
-			try {
-				writer = new PrintWriter("CurrencyMock2.csv", "UTF-8");
+			log.info("Users found with findAll():");
+			log.info("-------------------------------");
+			for (CurrencyRate cr : repository.findAll()) {
 
-				// création de l'objet currency rate
-				Currency cr = new Currency(2, "mock currency 2", "mck2", false, 10001, 0.02, 0.022, 32.0);
-				final Long StartTimeLong = 1514050791000L; // 23 novembre 2017
-				final Long EndTimeLong = 1517342118000L; // 30 janvier 2018
-				//final Long EndTimeLong = 1514057991100L; // petit test
 
-				// valeur de départ
-				double askbtc = 0.00025639;
-				double bidbtc = 0.00025628;
-				double delta = 0.00000120;
-				double deltaBidAsk = 0.00000015;
-
-				// sens d'évolution
-				double valueSens = 0.57;// valeur comprise entre 0 et 1; si = 0.5 => 1 chance sur deux de monter, si
-										// >0.5 plus de chance de monter
-				int signe = 1;
-				
-				// variable tampon
-				String text ="";
-
-				for (Long date = StartTimeLong; date < EndTimeLong; date += 3600000) {
-
-					Date timerecord = new Date(date);
-
-					// définition du signe
-
-					if (Math.random() <= valueSens) {
-						signe = 1;
-					} else {
-						signe = -1;
-					}
-
-					askbtc = askbtc + (signe) * (Math.random() * delta) ;
-					bidbtc = askbtc - (Math.random() * delta) - 0.00000002 ;
-
-					CurrencyRate crr = new CurrencyRate(cr, timerecord, bidbtc, askbtc);
-
-					repository.save(crr);
-					
-					text = date + ";" + bidbtc + ";" + askbtc;
-					
-					writer.println(text.replace(".", ","));
-
-				}
-
-				writer.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+
+			log.info("");
 
 		};
 	}
+	
+	
+	public CommandLineRunner chargementDonnéesCurrencyRate(CurrencyRateRepository repository) {
+		return (args) -> {
+			// save a couple of users
+			// repository.save(new User("francois", "l'embrouille", "fe",
+			// "francois@embrouille.com", "123", null, null, null));
+
+			// fetch all users
+
+			log.info("Users found with findAll():");
+			log.info("-------------------------------");
+			for (CurrencyRate cr : repository.findAll()) {
+
+
+			}
+
+			log.info("");
+
+		};
+	}
+	
+
+//	// ajout des currency rate mockés
+//
+//	public CommandLineRunner saveMockCurrency(CurrencyRateRepository repository) {
+//		return (args) -> {
+//
+//			// Sauvegarde des mocks
+//
+//			PrintWriter writer;
+//			try {
+//				writer = new PrintWriter("CurrencyMock6.csv", "UTF-8");
+//
+//				// création de l'objet currency rate
+//				Currency cr = new Currency(6, "mock currency 6", "mck6", false, 10005,0.06, 0.066, 36.0);
+//				final Long StartTimeLong = 1514050791000L; // 23 novembre 2017
+//				final Long EndTimeLong = 1517342118000L; // 30 janvier 2018
+//				//final Long EndTimeLong = 1514057991100L; // petit test
+//
+//				// valeur de départ
+//				double askbtc = 0.00007639;
+//				double bidbtc = 0.00007628;
+//				double delta = 0.00000130;
+//				double deltaBidAsk = 0.00000016;
+//
+//				// sens d'évolution
+//				double valueSens = 0.51;// valeur comprise entre 0 et 1; si = 0.5 => 1 chance sur deux de monter, si
+//										// >0.5 plus de chance de monter
+//				int signe = 1;
+//				
+//				// variable tampon
+//				String text ="";
+//
+//				for (Long date = StartTimeLong; date < EndTimeLong; date += 1800000) {
+//
+//					Date timerecord = new Date(date);
+//
+//					// définition du signe
+//
+//					if (Math.random() <= valueSens) {
+//						signe = 1;
+//					} else {
+//						signe = -1;
+//					}
+//
+//					if(askbtc<0.00001500) {
+//						askbtc=askbtc+0.00002000;
+//					}
+//					askbtc = askbtc + (signe) * (Math.random() * delta) ;
+//					bidbtc = askbtc - (Math.random() * delta) - 0.00000002 ;
+//
+//					CurrencyRate crr = new CurrencyRate(cr, timerecord, bidbtc, askbtc);
+//
+//					repository.save(crr);
+//					
+//					text = date + ";" + bidbtc + ";" + askbtc;
+//					
+//					writer.println(text.replace(".", ","));
+//
+//				}
+//
+//				writer.close();
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			System.out.println("chargement des données fini");
+//
+//		};
+//	}
 
 	// ajout des currency
 	// @Bean //le bean fait que ça s'éxécute au démarrage
@@ -120,7 +182,7 @@ public class ConnexionServeurCoinbotApplication {
 	// };
 	// }
 
-	@Bean
+	//@Bean
 	public CommandLineRunner demo(UserRepository repository) {
 		return (args) -> {
 			// save a couple of users
