@@ -13,12 +13,15 @@ public class InsertMock {
 
 	public static void main(String[] args) {
 
-		Date timerecord = new Date(1511458791000L);
+//		Date timerecord = new Date(1511458791000L);
+//		
+//		System.out.println(timerecord);
+//		Date timerecord2 = new Date(1511458791000L + 3600000);
+//		
+//		System.out.println(timerecord2);
 		
-		System.out.println(timerecord);
-		Date timerecord2 = new Date(1511458791000L + 3600000);
-		
-		System.out.println(timerecord2);
+		String text = "un chien. qui a despuce.c'est super.";
+		System.out.println(text.replace(".", ","));
 
 	}
 

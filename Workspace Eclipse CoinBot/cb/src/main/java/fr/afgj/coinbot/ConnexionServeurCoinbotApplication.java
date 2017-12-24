@@ -20,6 +20,7 @@ import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserRepository;
 
 @SpringBootApplication
+
 public class ConnexionServeurCoinbotApplication {
 
 	private static final Logger log = LogManager.getLogger();
@@ -30,7 +31,7 @@ public class ConnexionServeurCoinbotApplication {
 	}
 
 	// ajout des currency rate mockés
-	
+	@Bean
 	public CommandLineRunner saveMockCurrency(CurrencyRateRepository repository) {
 		return (args) -> {
 
@@ -38,24 +39,27 @@ public class ConnexionServeurCoinbotApplication {
 
 			PrintWriter writer;
 			try {
-				writer = new PrintWriter("CurrencyMock1.csv", "UTF-8");
+				writer = new PrintWriter("CurrencyMock2.csv", "UTF-8");
 
 				// création de l'objet currency rate
-				Currency cr = new Currency(1, "mock currency 1", "mck1", false, 10000, 0.01, 0.02, 30.0);
+				Currency cr = new Currency(2, "mock currency 2", "mck2", false, 10001, 0.02, 0.022, 32.0);
 				final Long StartTimeLong = 1514050791000L; // 23 novembre 2017
-				// final Long EndTimeLong = 1517342118000L; // 30 janvier 2018
-				final Long EndTimeLong = 1514057991100L; // petit test
+				final Long EndTimeLong = 1517342118000L; // 30 janvier 2018
+				//final Long EndTimeLong = 1514057991100L; // petit test
 
 				// valeur de départ
 				double askbtc = 0.00025639;
 				double bidbtc = 0.00025628;
-				double delta = 0.00000100;
-				double deltaBidAsk = 0.00000012;
+				double delta = 0.00000120;
+				double deltaBidAsk = 0.00000015;
 
 				// sens d'évolution
-				double valueSens = 0.5;// valeur comprise entre 0 et 1; si = 0.5 => 1 chance sur deux de monter, si
+				double valueSens = 0.57;// valeur comprise entre 0 et 1; si = 0.5 => 1 chance sur deux de monter, si
 										// >0.5 plus de chance de monter
 				int signe = 1;
+				
+				// variable tampon
+				String text ="";
 
 				for (Long date = StartTimeLong; date < EndTimeLong; date += 3600000) {
 
@@ -75,8 +79,10 @@ public class ConnexionServeurCoinbotApplication {
 					CurrencyRate crr = new CurrencyRate(cr, timerecord, bidbtc, askbtc);
 
 					repository.save(crr);
-
-					writer.println(date + ";" + bidbtc + ";" + askbtc);
+					
+					text = date + ";" + bidbtc + ";" + askbtc;
+					
+					writer.println(text.replace(".", ","));
 
 				}
 
