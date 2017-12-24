@@ -8,7 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyRate;
@@ -16,6 +15,7 @@ import fr.afgj.coinbot.entity.User;
 import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserRepository;
+import fr.afgj.coinbot.service.CurrencyService;
 
 @SpringBootApplication
 
@@ -35,11 +35,20 @@ public class ConnexionServeurCoinbotApplication {
 		
 		System.out.println("----------------");
 		
-		List<CurrencyRate> CurrencyRates = currencyRateRep.findByCurrency(cr);
-		int i = 0;
-		for (CurrencyRate currencyRate : CurrencyRates) {
-			System.out.println(i + ". currency rate (id = " + currencyRate.getIdcurrencyrate() + ") valeur bid :" + currencyRate.getBidbtc());
-			i++;
+//		List<CurrencyRate> CurrencyRates = currencyRateRep.findByCurrency(cr);
+//		//Set<CurrencyRate> CurrencyRates = cr.getCurrencyrates();
+//		
+//		int i = 0;
+//		for (CurrencyRate currencyRate : CurrencyRates) {
+//			System.out.println(i + ". currency rate (id = " + currencyRate.getIdcurrencyrate() + ") valeur bid :" + currencyRate.getBidbtc());
+//			i++;
+//		}
+//		
+		CurrencyService cs = ctx.getBean(CurrencyService.class);
+		List<Currency> currencies = cs.currencies();
+		
+		for (Currency currency : currencies) {
+			System.out.println("currency trouvé " + currency.getName() +  " (id = " + currency.getIdcurrency() + ")");
 		}
 		
 	}
