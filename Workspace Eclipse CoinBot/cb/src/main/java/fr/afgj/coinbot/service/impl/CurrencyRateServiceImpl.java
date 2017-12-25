@@ -1,5 +1,6 @@
 package fr.afgj.coinbot.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,17 @@ public class CurrencyRateServiceImpl implements CurrencyRateService{
 	}
 
 	@Override
-	public List<CurrencyRate> currencyRateByCurrency(Currency cr) {
+	public List<CurrencyRate> currencyRatesByCurrency(Currency cr) {
 		// TODO Auto-generated method stub
 		return currencyRateRepository.findByCurrency(cr);
 	}
+
+	@Override
+	public List<CurrencyRate> currencyRatesByDate(Date date0, Date Recentlydate, Currency cr) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

@@ -1,5 +1,6 @@
 package fr.afgj.coinbot.service;
 
+import java.util.Date;
 import java.util.List;
 
 import fr.afgj.coinbot.entity.Currency;
@@ -10,6 +11,8 @@ public interface CurrencyRateService {
 	public void deleteCurrencyRate(CurrencyRate crr);
 	public CurrencyRate saveCurrencyRate(CurrencyRate crr);
 	public List<CurrencyRate> currenciesRates();
-	public List<CurrencyRate> currencyRateByCurrency(Currency cr);
+	public List<CurrencyRate> currencyRatesByCurrency(Currency cr);
+	public List<CurrencyRate> currencyRatesByDate(Date date0, Date Recentlydate, Currency cr);
+	
 
 }

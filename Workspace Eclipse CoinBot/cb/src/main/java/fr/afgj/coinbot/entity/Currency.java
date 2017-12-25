@@ -1,7 +1,9 @@
 package fr.afgj.coinbot.entity;
 // Generated 21 d�c. 2017 09:38:56 by Hibernate Tools 5.1.6.Final
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -37,6 +39,7 @@ public class Currency implements java.io.Serializable {
 	private Set<OrderHistoryBot> orderhistorybots = new HashSet<OrderHistoryBot>(0);
 	private Set<CurrencyRate> currencyrates = new HashSet<CurrencyRate>(0);
 	private Set<CurrencyTrend> currencytrends = new HashSet<CurrencyTrend>(0);
+	private List<CurrencyRate> currencyratesStudy = new ArrayList<>();
 
 	public Currency() {
 	}
@@ -179,5 +182,16 @@ public class Currency implements java.io.Serializable {
 	public void setCurrencytrends(Set<CurrencyTrend> currencytrends) {
 		this.currencytrends = currencytrends;
 	}
+
+	public List<CurrencyRate> getCurrencyratesStudy() {
+		return currencyratesStudy;
+	}
+
+	public void setCurrencyratesStudy(List<CurrencyRate> currencyratesStudy) {
+		this.currencyratesStudy = currencyratesStudy;
+	}
+	
+	
+	
 
 }

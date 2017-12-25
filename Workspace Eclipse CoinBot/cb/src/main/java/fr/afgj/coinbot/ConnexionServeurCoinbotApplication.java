@@ -1,5 +1,6 @@
 package fr.afgj.coinbot;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +16,7 @@ import fr.afgj.coinbot.entity.User;
 import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserRepository;
-import fr.afgj.coinbot.service.CurrencyService;
+import fr.afgj.coinbot.service.CurrencyRateService;
 
 @SpringBootApplication
 
@@ -44,12 +45,32 @@ public class ConnexionServeurCoinbotApplication {
 //			i++;
 //		}
 //		
-		CurrencyService cs = ctx.getBean(CurrencyService.class);
-		List<Currency> currencies = cs.currencies();
+// partie à conserver*********************************************************************************************************
+//		// first loading
+//		//loading data into currencies trends bot
+//		CurrenciesTrendsBot ctb = CurrenciesTrendsBot.getInstance();
+//		CurrencyTrendService cts = ctx.getBean(CurrencyTrendService.class);
+//		CurrencyService cs = ctx.getBean(CurrencyService.class);
+//		List<Currency> currencies = cs.currencies();
+//		
+//		for (Currency currency : currencies) {
+//			CurrencyTrend ct = ctx.getBean(CurrencyTrend.class);
+//			ct.setCurrency(currency);
+//			cts.saveCurrencyTrend(ct);
+//			ctb.getCurrenciesTrends().add(ct);
+//		}
+//		
+//		for (CurrencyTrend ct : ctb.getCurrenciesTrends()) {
+//			System.out.println(ct.getIdtrend() + " " + ct.getCurrency().getName());
+//		}
+//		**************************************************************************************************
 		
-		for (Currency currency : currencies) {
-			System.out.println("currency trouvé " + currency.getName() +  " (id = " + currency.getIdcurrency() + ")");
-		}
+		CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
+		Date date0 = new Date(1514017735000L);
+		Date Recentlydate = new Date(1514190535000L);
+		List<CurrencyRate> currencyRates = crs.currencyRatesByDate(date0, Recentlydate, cr);
+		
+		System.out.println(currencyRates.size());
 		
 	}
 	

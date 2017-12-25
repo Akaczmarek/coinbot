@@ -110,6 +110,12 @@ public class CurrenciesTrendsBot implements Runnable{
 		while(true) {
 			
 
+			//parcourt de la liste de tendances
+			for (CurrencyTrend ct : this.getCurrenciesTrends()) {
+				ct.update();
+			}
+			
+			
 			//mise à jour des listes ordonnées
 			this.updateCurrenciesTrendsOrderByNoteToBuy();
 			this.updateCurrenciesTrendsOrderByNoteToSell();
