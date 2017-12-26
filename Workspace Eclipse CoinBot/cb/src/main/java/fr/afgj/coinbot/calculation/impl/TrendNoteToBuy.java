@@ -23,7 +23,16 @@ public class TrendNoteToBuy extends TrendNote {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
+		//Stage 1 :  transmit information to line equation average
+		
+		// preparation calculation equation :
+		
+		this.calculationAveragePt1("ask");
+		LineEquationAverage lineEquationAverage = new LineEquationAverage();
+		
+		
+		
 		
 	}
 

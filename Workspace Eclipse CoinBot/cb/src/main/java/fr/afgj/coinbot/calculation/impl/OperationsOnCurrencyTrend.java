@@ -2,6 +2,7 @@ package fr.afgj.coinbot.calculation.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -86,12 +87,17 @@ public class OperationsOnCurrencyTrend implements Runnable {
 
 			for (TrendRule tr : this.getTrendRule().getTrendRules()) {
 
-				tr.updateDefinitionStartDate();
+				Date startDateRule = tr.updateDefinitionStartDate();
 				
-				TrendNoteToBuy tntb = new TrendNoteToBuy(crs, tr, this);
-				TrendNoteToSell tnts = new TrendNoteToSell(crs, tr, this);
+				List<CurrencyRate> crsTransmit = new ArrayList<>(crs);
+				
+				crsTransmit.removeIf(p-> p.getTimerecord().getTime()<startDateRule.getTime());
+				
+				TrendNoteToBuy tntb = new TrendNoteToBuy(crsTransmit, tr, this);
+				TrendNoteToSell tnts = new TrendNoteToSell(crsTransmit, tr, this);
 
 			}
+			
 
 		} else {
 			this.log.error("error " + this.toString());
@@ -111,10 +117,39 @@ public class OperationsOnCurrencyTrend implements Runnable {
 	public static void main(String[] args) {
 		
 		TrendRulesBot tr = new TrendRulesBot();
+		
+		
+
+		
 		tr.loadTrendRulesBotEnum(); 
 		
 		for (TrendRule trb : tr.getTrendRules()) {
 			System.out.println(trb.getName() + ", date départ " + trb.updateDefinitionStartDate() + ", date fin" + trb.updateDefinitioneEndDate());
+		}
+		
+		
+		CurrencyRate cr1 =  new CurrencyRate();
+		cr1.setTimerecord(new Date(1514305547000L) );
+		CurrencyRate cr2 =  new CurrencyRate();
+		cr2.setTimerecord(new Date(1514287547000L) );
+		CurrencyRate cr3 =  new CurrencyRate();
+		cr3.setTimerecord(new Date(1514114747000L) );
+		CurrencyRate cr4 =  new CurrencyRate();
+		cr4.setTimerecord(new Date(1513164347000L) );
+		
+		Date startDateRule = new Date (1514291147000L);
+		List<CurrencyRate> crsTransmit = new ArrayList<>();
+		
+		 crsTransmit.add(cr1);
+		 crsTransmit.add(cr2);
+		 crsTransmit.add(cr3);
+		 crsTransmit.add(cr4);
+		 
+		 
+		crsTransmit.removeIf(p-> p.getTimerecord().getTime()<startDateRule.getTime());
+		System.out.println("----------------------");
+		for (CurrencyRate currencyRate : crsTransmit) {
+			System.out.println(currencyRate.getTimerecord());
 		}
 
 	}

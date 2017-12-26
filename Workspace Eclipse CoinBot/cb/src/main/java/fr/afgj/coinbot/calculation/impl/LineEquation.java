@@ -11,6 +11,7 @@ public abstract class LineEquation {
 		
 	}
 	
+	
 
 	public TrendPointXY getAveragePt1() {
 		return averagePt1;

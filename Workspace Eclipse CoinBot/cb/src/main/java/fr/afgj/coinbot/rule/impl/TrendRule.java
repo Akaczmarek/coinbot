@@ -113,7 +113,8 @@ public abstract class TrendRule {
 		}
 		
 		public long convertDurationInMillis(TrendRule tr) {
-			long result = ((tr.getNumberDays() * 24) + tr.getNumberHours())*3600000;
+			long result = (long)((((long)tr.getNumberDays() * 24) + (long)tr.getNumberHours())*(long)3600000);
+			System.out.println("durée en miliseconde" +result  + ", nombre heure " + tr.getNumberHours());
 			return result;
 		}
 		
@@ -136,7 +137,7 @@ public abstract class TrendRule {
 			Long durationRule = convertDurationInMillis(this);
 			
 			Date startDate = new Date(endDate.getTime()- durationRule);
-			
+			System.out.println("opération " +  (endDate.getTime()- durationRule));
 			this.setStartDate(startDate);
 			
 			return startDate;
