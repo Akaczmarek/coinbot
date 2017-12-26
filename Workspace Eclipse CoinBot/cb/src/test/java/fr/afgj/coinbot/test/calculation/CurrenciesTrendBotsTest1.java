@@ -1,6 +1,6 @@
 package fr.afgj.coinbot.test.calculation;
 
-import fr.afgj.coinbot.calculation.CurrenciesTrendsBot;
+import fr.afgj.coinbot.calculation.impl.CurrenciesTrendsBot;
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyTrend;
 

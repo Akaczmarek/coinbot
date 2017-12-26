@@ -1,4 +1,4 @@
-package fr.afgj.coinbot.calculation;
+package fr.afgj.coinbot.calculation.impl;
 
 import java.util.List;
 
