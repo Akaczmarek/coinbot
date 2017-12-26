@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fr.afgj.coinbot.calculation.ITrendNote;
 import fr.afgj.coinbot.entity.CurrencyRate;
 import fr.afgj.coinbot.rule.impl.TrendRule;
 
-public abstract class TrendNote implements Runnable {
+public abstract class TrendNote implements Runnable, ITrendNote {
 
 	private double note;
 	private List<CurrencyRate> currencyRates;
@@ -57,27 +58,39 @@ public abstract class TrendNote implements Runnable {
 		this.ooct = ooct;
 	}
 
-	public TrendPointXY calculationAveragePt1(String type) {
+	/* (non-Javadoc)
+	 * @see fr.afgj.coinbot.calculation.impl.ITrendNote#calculationAveragePt1(java.lang.String)
+	 */
+	@Override
+	public TrendPointXYAverage calculationAveragePt1(String type) {
 
 		List<CurrencyRate> currencyRates = new ArrayList<>(this.getCurrencyRates());
 		List<CurrencyRate> partOfCurrencyRate = currencyRates.subList(0, (currencyRates.size() / 2));
-		TrendPointXY pt = calculationAveragePt(partOfCurrencyRate, type);
+		TrendPointXYAverage pt = calculationAveragePt(partOfCurrencyRate, type);
 
 		return pt;
 	}
 
-	public TrendPointXY calculationAveragePt2(String type) {
+	/* (non-Javadoc)
+	 * @see fr.afgj.coinbot.calculation.impl.ITrendNote#calculationAveragePt2(java.lang.String)
+	 */
+	@Override
+	public TrendPointXYAverage calculationAveragePt2(String type) {
 
 		List<CurrencyRate> currencyRates = new ArrayList<>(this.getCurrencyRates());
 		List<CurrencyRate> partOfCurrencyRate = currencyRates.subList((currencyRates.size() / 2),
 				(currencyRates.size()));
-		TrendPointXY pt = calculationAveragePt(partOfCurrencyRate, type);
+		TrendPointXYAverage pt = calculationAveragePt(partOfCurrencyRate, type);
 
 		return pt;
 	}
 
-	public TrendPointXY calculationAveragePt(List<CurrencyRate> partOfCurrencyRate, String type) {
-		TrendPointXY pt = new TrendPointXYAverage();
+	/* (non-Javadoc)
+	 * @see fr.afgj.coinbot.calculation.impl.ITrendNote#calculationAveragePt(java.util.List, java.lang.String)
+	 */
+	@Override
+	public TrendPointXYAverage calculationAveragePt(List<CurrencyRate> partOfCurrencyRate, String type) {
+		TrendPointXYAverage pt = new TrendPointXYAverage();
 
 		List<CurrencyRate> list = partOfCurrencyRate;
 
