@@ -1,7 +1,13 @@
 package fr.afgj.coinbot.entity;
 // Generated 21 d�c. 2017 09:38:56 by Hibernate Tools 5.1.6.Final
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -149,5 +155,49 @@ public class CurrencyRate implements java.io.Serializable {
 	public void setAskeur(Double askeur) {
 		this.askeur = askeur;
 	}
+	
+	// the youngest is the first, the oldest is the last after sort
+	public volatile static Comparator<CurrencyRate> CRComparatorByDate = new Comparator<CurrencyRate>() {
 
+		@Override
+		public int compare(CurrencyRate CR1, CurrencyRate CR2) {
+			// TODO Auto-generated method stub
+
+			Long dateLongCR1 =  (CR1.getTimerecord().getTime());
+			Long dateLongCR2 =  (CR2.getTimerecord().getTime());
+			
+			return (int)(dateLongCR1 - dateLongCR2);
+		}
+	};
+	
+
+	public static void main(String[] args) {
+		
+//		CurrencyRate cr1 = new CurrencyRate();
+//		cr1.setTimerecord(new Date(1514294745000L));
+//		CurrencyRate cr2 = new CurrencyRate();
+//		cr2.setTimerecord(new Date(1514294747000L));
+//		CurrencyRate cr3 = new CurrencyRate();
+//		cr3.setTimerecord(new Date(1514294746000L));
+//		
+//		List<CurrencyRate> crs  =  new ArrayList<>();
+//		crs.add(cr1);
+//		crs.add(cr2);
+//		crs.add(cr3);
+//		
+//		for (CurrencyRate currencyRate : crs) {
+//			System.out.println(currencyRate.getTimerecord());
+//		}
+//		
+//		Collections.sort(crs, CurrencyRate.CRComparatorByDate);
+//		
+//		for (CurrencyRate currencyRate : crs) {
+//			System.out.println(currencyRate.getTimerecord());
+//		}
+		
+		
+
+		
+	}
+	
 }

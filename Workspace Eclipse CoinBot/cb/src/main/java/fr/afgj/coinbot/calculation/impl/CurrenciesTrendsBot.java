@@ -131,7 +131,7 @@ public class CurrenciesTrendsBot implements Runnable {
 		// boucle principale, boucle sur toutes les actions ci dessus
 		while (true) {
 
-			// parcourt de la liste de tendances
+			// parcourt de la liste de tendances et mise à jour
 			for (CurrencyTrend ct : this.getCurrenciesTrends()) {
 				ct.update(this.getTrendRule());
 			}

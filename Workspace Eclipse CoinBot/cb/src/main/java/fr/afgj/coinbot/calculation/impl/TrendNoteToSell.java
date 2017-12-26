@@ -1,5 +1,29 @@
 package fr.afgj.coinbot.calculation.impl;
 
-public class TrendNoteToSell {
+import java.util.List;
+
+import fr.afgj.coinbot.entity.CurrencyRate;
+import fr.afgj.coinbot.rule.impl.TrendRule;
+
+public class TrendNoteToSell extends TrendNote {
+
+	public TrendNoteToSell() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public TrendNoteToSell(List<CurrencyRate> currencyRates, TrendRule trendRule, OperationsOnCurrencyTrend ooct) {
+		super(currencyRates, trendRule, ooct);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
 
 }

@@ -165,6 +165,8 @@ public class CurrencyTrend implements java.io.Serializable {
 
 		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
 		OperationsOnCurrencyTrend ooct = new OperationsOnCurrencyTrend(crs, tr, this);
+		Thread t = new Thread(ooct);
+		t.start();
 
 		return false;
 	}

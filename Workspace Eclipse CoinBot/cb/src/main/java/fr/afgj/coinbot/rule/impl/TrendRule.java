@@ -2,6 +2,7 @@ package fr.afgj.coinbot.rule.impl;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public abstract class TrendRule {
@@ -13,6 +14,8 @@ public abstract class TrendRule {
 		private int numberDays;
 		private int numberHours;
 		private int multiplier;
+		private Date startDate; // translation to date - the rule start 
+		private Date endDate; // translation to date - the rule end (current date)
 
 		public TrendRule() {
 
@@ -67,9 +70,27 @@ public abstract class TrendRule {
 		public void setTrendRules(List<TrendRule> trendRules) {
 			TrendRules = trendRules;
 		}
+		
+		public Date getStartDate() {
+			return startDate;
+		}
+
+		public void setStartDate(Date startDate) {
+			this.startDate = startDate;
+		}
+
+		public Date getEndDate() {
+			return endDate;
+		}
+
+		public void setEndDate(Date endDate) {
+			this.endDate = endDate;
+		}
 
 		// Methods
 		// -------------------------------------------------------------------------------
+
+
 
 		/*
 		 * return the max value duration of trend
@@ -90,6 +111,12 @@ public abstract class TrendRule {
 			long result = (tr.getNumberDays() * 24) + tr.getNumberHours();
 			return result;
 		}
+		
+		public long convertDurationInMillis(TrendRule tr) {
+			long result = ((tr.getNumberDays() * 24) + tr.getNumberHours())*3600000;
+			return result;
+		}
+		
 
 		public final static Comparator<TrendRule> TRDurationComparator = new Comparator<TrendRule>() {
 
@@ -103,4 +130,21 @@ public abstract class TrendRule {
 				return TRduration2 - TRduration1;
 			}
 		};
+		
+		public Date updateDefinitionStartDate() {
+			Date endDate = updateDefinitioneEndDate();
+			Long durationRule = convertDurationInMillis(this);
+			
+			Date startDate = new Date(endDate.getTime()- durationRule);
+			
+			this.setStartDate(startDate);
+			
+			return startDate;
+		}
+		
+		public Date updateDefinitioneEndDate() {
+			Date endDate = new Date();
+			this.setEndDate(endDate);
+			return endDate;
+		}
 }
