@@ -1,18 +1,15 @@
 package fr.afgj.coinbot.calculation.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import fr.afgj.coinbot.calculation.ITrendNote;
-import fr.afgj.coinbot.entity.CurrencyRate;
 import fr.afgj.coinbot.rule.impl.TrendRule;
 
-public abstract class TrendNote implements Runnable, ITrendNote {
+public abstract class TrendNote implements Runnable {
 
 	private double note;
-	private List<CurrencyRate> currencyRates;
 	private List<TrendPointXY> pointsXY;
+	private List<LineEquation> lineEquations;
 	private TrendRule trendRule;
 	private OperationsOnCurrencyTrend ooct;
 
@@ -20,9 +17,9 @@ public abstract class TrendNote implements Runnable, ITrendNote {
 
 	}
 
-	public TrendNote(List<CurrencyRate> currencyRates, TrendRule trendRule, OperationsOnCurrencyTrend ooct) {
+	public TrendNote(List<TrendPointXY> pointsXY, TrendRule trendRule, OperationsOnCurrencyTrend ooct) {
 		super();
-		this.currencyRates = currencyRates;
+		this.pointsXY = pointsXY;
 		this.trendRule = trendRule;
 		this.ooct = ooct;
 	}
@@ -35,12 +32,12 @@ public abstract class TrendNote implements Runnable, ITrendNote {
 		this.note = note;
 	}
 
-	public List<CurrencyRate> getCurrencyRates() {
-		return currencyRates;
+	public List<TrendPointXY> getPointsXY() {
+		return pointsXY;
 	}
 
-	public void setCurrencyRates(List<CurrencyRate> currencyRates) {
-		this.currencyRates = currencyRates;
+	public void setPointsXY(List<TrendPointXY> pointsXY) {
+		this.pointsXY = pointsXY;
 	}
 
 	public TrendRule getTrendRule() {
@@ -58,107 +55,120 @@ public abstract class TrendNote implements Runnable, ITrendNote {
 	public void setOoct(OperationsOnCurrencyTrend ooct) {
 		this.ooct = ooct;
 	}
+	
+	public List<LineEquation> getLineEquations() {
+		return lineEquations;
+	}
 
-	/* (non-Javadoc)
-	 * @see fr.afgj.coinbot.calculation.impl.ITrendNote#calculationAveragePt1(java.lang.String)
+	public void setLineEquations(List<LineEquation> lineEquations) {
+		this.lineEquations = lineEquations;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.afgj.coinbot.calculation.impl.ITrendNote#calculationAveragePt1(java.lang.
+	 * String)
 	 */
-	@Override
-	public TrendPointXYAverage calculationAveragePt1(String type) {
 
-		List<CurrencyRate> currencyRates = new ArrayList<>(this.getCurrencyRates());
-		List<CurrencyRate> partOfCurrencyRate = currencyRates.subList(0, (currencyRates.size() / 2));
-		TrendPointXYAverage pt = calculationAveragePt(partOfCurrencyRate, type);
+
+
+	public TrendPointXY calculationAveragePt1() {
+
+		List<TrendPointXY> PointsXY = new ArrayList<>(this.getPointsXY());
+		List<TrendPointXY> partOfPointsList = PointsXY.subList(0, (PointsXY.size() / 2));
+		TrendPointXY pt = calculationAveragePt(partOfPointsList);
 
 		return pt;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.afgj.coinbot.calculation.impl.ITrendNote#calculationAveragePt2(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.afgj.coinbot.calculation.impl.ITrendNote#calculationAveragePt2(java.lang.
+	 * String)
 	 */
-	@Override
-	public TrendPointXYAverage calculationAveragePt2(String type) {
 
-		List<CurrencyRate> currencyRates = new ArrayList<>(this.getCurrencyRates());
-		List<CurrencyRate> partOfCurrencyRate = currencyRates.subList((currencyRates.size() / 2),
-				(currencyRates.size()));
-		TrendPointXYAverage pt = calculationAveragePt(partOfCurrencyRate, type);
+	public TrendPointXY calculationAveragePt2() {
+
+		List<TrendPointXY> PointsXY = new ArrayList<>(this.getPointsXY());
+		List<TrendPointXY> partOfPointsList = PointsXY.subList((PointsXY.size() / 2), (PointsXY.size()));
+		TrendPointXY pt = calculationAveragePt(partOfPointsList);
 
 		return pt;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.afgj.coinbot.calculation.impl.ITrendNote#calculationAveragePt(java.util.List, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.afgj.coinbot.calculation.impl.ITrendNote#calculationAveragePt(java.util.
+	 * List, java.lang.String)
 	 */
-	@Override
-	public TrendPointXYAverage calculationAveragePt(List<CurrencyRate> partOfCurrencyRate, String type) {
-		TrendPointXYAverage pt = new TrendPointXYAverage();
 
-		List<CurrencyRate> list = partOfCurrencyRate;
+	public TrendPointXY calculationAveragePt(List<TrendPointXY> partOfPointsList) {
+		TrendPointXY pt = new TrendPointXY();
+
+		List<TrendPointXY> list = partOfPointsList;
 
 		long sumDate = 0L;
 		double sumValue = 0.0;
-		
+
 		if (!list.isEmpty()) {
-			for (CurrencyRate cr : list) {
+			for (TrendPointXY ptXY : list) {
 
-				sumDate += cr.getTimerecord().getTime();
-				
-				if ("bid".equals(type)) {
-					sumValue += cr.getBidbtc();
+				sumDate += ptXY.getX();
 
-				} else if ("ask".equals(type)) {
-					sumValue += cr.getAskbtc();
-				
-				}
+				sumValue += ptXY.getY();
+
 			}
-			pt.setX( sumDate /list.size());
-			pt.setY( sumValue /list.size());
+			pt.setX(sumDate / list.size());
+			pt.setY(sumValue / list.size());
 		}
 
 		return pt;
 	}
 
+	
+	public void askCalculationLinesEquations(TrendPointXY pt1, TrendPointXY pt2) {
+		List<TrendPointXY> pointsXY = new ArrayList<>(this.getPointsXY());
+		LineEquationAverage lineEquationAverage = new LineEquationAverage(pt1, pt2, this, pointsXY);
+	}
+	
+	
 	public static void main(String[] args) {
-		
-		
-		CurrencyRate cr1 =  new CurrencyRate();
-		cr1.setTimerecord(new Date(1000L) );
-		cr1.setAskbtc(2.0);
-		cr1.setBidbtc(4.0);
 
-		CurrencyRate cr2 =  new CurrencyRate();
-		cr2.setTimerecord(new Date(2000L) );
-		cr2.setAskbtc(4.0);
-		cr2.setBidbtc(4.0);
-		CurrencyRate cr3 =  new CurrencyRate();
-		cr3.setTimerecord(new Date(3000L) );
-		cr3.setAskbtc(6.0);
-		cr3.setBidbtc(4.0);
-		CurrencyRate cr4 =  new CurrencyRate();
-		cr4.setTimerecord(new Date(4000L) );
-		cr4.setAskbtc(8.0);
-		cr4.setBidbtc(4.0);
-		CurrencyRate cr5 =  new CurrencyRate();
-		cr5.setTimerecord(new Date(5000L) );
-		cr5.setAskbtc(10.0);
-		cr5.setBidbtc(4.0);
+		TrendPointXY pt1 = new TrendPointXY();
+		pt1.setX(1000L);
+		pt1.setY(1.0);
+		TrendPointXY pt2 = new TrendPointXY();
+		pt2.setX(2000L);
+		pt2.setY(2.0);
+		TrendPointXY pt3 = new TrendPointXY();
+		pt3.setX(3000L);
+		pt3.setY(3.0);
+		TrendPointXY pt4 = new TrendPointXY();
+		pt4.setX(4000L);
+		pt4.setY(4.0);
+		TrendPointXY pt5 = new TrendPointXY();
+		pt5.setX(5000L);
+		pt5.setY(5.0);
 
-		
-		List<CurrencyRate> list = new ArrayList<>();
-		list.add(cr1);
-		list.add(cr2);
-		list.add(cr3);
-		list.add(cr4);
-		list.add(cr5);
-		
+		List<TrendPointXY> list = new ArrayList<>();
+		list.add(pt1);
+		list.add(pt2);
+		list.add(pt3);
+		list.add(pt4);
+		list.add(pt5);
+
 		TrendNote tn = new TrendNoteToBuy();
-		tn.setCurrencyRates(list);
-		
-		TrendPointXY pt= tn.calculationAveragePt2("ask");
-		
+		tn.setPointsXY(list);
+
+		TrendPointXY pt = tn.calculationAveragePt2();
+
 		System.out.println("temps " + pt.getX() + ", value " + pt.getY());
-		
-		
 
 	}
 

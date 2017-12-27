@@ -12,10 +12,14 @@ public class TrendNoteToSell extends TrendNote {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TrendNoteToSell(List<CurrencyRate> currencyRates, TrendRule trendRule, OperationsOnCurrencyTrend ooct) {
-		super(currencyRates, trendRule, ooct);
+
+
+	public TrendNoteToSell(List<TrendPointXY> pointsXY, TrendRule trendRule, OperationsOnCurrencyTrend ooct) {
+		super(pointsXY, trendRule, ooct);
 		// TODO Auto-generated constructor stub
 	}
+
+
 
 	@Override
 	public void run() {
@@ -23,8 +27,8 @@ public class TrendNoteToSell extends TrendNote {
 
 		// preparation calculation equation :
 
-		this.calculationAveragePt1("bid");
-		this.calculationAveragePt2("bid");
+		this.calculationAveragePt1();
+		this.calculationAveragePt2();
 		
 	}
 	

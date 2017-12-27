@@ -2,7 +2,6 @@ package fr.afgj.coinbot.calculation.impl;
 
 import java.util.List;
 
-import fr.afgj.coinbot.entity.CurrencyRate;
 import fr.afgj.coinbot.rule.impl.TrendRule;
 
 public class TrendNoteToBuy extends TrendNote {
@@ -12,10 +11,14 @@ public class TrendNoteToBuy extends TrendNote {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TrendNoteToBuy(List<CurrencyRate> currencyRates, TrendRule trendRule, OperationsOnCurrencyTrend ooct) {
-		super(currencyRates, trendRule, ooct);
+
+
+	public TrendNoteToBuy(List<TrendPointXY> pointsXY, TrendRule trendRule, OperationsOnCurrencyTrend ooct) {
+		super(pointsXY, trendRule, ooct);
 		// TODO Auto-generated constructor stub
 	}
+
+
 
 	@Override
 	public void run() {
@@ -26,13 +29,23 @@ public class TrendNoteToBuy extends TrendNote {
 		
 		// Stage 1 : transmit information to line equation average
 
-		// preparation calculation equation :
+		// Stage 1.1 : preparation calculation equation :
 
-		TrendPointXYAverage pt1 = this.calculationAveragePt1("ask");
-		TrendPointXYAverage pt2 = this.calculationAveragePt2("ask");
-		LineEquationAverage lineEquationAverage = new LineEquationAverage(pt1, pt2, this);
+		TrendPointXY pt1 = this.calculationAveragePt1();
+		TrendPointXY pt2 = this.calculationAveragePt2();
+		
+		// Stage 1.2 : ask calculation
+		
+		askCalculationLinesEquations(pt1, pt2);
+		
+
+		
 		
 
 	}
+
+
+
+
 
 }

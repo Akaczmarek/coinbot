@@ -4,7 +4,9 @@ public class LineEquationCeiling extends LineEquation {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+	
+		// Stage 0 : 
+		this.calculationCeilingLineEquation();
 		
 	}
 

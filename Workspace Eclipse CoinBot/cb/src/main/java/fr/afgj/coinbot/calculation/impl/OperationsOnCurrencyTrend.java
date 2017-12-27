@@ -126,7 +126,7 @@ public class OperationsOnCurrencyTrend implements Runnable {
 
 		// stage 1 : check if the calculation is possible
 
-		if (this.getNewCurrencyRates() != null && this.getNewCurrencyRates().size() > 100) {
+		if (this.getNewCurrencyRates() != null && this.getNewCurrencyRates().size() > 2) {
 
 			List<TrendPointXY> ptsBid = new ArrayList<>(this.getPointsXYOfBid());
 			List<TrendPointXY> ptsAsk = new ArrayList<>(this.getPointsXYOfAsk());
@@ -148,9 +148,14 @@ public class OperationsOnCurrencyTrend implements Runnable {
 				ptsBidTransmit.removeIf(p -> p.getX() < startDateRule.getTime());
 				ptsAskTransmit.removeIf(p -> p.getX() < startDateRule.getTime());
 
+				// new calcul of note to sell
 				TrendNoteToSell tnts = new TrendNoteToSell(ptsBidTransmit, tr, this);
-				TrendNoteToBuy tntb = new TrendNoteToBuy(ptsAskTransmit, tr, this);
+				Thread t0 = new Thread(tnts);
+				t0.start();
 				
+				
+				TrendNoteToBuy tntb = new TrendNoteToBuy(ptsAskTransmit, tr, this);
+
 
 			}
 
