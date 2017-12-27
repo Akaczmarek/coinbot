@@ -125,8 +125,8 @@ public class OperationsOnCurrencyTrend implements Runnable {
 		updatePointsXY();
 
 		// stage 1 : check if the calculation is possible
-
-		if (this.getNewCurrencyRates() != null && this.getNewCurrencyRates().size() > 2) {
+		
+		if (this.getNewCurrencyRates() != null && this.getNewCurrencyRates().size() >= 2) {
 
 			List<TrendPointXY> ptsBid = new ArrayList<>(this.getPointsXYOfBid());
 			List<TrendPointXY> ptsAsk = new ArrayList<>(this.getPointsXYOfAsk());
@@ -141,12 +141,15 @@ public class OperationsOnCurrencyTrend implements Runnable {
 			for (TrendRule tr : this.getTrendRule().getTrendRules()) {
 
 				Date startDateRule = tr.updateDefinitionStartDate();
+				Date endDateRule = tr.updateDefinitioneEndDate();
 
 				List<TrendPointXY> ptsBidTransmit = new ArrayList<>(ptsBid);
 				List<TrendPointXY> ptsAskTransmit = new ArrayList<>(ptsAsk);
 
 				ptsBidTransmit.removeIf(p -> p.getX() < startDateRule.getTime());
 				ptsAskTransmit.removeIf(p -> p.getX() < startDateRule.getTime());
+				ptsBidTransmit.removeIf(p -> p.getX() > endDateRule.getTime()); //pour éliminer les valeurs mocké trop dans le futur
+				ptsAskTransmit.removeIf(p -> p.getX() > endDateRule.getTime()); //pour éliminer les valeurs mocké trop dans le futur
 
 				// new calcul of note to sell
 				TrendNoteToSell tnts = new TrendNoteToSell(ptsBidTransmit, tr, this);

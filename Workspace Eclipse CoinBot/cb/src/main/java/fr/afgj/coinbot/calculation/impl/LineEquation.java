@@ -15,6 +15,10 @@ public abstract class LineEquation implements Runnable {
 	private TrendNote trendNote;
 	private List<TrendPointXY> pointsXY;
 
+	{
+
+	}
+
 	public LineEquation() {
 
 	}
@@ -89,7 +93,8 @@ public abstract class LineEquation implements Runnable {
 		double b = this.getOrdOrigin();
 
 		this.setLeadingDirect((pt1Y - b) / pt1X);
-
+		double a = this.getLeadingDirect();
+		System.out.println("line equation average : a = " + a + ", b = " + b + " " + this.toString());
 	}
 
 	public void calculationCeilingLineEquation() {
@@ -127,6 +132,8 @@ public abstract class LineEquation implements Runnable {
 		b = yHighPt - a * xHighPt;
 		this.setOrdOrigin(b);
 
+		System.out.println("line equation ceiling : a = " + a + ", b = " + b + " " + this.toString());
+
 	}
 
 	public void calculationSupportLineEquation() {
@@ -151,6 +158,7 @@ public abstract class LineEquation implements Runnable {
 			resultComparison = y - a * x + b;
 
 			comparisonList.put(resultComparison, pt);
+
 		}
 
 		// the lower point
@@ -163,6 +171,31 @@ public abstract class LineEquation implements Runnable {
 
 		b = yLowPt - a * xLowPt;
 		this.setOrdOrigin(b);
+		System.out.println("line equation support : a = " + a + ", b = " + b + " " + this.toString());
+	}
+
+	public void calculationLastTrendLineEquation() {
+
+		
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("LineEquation [averagePt1=");
+		builder.append(averagePt1);
+		builder.append(", averagePt2=");
+		builder.append(averagePt2);
+		builder.append(", leadingDirect=");
+		builder.append(leadingDirect);
+		builder.append(", ordOrigin=");
+		builder.append(ordOrigin);
+		builder.append(", trendNote=");
+		builder.append(trendNote);
+		builder.append(", pointsXY=");
+		builder.append(pointsXY);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

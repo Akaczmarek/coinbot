@@ -25,11 +25,19 @@ public class TrendNoteToSell extends TrendNote {
 	public void run() {
 		// Stage 1 : transmit information to line equation average
 
+		System.out.println("test je suis dans trens note to sell");
 		// preparation calculation equation :
 
-		this.calculationAveragePt1();
-		this.calculationAveragePt2();
+		// Stage 1 : transmit information to line equation average
+
+		// Stage 1.1 : preparation calculation equation :
+
+		TrendPointXY pt1 = this.calculationAveragePt1();
+		TrendPointXY pt2 = this.calculationAveragePt2();
 		
+		// Stage 1.2 : ask calculation
+		
+		askCalculationLinesEquations(pt1, pt2);
 	}
 	
 	

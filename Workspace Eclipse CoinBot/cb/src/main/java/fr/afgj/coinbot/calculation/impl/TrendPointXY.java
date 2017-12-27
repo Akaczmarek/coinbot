@@ -36,7 +36,7 @@ public class TrendPointXY {
 		this.y = y;
 	}
 	
-	// the youngest point is the first, the oldest point is the last after sort
+	// the youngest point is the first (index 0), the oldest point is the last after sort
 	public volatile static Comparator<TrendPointXY> ptComparatorByDate = new Comparator<TrendPointXY>() {
 
 		@Override
@@ -46,7 +46,7 @@ public class TrendPointXY {
 			Long dateLongTPt1 =  (tPt1.getX()/10);
 			Long dateLongTPt2 =  (tPt2.getX()/10);
 			
-			return (int)(dateLongTPt1 - dateLongTPt2);
+			return (int)(- dateLongTPt1 + dateLongTPt2);
 		}
 	};
 

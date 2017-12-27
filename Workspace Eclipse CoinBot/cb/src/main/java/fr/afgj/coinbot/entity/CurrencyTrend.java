@@ -176,7 +176,7 @@ public class CurrencyTrend implements java.io.Serializable {
 	 * false sinon
 	 * 
 	 */
-	public boolean update(TrendRule tr) {
+	public synchronized boolean update(TrendRule tr) {
 
 		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
 		this.getOoct().setNewCurrencyRates(crs);

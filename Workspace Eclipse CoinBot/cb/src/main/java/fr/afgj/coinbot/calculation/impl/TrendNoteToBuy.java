@@ -23,13 +23,10 @@ public class TrendNoteToBuy extends TrendNote {
 	@Override
 	public void run() {
 
-		//Stage 0 : definition
-		
-		
-		
+
 		// Stage 1 : transmit information to line equation average
 
-		// Stage 1.1 : preparation calculation equation :
+		// Stage 1.1 : preparation calculation equations :
 
 		TrendPointXY pt1 = this.calculationAveragePt1();
 		TrendPointXY pt2 = this.calculationAveragePt2();
@@ -37,6 +34,16 @@ public class TrendNoteToBuy extends TrendNote {
 		// Stage 1.2 : ask calculation
 		
 		askCalculationLinesEquations(pt1, pt2);
+		
+		
+		// Stage 2 : transmit information to last TrendEquation
+		
+		// Stage 2.1 : preparation calculation equation :
+
+		TrendPointXY pt1 = this.calculationLastTrendPt1();
+		TrendPointXY pt2 = this.calculationLastTrendPt2();
+		
+		askCalculationLineEquationLastTrend(pt1, pt2);
 		
 
 		

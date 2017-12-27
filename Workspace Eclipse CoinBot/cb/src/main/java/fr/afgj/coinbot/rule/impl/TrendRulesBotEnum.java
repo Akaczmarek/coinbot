@@ -11,7 +11,8 @@ import java.util.List;
  */
 public enum TrendRulesBotEnum {
 
-	H4(0, 4, 5), D1(1, 0, 3), D1H12(1, 12, 2), D10(10, 0, 3), D30(30, 0, 2);
+	H4(0, 4, 5);
+	//, D1(1, 0, 3), D1H12(1, 12, 2), D10(10, 0, 3), D30(30, 0, 2);
 
 	private int numberDays;
 	private int numberHours;

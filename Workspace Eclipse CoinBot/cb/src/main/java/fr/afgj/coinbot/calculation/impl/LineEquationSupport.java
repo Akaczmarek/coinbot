@@ -4,7 +4,12 @@ public class LineEquationSupport extends LineEquation {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+
+		// Stage 0 : calculation of equation 
+		this.calculationSupportLineEquation();
+		
+		// stage 1 : save line equation
+		this.getTrendNote().getLineEquations().add(this);
 		
 	}
 
