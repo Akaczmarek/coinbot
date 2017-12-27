@@ -1,6 +1,10 @@
 package fr.afgj.coinbot.calculation.impl;
 
-public abstract class TrendPointXY {
+import java.util.Comparator;
+
+import fr.afgj.coinbot.entity.CurrencyRate;
+
+public class TrendPointXY {
 	
 
 	private long x;
@@ -31,5 +35,19 @@ public abstract class TrendPointXY {
 	public void setY(double y) {
 		this.y = y;
 	}
+	
+	// the youngest point is the first, the oldest point is the last after sort
+	public volatile static Comparator<TrendPointXY> ptComparatorByDate = new Comparator<TrendPointXY>() {
+
+		@Override
+		public int compare(TrendPointXY tPt1, TrendPointXY tPt2) {
+			// TODO Auto-generated method stub
+
+			Long dateLongTPt1 =  (tPt1.getX()/10);
+			Long dateLongTPt2 =  (tPt2.getX()/10);
+			
+			return (int)(dateLongTPt1 - dateLongTPt2);
+		}
+	};
 
 }

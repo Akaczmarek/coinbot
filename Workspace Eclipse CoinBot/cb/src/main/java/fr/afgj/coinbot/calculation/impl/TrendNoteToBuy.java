@@ -20,6 +20,10 @@ public class TrendNoteToBuy extends TrendNote {
 	@Override
 	public void run() {
 
+		//Stage 0 : definition
+		
+		
+		
 		// Stage 1 : transmit information to line equation average
 
 		// preparation calculation equation :

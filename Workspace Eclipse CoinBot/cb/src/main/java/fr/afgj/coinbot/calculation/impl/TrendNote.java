@@ -12,6 +12,7 @@ public abstract class TrendNote implements Runnable, ITrendNote {
 
 	private double note;
 	private List<CurrencyRate> currencyRates;
+	private List<TrendPointXY> pointsXY;
 	private TrendRule trendRule;
 	private OperationsOnCurrencyTrend ooct;
 
@@ -101,7 +102,7 @@ public abstract class TrendNote implements Runnable, ITrendNote {
 			for (CurrencyRate cr : list) {
 
 				sumDate += cr.getTimerecord().getTime();
-
+				
 				if ("bid".equals(type)) {
 					sumValue += cr.getBidbtc();
 

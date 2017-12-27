@@ -65,12 +65,18 @@ public class ConnexionServeurCoinbotApplication {
 //		}
 //		**************************************************************************************************
 		
-		CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
-		Date date0 = new Date(1514017735000L);
-		Date Recentlydate = new Date(1514190535000L);
-		List<CurrencyRate> currencyRates = crs.currencyRatesByDate(date0, Recentlydate, cr);
+//		//essai de récupération de données****************************************************************
+//		CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
+//		Date date0 = new Date(1514017735000L);
+//		Date Recentlydate = new Date(1514190535000L);
+//		List<CurrencyRate> currencyRates = crs.currencyRatesByDate(date0, Recentlydate, cr);
+//		
+//		System.out.println(currencyRates.size());
+//		//************************************************************************************************
 		
-		System.out.println(currencyRates.size());
+		
+		
+		
 		
 	}
 	
