@@ -4,17 +4,12 @@ import java.util.List;
 
 public class LineEquationAverage extends LineEquation {
 
-	public LineEquationAverage() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-
 
 	public LineEquationAverage(TrendPointXY averagePt1, TrendPointXY averagePt2, TrendNote trendNote,
 			List<TrendPointXY> pointsXY) {
 		super(averagePt1, averagePt2, trendNote, pointsXY);
 		// TODO Auto-generated constructor stub
+		this.setName("Average");
 	}
 
 

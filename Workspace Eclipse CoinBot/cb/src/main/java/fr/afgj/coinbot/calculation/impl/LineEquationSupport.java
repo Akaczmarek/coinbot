@@ -2,6 +2,12 @@ package fr.afgj.coinbot.calculation.impl;
 
 public class LineEquationSupport extends LineEquation {
 
+	
+	public LineEquationSupport() {
+		super();
+		this.setName("Support");
+	}
+	
 	@Override
 	public void run() {
 

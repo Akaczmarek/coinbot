@@ -1,12 +1,8 @@
 package fr.afgj.coinbot.entity;
 // Generated 21 d�c. 2017 09:38:56 by Hibernate Tools 5.1.6.Final
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -166,7 +162,7 @@ public class CurrencyRate implements java.io.Serializable {
 			Long dateLongCR1 =  (CR1.getTimerecord().getTime());
 			Long dateLongCR2 =  (CR2.getTimerecord().getTime());
 			
-			return (int)(dateLongCR1 - dateLongCR2);
+			return (int)(- dateLongCR1 + dateLongCR2);
 		}
 	};
 	

@@ -31,21 +31,39 @@ public class TrendNoteToBuy extends TrendNote {
 		TrendPointXY pt1 = this.calculationAveragePt1();
 		TrendPointXY pt2 = this.calculationAveragePt2();
 		
-		// Stage 1.2 : ask calculation
+		// Stage 1.2 : ask calculation equations average, support, ceiling
 		
-		askCalculationLinesEquations(pt1, pt2);
+		this.askCalculationLinesEquations(pt1, pt2);
 		
 		
 		// Stage 2 : transmit information to last TrendEquation
 		
-		// Stage 2.1 : preparation calculation equation :
-
-		TrendPointXY pt1 = this.calculationLastTrendPt1();
-		TrendPointXY pt2 = this.calculationLastTrendPt2();
+		// Stage 2.1 : ask calculation equations last Trend
+		this.askCalculationLineEquationLastTrend();
 		
-		askCalculationLineEquationLastTrend(pt1, pt2);
+		// Stage 3 : definition the last point;
 		
-
+		this.setLastPoint(this.lastPointOfTrend());
+		
+		// Stage 4 : wait result
+		
+		this.waitResultEquation();
+		
+		//********************************************************************************
+		//definition note : 
+		//********************************************************************************
+		if (this.waitResultEquation()) {
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}
 		
 		
 

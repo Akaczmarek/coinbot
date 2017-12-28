@@ -2,6 +2,11 @@ package fr.afgj.coinbot.calculation.impl;
 
 public class LineEquationCeiling extends LineEquation {
 
+	public LineEquationCeiling() {
+		super();
+		this.setName("Ceiling");
+	}
+	
 	@Override
 	public void run() {
 	
@@ -12,5 +17,7 @@ public class LineEquationCeiling extends LineEquation {
 		this.getTrendNote().getLineEquations().add(this);
 		
 	}
+
+
 
 }

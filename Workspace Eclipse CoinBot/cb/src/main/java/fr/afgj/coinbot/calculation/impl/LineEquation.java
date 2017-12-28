@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import ch.qos.logback.core.pattern.color.ForegroundCompositeConverterBase;
+
 public abstract class LineEquation implements Runnable {
 
 	private TrendPointXY averagePt1;
@@ -14,6 +16,7 @@ public abstract class LineEquation implements Runnable {
 	private double ordOrigin;
 	private TrendNote trendNote;
 	private List<TrendPointXY> pointsXY;
+	private String name;
 
 	{
 
@@ -23,6 +26,14 @@ public abstract class LineEquation implements Runnable {
 
 	}
 
+	
+	public LineEquation(TrendNote trendNote, List<TrendPointXY> pointsXY) {
+		super();
+		this.trendNote = trendNote;
+		this.pointsXY = pointsXY;
+	}
+
+
 	public LineEquation(TrendPointXY averagePt1, TrendPointXY averagePt2, TrendNote trendNote,
 			List<TrendPointXY> pointsXY) {
 		super();
@@ -31,6 +42,17 @@ public abstract class LineEquation implements Runnable {
 		this.trendNote = trendNote;
 		this.pointsXY = pointsXY;
 	}
+
+	
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 
 	public TrendPointXY getAveragePt1() {
 		return averagePt1;
@@ -98,7 +120,17 @@ public abstract class LineEquation implements Runnable {
 	}
 
 	public void calculationCeilingLineEquation() {
-		List<TrendPointXY> ptsXY = new ArrayList<>(this.getPointsXY());
+		List<TrendPointXY> ptsXY;
+		
+		if (this.getPointsXY().size()>10) {
+			//exclusion of the last 5 points in calculation.
+			//allows to give a stronger weight to the note in case of significant variation at the last moment.
+			
+			ptsXY = new ArrayList<>(this.getPointsXY().subList(5, this.getPointsXY().size()));
+		}else {
+			
+			ptsXY = new ArrayList<>(this.getPointsXY());
+		}
 
 		Map<Double, TrendPointXY> comparisonList = new TreeMap<>(); // comparison between line and points
 		Iterator<TrendPointXY> ite = ptsXY.iterator();
@@ -137,7 +169,17 @@ public abstract class LineEquation implements Runnable {
 	}
 
 	public void calculationSupportLineEquation() {
-		List<TrendPointXY> ptsXY = new ArrayList<>(this.getPointsXY());
+		List<TrendPointXY> ptsXY;
+		
+		if (this.getPointsXY().size()>10) {
+			//exclusion of the last 5 points in calculation.
+			//allows to give a stronger weight to the note in case of significant variation at the last moment.
+			
+			ptsXY = new ArrayList<>(this.getPointsXY().subList(5, this.getPointsXY().size()));
+		}else {
+			
+			ptsXY = new ArrayList<>(this.getPointsXY());
+		}
 
 		Map<Double, TrendPointXY> comparisonList = new TreeMap<>(); // comparison between line and points
 		Iterator<TrendPointXY> ite = ptsXY.iterator();
@@ -174,9 +216,26 @@ public abstract class LineEquation implements Runnable {
 		System.out.println("line equation support : a = " + a + ", b = " + b + " " + this.toString());
 	}
 
-	public void calculationLastTrendLineEquation() {
-
+	public TrendPointXY lastPointofLastTrend() {
+		TrendPointXY pt1 = new TrendPointXY();
 		
+		if (this.getPointsXY()!=null) {
+			pt1.setX(this.getPointsXY().get(0).getX());
+			pt1.setY(this.getPointsXY().get(0).getY());
+		}
+
+		return pt1;
+	}
+	
+	public TrendPointXY penultimatePointofLastTrend() {
+		TrendPointXY pt1 = new TrendPointXY();
+		
+		if (this.getPointsXY()!=null) {
+			pt1.setX(this.getPointsXY().get(1).getX());
+			pt1.setY(this.getPointsXY().get(1).getY());
+		}
+
+		return pt1;
 	}
 
 	@Override
@@ -196,6 +255,31 @@ public abstract class LineEquation implements Runnable {
 		builder.append(pointsXY);
 		builder.append("]");
 		return builder.toString();
+	}
+	
+	public static void main(String[] args) {
+		List<Integer> list =  new ArrayList<>();
+		
+		for (int i = 0; i < 10 ; i++) {
+			
+			list.add(i);
+		}
+		
+		
+
+		List<Integer> list2 =  new ArrayList<>(list.subList(3, list.size()));
+		
+		System.out.println("liste diminuée-------------------------------------");
+		for (Integer i : list2) {
+			System.out.println(i);
+		}
+		
+		System.out.println("liste originale-------------------------------------");
+		for (Integer i : list) {
+			System.out.println(i);
+		}
+		
+		
 	}
 
 }
