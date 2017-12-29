@@ -116,7 +116,7 @@ public abstract class LineEquation implements Runnable, ILineEquationLastTrend {
 
 		this.setLeadingDirect((pt1Y - b) / pt1X);
 		double a = this.getLeadingDirect();
-		System.out.println("line equation average : a = " + a + ", b = " + b + " " + this.toString());
+
 	}
 
 	public void calculationCeilingLineEquation() {
@@ -163,8 +163,6 @@ public abstract class LineEquation implements Runnable, ILineEquationLastTrend {
 
 		b = yHighPt - a * xHighPt;
 		this.setOrdOrigin(b);
-
-		System.out.println("line equation ceiling : a = " + a + ", b = " + b + " " + this.toString());
 
 	}
 
@@ -213,7 +211,6 @@ public abstract class LineEquation implements Runnable, ILineEquationLastTrend {
 
 		b = yLowPt - a * xLowPt;
 		this.setOrdOrigin(b);
-		System.out.println("line equation support : a = " + a + ", b = " + b + " " + this.toString());
 	}
 
 	public TrendPointXY lastPointofLastTrend() {

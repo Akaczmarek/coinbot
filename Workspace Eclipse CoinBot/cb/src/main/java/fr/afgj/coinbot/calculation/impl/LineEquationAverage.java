@@ -21,7 +21,6 @@ public class LineEquationAverage extends LineEquation {
 	public void run() {
 		// TODO Auto-generated method stub
 
-		System.out.println("test je suis dans line equation");
 		// Stage 0 : calculation of equation 
 		this.calculationAverageLineEquation();
 

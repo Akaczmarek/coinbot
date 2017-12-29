@@ -47,18 +47,23 @@ public class TrendNoteToBuy extends TrendNote {
 		
 		// Stage 4 : wait result
 		
-		this.waitResultEquation();
+		boolean checkFinish = this.waitResultEquation();
+		
 		
 		//********************************************************************************
 		//definition note : 
 		//********************************************************************************
-		if (this.waitResultEquation()) {
+		if (checkFinish) {
+			System.out.println("on poursuit");
 			
-			System.out.println("poursuite");
-			
-			
-			
+			this.treatmentNotationAsk();
+		
+		}else {
+			System.out.println("opérations pas terminées, le calcul est abandonné");
 		}
+		
+		// Stage 5 : SAVE RESULT
+		this.getOoct().getTrendNotesToBuy().add(this);
 		
 		
 

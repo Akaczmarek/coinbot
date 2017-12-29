@@ -60,6 +60,9 @@ public class TrendNoteToSell extends TrendNote {
 		}else {
 			System.out.println("opérations pas terminées, le calcul est abandonné");
 		}
+		
+		// Stage 5 : SAVE RESULT
+		this.getOoct().getTrendNotesToSell().add(this);
 	}
 	
 	

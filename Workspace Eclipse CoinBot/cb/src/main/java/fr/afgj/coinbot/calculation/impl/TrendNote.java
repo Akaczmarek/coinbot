@@ -209,7 +209,7 @@ public abstract class TrendNote implements Runnable {
 
 		int i = 0;
 		while (true) {
-			System.out.println("poursuite!!!!");
+
 			if (this.getLineEquations().size() == 3 && this.getLineEquationsLT().size() == 2
 					&& this.getLastPoint() != null) {
 
@@ -223,7 +223,7 @@ public abstract class TrendNote implements Runnable {
 			i++;
 			
 			try {
-				Thread.sleep(5);
+				Thread.sleep(15);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -371,7 +371,7 @@ public abstract class TrendNote implements Runnable {
 				multiplierLastTrend =(aLt1/aLt2)*2 + 1;
 				System.out.println("pente douce favorable à la vente, mais tendance à l'achat");
 			}else if (aLt1<aLt2) {
-				multiplierLastTrend =(aLt1/aLt2)*2 + (-3 * (aLt2/aLt1) +3);
+				multiplierLastTrend = 2 + (-5 * (aLt2/aLt1) +5);
 				System.out.println("pente brute favorable à la vente");
 			}
 		}
@@ -384,8 +384,165 @@ public abstract class TrendNote implements Runnable {
 		
 		
 		
-		System.out.println("note : " + globalNote );
+		System.out.println("note pour vente : " + globalNote );
 
+	}
+	
+	public void treatmentNotationAsk() {
+		
+		// it's worth selling when the ask is at near of the support line
+
+		// stage 0 : variables initialization
+		
+		//variable note
+		double note1 = 0.0; // comparison position last point between ceiling and support
+		double note2 = 0.0; // comparison position last point between ceiling and average
+		double intermediateNote = 0.0; // intermediateNote result note without last trend
+		double globalNote = 0.0; // result note
+
+		
+		// variable line equation of curve
+		double aAverage=0.0;
+		double bAverage=0.0;
+		double aCeiling=0.0;
+		double bCeiling=0.0;
+		double aSupport=0.0;
+		double bSupport=0.0;
+		
+		// connected data line Equation
+		Iterator<LineEquation> ite = this.getLineEquations().iterator();
+		
+		while (ite.hasNext()) {
+			LineEquation le = ite.next();
+			if ("Average".equals(le.getName())){
+				aAverage = le.getLeadingDirect();
+				bAverage = le.getOrdOrigin();
+			}else if ("Ceiling".equals(le.getName())) {
+				aCeiling = le.getLeadingDirect(); 
+				bCeiling = le.getOrdOrigin();
+			}else if ("Support".equals(le.getName())) {
+				aSupport = le.getLeadingDirect();
+				bSupport = le.getOrdOrigin();
+			}else {
+				System.out.println("erreur manque des données pour notation");
+			}
+			
+		}
+
+		// variable line equation of last trend 1 and last trend 2
+		//Line Last trend 1 this the line between le last point and the before last point 
+		// only the guideline coefficients are taken into consideration
+		double aLt1=0.0;
+		double aLt2=0.0;
+
+		
+		// connected data line Equation LAST TREND
+		Iterator<ILineEquationLastTrend> ite1 = this.getLineEquationsLT().iterator();
+		
+		while (ite1.hasNext()) {
+			LineEquation le = (LineEquation) ite1.next();
+			if ("Lt1".equals(le.getName())){
+				aLt1 = le.getLeadingDirect();
+			}else if ("Lt2".equals(le.getName())) {
+				aLt2 = le.getLeadingDirect(); 
+			}else {
+				System.out.println("erreur manque des données pour notation");
+			}
+			
+		}
+		
+		
+		//variable last point
+		double yPt = this.getLastPoint().getY();
+		long xRef = this.getLastPoint().getX();
+		
+		int multiplier = this.getTrendRule().getMultiplier();
+
+
+
+		// Stage 1 : value of the gap between ceiling and support
+		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
+
+		if (gapCeilingSupport < 0) {
+			System.out.println("erreur de calcul");
+		}
+
+		// Stage 2 : value of the gap between ceiling and average
+		double gapAverageSupport = (aAverage * xRef + bAverage) - (aSupport * xRef + bSupport);
+
+		if (gapAverageSupport < 0) {
+			System.out.println("erreur de calcul");
+		}
+
+		// Stage 3 : comparison position last point between ceiling and support
+		// gapSupportPt > 0 : last point is below support line, note>1
+		// gapCeilingPt<=0 && gapCeilingPt<=gapCeilingSupport : last point is between
+		// ceiling and support 0>note>1
+		// gapCeilingPt>=0 && gapCeilingPt>gapCeilingSupport : last point is below
+		// support note=0
+
+		double gapSupportPt = (aSupport * xRef + bSupport) - yPt;
+
+		if (gapSupportPt > 0) {
+			note1 = 1 + Math.abs(gapSupportPt) / gapCeilingSupport;
+		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) <= gapCeilingSupport) {
+			note1 = 1 - Math.abs(gapSupportPt) / gapCeilingSupport;
+		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) > gapCeilingSupport) {
+			note1 = 0;
+		} else {
+			System.out.println("calcul de note pas pris en compte ask , support et ceiling");
+		}
+
+		// Stage 4 : comparison position last point between ceiling and average
+		// gapCeilingPt<0 : last point is above ceiling line, note>1
+		// gapCeilingPt>=0 && gapCeilingPt<=gapCeilingaverage : last point is between
+		// ceiling and average 0>note>1
+		// gapCeilingPt>=0 && gapCeilingPt>gapCeilingaverage : last point is below
+		// average note=0
+
+		if (gapSupportPt > 0) {
+			note2 = 1 + Math.abs(gapSupportPt) / gapAverageSupport;
+		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) <= gapAverageSupport) {
+			note2 = 1 - Math.abs(gapSupportPt) / gapAverageSupport;
+		} else if (gapSupportPt <= 0 && Math.abs(gapSupportPt) > gapAverageSupport) {
+			note2 = 0;
+		} else {
+			System.out.println("calcul de note pas pris en compte ask , support et average");
+		}
+		
+		// stage 6 : calculation intermediate Note
+		intermediateNote = (note1 + note2) * multiplier;
+		
+		//stage 7 : taking into account the latest trend
+		
+		double multiplierLastTrend =0.0;
+		
+		if (aLt2<0) {
+			multiplierLastTrend =0.0;
+			System.out.println("pente positive tendance achat");
+		}else if (aLt2>=0) {
+			
+			// calculation multiplier :the higher the slope, the more the multiplicative is important
+			if (aLt1>=aLt2) {
+				multiplierLastTrend =2 + (-5 * (aLt2/aLt1) +5);
+				System.out.println("pente brute favorable à l'achat");
+
+			}else if (aLt1<aLt2) {
+				multiplierLastTrend =(aLt1/aLt2)*2 + 1;
+				System.out.println("pente douce favorable à l'achat, mais tendance à la vente proche");
+			}
+		}
+		
+		
+		globalNote = intermediateNote*multiplierLastTrend;
+		
+		// stage 8 : calculation the global Note
+		this.setNote(globalNote);
+		
+		
+		
+		System.out.println("note pour achat : " + globalNote );
+		
 	}
 
 	public static void main(String[] args) {

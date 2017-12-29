@@ -35,6 +35,8 @@ public class OperationsOnCurrencyTrend implements Runnable {
 	{
 		pointsXYOfBid = new ArrayList<>();
 		pointsXYOfAsk = new ArrayList<>();
+		TrendNotesToBuy = new ArrayList<>();
+		TrendNotesToSell = new ArrayList<>();
 	}
 
 	public OperationsOnCurrencyTrend(CurrencyTrend currencyTrend) {
@@ -163,7 +165,9 @@ public class OperationsOnCurrencyTrend implements Runnable {
 				
 				
 				TrendNoteToBuy tntb = new TrendNoteToBuy(ptsAskTransmit, tr, this);
-
+				Thread t1 = new Thread(tntb);
+				t1.start();
+				
 				}else {
 					System.out.println("erreur : pas assez de données, ne peut pas faire l'objet de calcul");
 				}
