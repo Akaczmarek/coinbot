@@ -24,7 +24,7 @@ public class LineEquationLastTrend2 extends LineEquation implements ILineEquatio
 		this.setAveragePt1(lastPointofLastTrend());
 
 		// stage 0.2 : the first point defining the latest trend
-		this.setAveragePt1(ptBaseOfLastTrend());
+		this.setAveragePt2(ptBaseOfLastTrend());
 
 		// stage 1 : calculation equation
 

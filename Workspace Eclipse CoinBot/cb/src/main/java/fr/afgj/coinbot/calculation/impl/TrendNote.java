@@ -2,6 +2,7 @@ package fr.afgj.coinbot.calculation.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import fr.afgj.coinbot.calculation.ILineEquationLastTrend;
@@ -18,7 +19,8 @@ public abstract class TrendNote implements Runnable {
 	private OperationsOnCurrencyTrend ooct;
 
 	{
-		lineEquations = new ArrayList<>();
+		this.setLineEquations(new ArrayList<>());
+		this.setLineEquationsLT(new ArrayList<>());
 	}
 
 	public TrendNote() {
@@ -207,26 +209,132 @@ public abstract class TrendNote implements Runnable {
 
 		int i = 0;
 		while (true) {
-
+			System.out.println("poursuite!!!!");
 			if (this.getLineEquations().size() == 3 && this.getLineEquationsLT().size() == 2
 					&& this.getLastPoint() != null) {
 
-				try {
-					Thread.sleep(5);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
 				return true;
 			}
-
+			
 			if (i > 50) {
 				//time is exceeded
 				return false;
 			}
 			i++;
+			
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+
+	}
+	
+	
+	public void treatmentNotationBid() {
+		// it's worth selling when the bid is at near of the ceiling line
+
+		// stage 0 : variables initialization
+		
+		//variable note
+		double note1 = 0.0; // comparison position last point between ceiling and support
+		double note2 = 0.0; // comparison position last point between ceiling and average
+		double globalNote = 0.0; // result note
+		
+		// variable line equation
+		double aAverage=0.0;
+		double bAverage=0.0;
+		double aCeiling=0.0;
+		double bCeiling=0.0;
+		double aSupport=0.0;
+		double bSupport=0.0;
+		
+		// connected data line Equation
+		Iterator<LineEquation> ite = this.getLineEquations().iterator();
+		
+		while (ite.hasNext()) {
+			LineEquation le = ite.next();
+			if ("Average".equals(le.getName())){
+				aAverage = le.getLeadingDirect();
+				bAverage = le.getOrdOrigin();
+			}else if ("Ceiling".equals(le.getName())) {
+				aCeiling = le.getLeadingDirect(); 
+				bCeiling = le.getOrdOrigin();
+			}else if ("Support".equals(le.getName())) {
+				aSupport = le.getLeadingDirect();// erreur null pointer
+				bSupport = le.getOrdOrigin();
+			}else {
+				System.out.println("erreur manque des données pour notation");
+			}
+			
+		}
+
+		//variable last point
+		double yPt = this.getLastPoint().getY();
+		long xRef = this.getLastPoint().getX();
+		
+		int multiplier = this.getTrendRule().getMultiplier();
+
+
+
+		// Stage 1 : value of the gap between ceiling and support
+		double gapCeilingSupport = (aCeiling * xRef + bCeiling) - (aSupport * xRef + bSupport);
+
+		if (gapCeilingSupport < 0) {
+			System.out.println("erreur de calcul");
+		}
+
+		// Stage 2 : value of the gap between ceiling and average
+		double gapCeilingAverage = (aCeiling * xRef + bCeiling) - (aAverage * xRef + bAverage);
+
+		if (gapCeilingAverage < 0) {
+			System.out.println("erreur de calcul");
+		}
+
+		// Stage 3 : comparison position last point between ceiling and support
+		// gapCeilingPt<0 : last point is above ceiling line, note>1
+		// gapCeilingPt>=0 && gapCeilingPt<=gapCeilingSupport : last point is between
+		// ceiling and support 0>note>1
+		// gapCeilingPt>=0 && gapCeilingPt>gapCeilingSupport : last point is below
+		// support note=0
+
+		double gapCeilingPt = (aCeiling * xRef + bCeiling) - yPt;
+
+		if (gapCeilingPt < 0) {
+			note1 = 1 + Math.abs(gapCeilingPt) / gapCeilingSupport;
+		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) <= gapCeilingSupport) {
+			note1 = 1 - Math.abs(gapCeilingPt) / gapCeilingSupport;
+		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) > gapCeilingSupport) {
+			note1 = 0;
+		} else {
+			System.out.println("calcul de note pas pris en compte bid , support et ceiling");
+		}
+
+		// Stage 4 : comparison position last point between ceiling and average
+		// gapCeilingPt<0 : last point is above ceiling line, note>1
+		// gapCeilingPt>=0 && gapCeilingPt<=gapCeilingaverage : last point is between
+		// ceiling and average 0>note>1
+		// gapCeilingPt>=0 && gapCeilingPt>gapCeilingaverage : last point is below
+		// average note=0
+
+		if (gapCeilingPt < 0) {
+			note2 = 1 + Math.abs(gapCeilingPt) / gapCeilingAverage;
+		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) <= gapCeilingAverage) {
+			note2 = 1 - Math.abs(gapCeilingPt) / gapCeilingAverage;
+		} else if (gapCeilingPt >= 0 && Math.abs(gapCeilingPt) > gapCeilingAverage) {
+			note2 = 0;
+		} else {
+			System.out.println("calcul de note pas pris en compte bid , support et average");
+		}
+
+		// stage 6 : calculation global note
+		globalNote = (note1 + note2) * multiplier;
+
+		this.setNote(globalNote);
+		
+		System.out.println("note : " + globalNote );
 
 	}
 

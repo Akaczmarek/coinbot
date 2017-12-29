@@ -54,12 +54,7 @@ public class TrendNoteToBuy extends TrendNote {
 		//********************************************************************************
 		if (this.waitResultEquation()) {
 			
-			
-			
-			
-			
-			
-			
+			System.out.println("poursuite");
 			
 			
 			
