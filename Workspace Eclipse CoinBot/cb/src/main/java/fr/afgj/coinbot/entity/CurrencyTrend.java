@@ -47,10 +47,11 @@ public class CurrencyTrend implements java.io.Serializable {
 	private Double notetosell;
 	private Double valuebidbtc;
 	private Double valueaskbtc;
-	private OperationsOnCurrencyTrend ooct;
+	// MIS EN COMM ALAIN 29/12
+//	private OperationsOnCurrencyTrend ooct;
 
 	{
-		this.ooct = new OperationsOnCurrencyTrend(this);
+//		this.ooct = new OperationsOnCurrencyTrend(this);
 	}
 	public CurrencyTrend() {
 	}
@@ -157,14 +158,14 @@ public class CurrencyTrend implements java.io.Serializable {
 	public void setValueaskbtc(Double valueaskbtc) {
 		this.valueaskbtc = valueaskbtc;
 	}
-	
-	public OperationsOnCurrencyTrend getOoct() {
-		return ooct;
-	}
-
-	public void setOoct(OperationsOnCurrencyTrend ooct) {
-		this.ooct = ooct;
-	}
+	// MIS EN COMM ALAIN 29/12
+//	public OperationsOnCurrencyTrend getOoct() {
+//		return ooct;
+//	}
+//
+//	public void setOoct(OperationsOnCurrencyTrend ooct) {
+//		this.ooct = ooct;
+//	}
 
 	// methods
 	// ----------------------------------------------------------------------
@@ -176,15 +177,15 @@ public class CurrencyTrend implements java.io.Serializable {
 	 * false sinon
 	 * 
 	 */
-	public synchronized boolean update(TrendRule tr) {
-
-		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
-		this.getOoct().setNewCurrencyRates(crs);
-		Thread t = new Thread(ooct);
-		t.start();
-
-		return false;
-	}
+//	public synchronized boolean update(TrendRule tr) {
+//
+//		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
+//		this.getOoct().setNewCurrencyRates(crs);
+//		Thread t = new Thread(ooct);
+//		t.start();
+//
+//		return false;
+//	}
 
 	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
 

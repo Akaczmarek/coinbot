@@ -39,7 +39,8 @@ public class Currency implements java.io.Serializable {
 	private Set<OrderHistoryBot> orderhistorybots = new HashSet<OrderHistoryBot>(0);
 	private Set<CurrencyRate> currencyrates = new HashSet<CurrencyRate>(0);
 	private Set<CurrencyTrend> currencytrends = new HashSet<CurrencyTrend>(0);
-	private List<CurrencyRate> currencyratesStudy = new ArrayList<>();
+	// MIS EN COMM ALAIN 29/12
+//	private List<CurrencyRate> currencyratesStudy = new ArrayList<CurrencyRate>();
 
 	public Currency() {
 	}
@@ -182,14 +183,15 @@ public class Currency implements java.io.Serializable {
 	public void setCurrencytrends(Set<CurrencyTrend> currencytrends) {
 		this.currencytrends = currencytrends;
 	}
-
-	public List<CurrencyRate> getCurrencyratesStudy() {
-		return currencyratesStudy;
-	}
-
-	public void setCurrencyratesStudy(List<CurrencyRate> currencyratesStudy) {
-		this.currencyratesStudy = currencyratesStudy;
-	}
+	// MIS EN COMM ALAIN 29/12
+//
+//	public List<CurrencyRate> getCurrencyratesStudy() {
+//		return currencyratesStudy;
+//	}
+//
+//	public void setCurrencyratesStudy(List<CurrencyRate> currencyratesStudy) {
+//		this.currencyratesStudy = currencyratesStudy;
+//	}
 	
 	
 	

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,10 +21,30 @@ import fr.afgj.coinbot.repository.UserRepository;
 import fr.afgj.coinbot.service.CurrencyRateService;
 
 @SpringBootApplication
-
 public class ConnexionServeurCoinbotApplication {
 
 	private static final Logger log = LogManager.getLogger();
+	private static final SessionFactory sessionFactory;
+
+    static 
+    {
+     try 
+       {
+        // Create the SessionFactory from hibernate.cfg.xml
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+        } 
+        catch (Throwable ex)
+        {
+          // Make sure you log the exception, as it might be swallowed
+          System.err.println("Initial SessionFactory creation failed." + ex);
+          throw new ExceptionInInitializerError(ex);
+        }
+     }
+
+     public static SessionFactory getSessionFactory()
+     {
+      return sessionFactory;
+     }
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(ConnexionServeurCoinbotApplication.class, args);
