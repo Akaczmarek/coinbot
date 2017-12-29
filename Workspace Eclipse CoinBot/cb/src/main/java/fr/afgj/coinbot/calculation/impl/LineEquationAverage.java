@@ -4,6 +4,9 @@ import java.util.List;
 
 public class LineEquationAverage extends LineEquation {
 
+	public LineEquationAverage() {
+		
+	}
 
 	public LineEquationAverage(TrendPointXY averagePt1, TrendPointXY averagePt2, TrendNote trendNote,
 			List<TrendPointXY> pointsXY) {

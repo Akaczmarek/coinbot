@@ -32,6 +32,10 @@ public class LineEquationLastTrend2 extends LineEquation implements ILineEquatio
 
 		// stage 2 : save line equation
 		this.getTrendNote().getLineEquationsLT().add(this);
+		
+		System.out.println("--------------------------------------------------------");
+		System.out.println("last trend 2 - point1, x :" + this.getAveragePt1().getX() + " y : " + this.getAveragePt1().getY());
+		System.out.println("last trend 2 - point2, x :" + this.getAveragePt2().getX() + " y : " + this.getAveragePt2().getY());
 	}
 
 
@@ -57,15 +61,18 @@ public class LineEquationLastTrend2 extends LineEquation implements ILineEquatio
 						checkTrend = "up";
 
 						ptn1 = ptn;
+						pt = ptn1;
 
 					} else if ((ptn1.getY() - ptn.getY()) < 0 && (checkTrend == null || "down".equals(checkTrend))) {
 						checkTrend = "down";
 						ptn1 = ptn;
+						pt = ptn1;
 
 					} else if ((ptn1.getY() - ptn.getY()) == 0) {
 
 						// incompatible value, redo a ride
 						ptn1 = ptn;
+						pt = ptn1;
 					} else {
 
 						pt = ptn1;

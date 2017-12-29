@@ -241,9 +241,11 @@ public abstract class TrendNote implements Runnable {
 		//variable note
 		double note1 = 0.0; // comparison position last point between ceiling and support
 		double note2 = 0.0; // comparison position last point between ceiling and average
+		double intermediateNote = 0.0; // intermediateNote result note without last trend
 		double globalNote = 0.0; // result note
+
 		
-		// variable line equation
+		// variable line equation of curve
 		double aAverage=0.0;
 		double bAverage=0.0;
 		double aCeiling=0.0;
@@ -263,7 +265,7 @@ public abstract class TrendNote implements Runnable {
 				aCeiling = le.getLeadingDirect(); 
 				bCeiling = le.getOrdOrigin();
 			}else if ("Support".equals(le.getName())) {
-				aSupport = le.getLeadingDirect();// erreur null pointer
+				aSupport = le.getLeadingDirect();
 				bSupport = le.getOrdOrigin();
 			}else {
 				System.out.println("erreur manque des données pour notation");
@@ -271,6 +273,29 @@ public abstract class TrendNote implements Runnable {
 			
 		}
 
+		// variable line equation of last trend 1 and last trend 2
+		//Line Last trend 1 this the line between le last point and the before last point 
+		// only the guideline coefficients are taken into consideration
+		double aLt1=0.0;
+		double aLt2=0.0;
+
+		
+		// connected data line Equation LAST TREND
+		Iterator<ILineEquationLastTrend> ite1 = this.getLineEquationsLT().iterator();
+		
+		while (ite1.hasNext()) {
+			LineEquation le = (LineEquation) ite1.next();
+			if ("Lt1".equals(le.getName())){
+				aLt1 = le.getLeadingDirect();
+			}else if ("Lt2".equals(le.getName())) {
+				aLt2 = le.getLeadingDirect(); 
+			}else {
+				System.out.println("erreur manque des données pour notation");
+			}
+			
+		}
+		
+		
 		//variable last point
 		double yPt = this.getLastPoint().getY();
 		long xRef = this.getLastPoint().getX();
@@ -329,10 +354,35 @@ public abstract class TrendNote implements Runnable {
 			System.out.println("calcul de note pas pris en compte bid , support et average");
 		}
 
-		// stage 6 : calculation global note
-		globalNote = (note1 + note2) * multiplier;
-
+		// stage 6 : calculation intermediate Note
+		intermediateNote = (note1 + note2) * multiplier;
+		
+		//stage 7 : taking into account the latest trend
+		
+		double multiplierLastTrend =0.0;
+		
+		if (aLt2>=0) {
+			multiplierLastTrend =0.0;
+			System.out.println("pente positive tendance achat");
+		}else if (aLt2<0) {
+			
+			// calculation multiplier :the higher the slope, the more the multiplicative is important
+			if (aLt1>=aLt2) {
+				multiplierLastTrend =(aLt1/aLt2)*2 + 1;
+				System.out.println("pente douce favorable à la vente, mais tendance à l'achat");
+			}else if (aLt1<aLt2) {
+				multiplierLastTrend =(aLt1/aLt2)*2 + (-3 * (aLt2/aLt1) +3);
+				System.out.println("pente brute favorable à la vente");
+			}
+		}
+		
+		
+		globalNote = intermediateNote*multiplierLastTrend;
+		
+		// stage 8 : calculation the global Note
 		this.setNote(globalNote);
+		
+		
 		
 		System.out.println("note : " + globalNote );
 

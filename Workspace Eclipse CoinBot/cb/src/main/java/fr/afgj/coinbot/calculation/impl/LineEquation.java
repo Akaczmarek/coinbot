@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import ch.qos.logback.core.pattern.color.ForegroundCompositeConverterBase;
+import fr.afgj.coinbot.calculation.ILineEquationLastTrend;
 
-public abstract class LineEquation implements Runnable {
+public abstract class LineEquation implements Runnable, ILineEquationLastTrend {
 
 	private TrendPointXY averagePt1;
 	private TrendPointXY averagePt2;
