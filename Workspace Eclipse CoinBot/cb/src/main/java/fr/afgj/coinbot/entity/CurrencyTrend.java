@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -48,10 +49,10 @@ public class CurrencyTrend implements java.io.Serializable {
 	private Double valuebidbtc;
 	private Double valueaskbtc;
 	// MIS EN COMM ALAIN 29/12
-//	private OperationsOnCurrencyTrend ooct;
+	private OperationsOnCurrencyTrend ooct;
 
 	{
-//		this.ooct = new OperationsOnCurrencyTrend(this);
+		this.ooct = new OperationsOnCurrencyTrend(this);
 	}
 	public CurrencyTrend() {
 	}
@@ -159,13 +160,14 @@ public class CurrencyTrend implements java.io.Serializable {
 		this.valueaskbtc = valueaskbtc;
 	}
 	// MIS EN COMM ALAIN 29/12
-//	public OperationsOnCurrencyTrend getOoct() {
-//		return ooct;
-//	}
-//
-//	public void setOoct(OperationsOnCurrencyTrend ooct) {
-//		this.ooct = ooct;
-//	}
+	@Transient
+	public OperationsOnCurrencyTrend getOoct() {
+		return ooct;
+	}
+
+	public void setOoct(OperationsOnCurrencyTrend ooct) {
+		this.ooct = ooct;
+	}
 
 	// methods
 	// ----------------------------------------------------------------------
@@ -177,15 +179,15 @@ public class CurrencyTrend implements java.io.Serializable {
 	 * false sinon
 	 * 
 	 */
-//	public synchronized boolean update(TrendRule tr) {
-//
-//		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
-//		this.getOoct().setNewCurrencyRates(crs);
-//		Thread t = new Thread(ooct);
-//		t.start();
-//
-//		return false;
-//	}
+	public synchronized boolean update(TrendRule tr) {
+
+		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
+		this.getOoct().setNewCurrencyRates(crs);
+		Thread t = new Thread(ooct);
+		t.start();
+
+		return false;
+	}
 
 	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
 

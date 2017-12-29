@@ -150,7 +150,12 @@ public class OperationsOnCurrencyTrend implements Runnable {
 				ptsAskTransmit.removeIf(p -> p.getX() < startDateRule.getTime());
 				ptsBidTransmit.removeIf(p -> p.getX() > endDateRule.getTime()); //pour éliminer les valeurs mocké trop dans le futur
 				ptsAskTransmit.removeIf(p -> p.getX() > endDateRule.getTime()); //pour éliminer les valeurs mocké trop dans le futur
-
+				
+				
+				//Transmission for calculation
+				
+				if (ptsBidTransmit.size()>2 && ptsAskTransmit.size()>2) {
+				
 				// new calcul of note to sell
 				TrendNoteToSell tnts = new TrendNoteToSell(ptsBidTransmit, tr, this);
 				Thread t0 = new Thread(tnts);
@@ -159,7 +164,11 @@ public class OperationsOnCurrencyTrend implements Runnable {
 				
 				TrendNoteToBuy tntb = new TrendNoteToBuy(ptsAskTransmit, tr, this);
 
-
+				}else {
+					System.out.println("erreur : pas assez de données, ne peut pas faire l'objet de calcul");
+				}
+				
+				
 			}
 
 		} else {
