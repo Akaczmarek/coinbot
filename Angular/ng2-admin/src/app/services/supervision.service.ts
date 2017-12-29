@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { WebService } from 'app/services/web.service';
+import { User } from 'app/_models/user';
 
 @Injectable()
 export class SupervisionService {
-
   mockVolume : Array<number> = [];
   mockAchatVenteHisto : Array<any> = [];
   mockUserActions : Array<any> = [];
 
 
-  constructor(private http : Http) { 
+  constructor(private http : Http, private webService : WebService) { 
     this.mockVolume.push(100,250,350);
     this.mockAchatVenteHisto = [
         {
@@ -99,15 +100,7 @@ export class SupervisionService {
   }
 
 
-  getAllBuy(){
-    return this.http.get(`url`)
-    .map(response => response.json());
+  getOHBbyUser(id: number) {
+    return this.webService.getAllByElement('orderhistorybot', id, 'user');
   }
-
-  getAllSold(){
-    return this.http.get(`url`)
-    .map(response => response.json());
-  }
-
-
 }

@@ -12,6 +12,11 @@ export class StripedTable {
   smartTableData:Array<any>;
 
   constructor(private supervisionService : SupervisionService ) {
-    this.smartTableData = supervisionService.mockAchatVenteHisto;
+    //this.smartTableData = supervisionService.mockAchatVenteHisto;
+    this.updateOHBUser();
+  }
+
+  updateOHBUser() {
+    this.supervisionService.getOHBbyUser(1).subscribe(reponse => this.smartTableData = reponse._embedded.orderHistoryBot);
   }
 }

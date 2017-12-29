@@ -2,24 +2,20 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th class="table-id">#</th>
       <th>Type d’ordre </th>
       <th>Cryptomonnaie</th>
       <th>Volume</th>
       <th>Date</th>
-      <th>Etat d'éxecution</th>
       <th>Valeur de gain en BTC</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of smartTableData">
-      <td class="table-id">{{ item.id }}</td>
-      <td>{{ item.typeOrdre }}</td>
-      <td>{{ item.cryptomonnaie }}</td>
+      <td>{{ item.ordertype }}</td>
+      <td>{{ item.currency }}</td>
       <td>{{ item.volume }}</td>
-      <td>{{ item.date | date: 'dd/MM/yyyy'}}</td>
-      <td>{{ item.etat }}</td>
-      <td>{{ item.valeurGain }}</td>
+      <td>{{ item.timestampfinished | date: 'dd/MM/yyyy'}}</td>
+      <td>{{ item.gainbtc }}</td>
     </tr>
     </tbody>
   </table>
