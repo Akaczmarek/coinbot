@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -39,8 +40,8 @@ public class Currency implements java.io.Serializable {
 	private Set<OrderHistoryBot> orderhistorybots = new HashSet<OrderHistoryBot>(0);
 	private Set<CurrencyRate> currencyrates = new HashSet<CurrencyRate>(0);
 	private Set<CurrencyTrend> currencytrends = new HashSet<CurrencyTrend>(0);
-	// MIS EN COMM ALAIN 29/12
-//	private List<CurrencyRate> currencyratesStudy = new ArrayList<CurrencyRate>();
+
+	private List<CurrencyRate> currencyratesStudy = new ArrayList<CurrencyRate>();
 
 	public Currency() {
 	}
@@ -184,14 +185,14 @@ public class Currency implements java.io.Serializable {
 		this.currencytrends = currencytrends;
 	}
 	// MIS EN COMM ALAIN 29/12
-//
-//	public List<CurrencyRate> getCurrencyratesStudy() {
-//		return currencyratesStudy;
-//	}
-//
-//	public void setCurrencyratesStudy(List<CurrencyRate> currencyratesStudy) {
-//		this.currencyratesStudy = currencyratesStudy;
-//	}
+	@Transient
+	public List<CurrencyRate> getCurrencyratesStudy() {
+		return currencyratesStudy;
+	}
+
+	public void setCurrencyratesStudy(List<CurrencyRate> currencyratesStudy) {
+		this.currencyratesStudy = currencyratesStudy;
+	}
 	
 	
 	

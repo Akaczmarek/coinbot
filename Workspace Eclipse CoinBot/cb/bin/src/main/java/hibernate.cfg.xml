@@ -4,19 +4,19 @@
     <session-factory>
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.password">afgj</property>
+        <property name="hibernate.connection.password">servcoinbot</property>
         <property name="hibernate.connection.url">jdbc:postgresql://37.187.124.78:5432/coinbot</property>
         <property name="hibernate.connection.username">admin</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.search.autoregister_listeners">true</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
-        <mapping class="hibernate.entity.Currency"/>
-        <mapping class="hibernate.entity.Ordertype"/>
-        <mapping class="hibernate.entity.Apikey"/>
-        <mapping class="hibernate.entity.Currencyrate"/>
-        <mapping class="hibernate.entity.Currencytrend"/>
-        <mapping class="hibernate.entity.User"/>
-        <mapping class="hibernate.entity.Userconfiguration"/>
-        <mapping class="hibernate.entity.Orderhistorybot"/>
+        <mapping class="fr.afgj.coinbot.entity.Currency"/>
+        <mapping class="fr.afgj.coinbot.entity.OrderType"/>
+        <mapping class="fr.afgj.coinbot.entity.ApiKey"/>
+        <mapping class="fr.afgj.coinbot.entity.CurrencyRate"/>
+        <mapping class="fr.afgj.coinbot.entity.CurrencyTrend"/>
+        <mapping class="fr.afgj.coinbot.entity.User"/>
+        <mapping class="fr.afgj.coinbot.entity.UserConfiguration"/>
+        <mapping class="fr.afgj.coinbot.entity.OrderHistoryBot"/>
     </session-factory>
 </hibernate-configuration>
