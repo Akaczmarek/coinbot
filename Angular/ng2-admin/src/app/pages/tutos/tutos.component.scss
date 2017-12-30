@@ -5,11 +5,26 @@ body{
 
 }
 .paragraph{
-
+    padding-bottom: 15px;
+    padding-top: 15px;
+    
 }
 h1{
     font-size: 38px;
+  
 }
 h1,h2,h3,h4,h5,h6{
     text-align: center;
+    padding-bottom: 15px;
 }
+
+h4{
+    color: red;
+    padding-top: 15px;
+}
+
+img{
+    position: relative;
+   left: 240px;
+}
+
