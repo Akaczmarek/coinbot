@@ -34,8 +34,10 @@ public class Element1Test implements Runnable {
 		// TODO Auto-generated method stub
 
 		
-		for (int i = 0; i < 150; i++) {
-			System.out.println("------------------------------------");
+		
+		for (int i = 0; i < 800; i++) {
+			System.out.println("test : " + i +" . ------------------------------------");
+			
 			int x = 1;
 			for (CurrencyTrend ct : getCtb().getCurrenciesTrendsOrderByNoteToBuy()) {
 				if (ct.getCurrency() != null) {
@@ -44,11 +46,18 @@ public class Element1Test implements Runnable {
 					x++;
 				}
 				try {
-					Thread.sleep(100);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+			
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 

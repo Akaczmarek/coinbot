@@ -106,7 +106,7 @@ public class TestLineEquationandNote {
 		c.getCurrencyratesStudy().add(cr11);
 		c.getCurrencyratesStudy().add(cr12);
 		
-		System.out.println(ct.update(tr));
+
 		
 		try {
 			Thread.sleep(20);

@@ -63,10 +63,7 @@ public class currenciesTrendBotsTestFinal {
 		Thread t2 = new Thread(el2);
 		t2.start();
 		
-		//demande d'affichage de résultat, simule de piochage d'information
-		Element1Test el3 = new Element1Test("el2");
-		Thread t3 = new Thread(el3);
-		t3.start();
+
 		
 		
 		

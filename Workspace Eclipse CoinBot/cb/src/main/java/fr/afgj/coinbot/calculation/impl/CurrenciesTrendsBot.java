@@ -134,32 +134,41 @@ public class CurrenciesTrendsBot implements Runnable {
 		 * 
 		 */
 		// boucle principale, boucle sur toutes les actions ci dessus
+		int j = 0;
 		while (true) {
-
+			
+			
 			// parcourt de la liste de tendances et mise à jour
+			int i = 0;
 			for (CurrencyTrend ct : this.getCurrenciesTrends()) {
-
+				
 				// Stage 0 : Launch update
 				ct.setUpdateFinish(false);
 				ct.update(this.getTrendRule());
 
-				// Stage 1 : wait result
+				// Stage 1 : wait result UPDATE
 
 				boolean checkFinish = this.waitResultUpdateCurrencyTrend(ct);
 
 				// stage 2 : treatment if update finished
 				if (checkFinish) {
-
+					System.out.println("calcul de 1 tendance fini : " + j + "-" + i);
 				} else {
 					System.out.println("erreur ctb : une tendance n'a pas été mise à jour ");
 				}
-
+				i++;
 			}
 
 			// mise à jour des listes ordonnées
 			this.updateCurrenciesTrendsOrderByNoteToBuy();
 			this.updateCurrenciesTrendsOrderByNoteToSell();
 
+			
+//			System.out.println("**************************************");
+//			for (CurrencyTrend ct : this.getCurrenciesTrendsOrderByNoteToBuy()) {
+//				System.out.println(ct.getCurrency().getName() + ", note" + ct.getNotetobuy());
+//			}
+			
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -167,19 +176,17 @@ public class CurrenciesTrendsBot implements Runnable {
 				e.printStackTrace();
 			}
 
+			j++;
 		}
 	}
 
 	private boolean waitResultUpdateCurrencyTrend(CurrencyTrend ct) {
 		// TODO Auto-generated method stub
 
-		ct.update(this.getTrendRule());
-
 		int i = 0;
-		if (ct != null) {
 
+		while (true) {
 			if (ct.isUpdateFinish()) {
-
 				return true;
 			}
 
@@ -196,8 +203,6 @@ public class CurrenciesTrendsBot implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {
-			return false;
 		}
 
 	}

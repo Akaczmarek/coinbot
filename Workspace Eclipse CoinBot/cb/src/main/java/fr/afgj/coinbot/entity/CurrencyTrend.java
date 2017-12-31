@@ -202,18 +202,19 @@ public class CurrencyTrend implements java.io.Serializable {
 		Thread t = new Thread(ooct);
 		t.start();
 		
-		
 		int i =0;
 		
 		while (true) {
 
 			if (!t.isAlive()) {
 				this.setUpdateFinish(true);
+				break;
 			}
 			
 			if (i > 50) {
 				//time is exceeded
 				this.setUpdateFinish(false);
+				break;
 			}
 			
 			i++;
