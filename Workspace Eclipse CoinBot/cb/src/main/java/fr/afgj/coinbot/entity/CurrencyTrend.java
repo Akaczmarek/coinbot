@@ -54,6 +54,7 @@ public class CurrencyTrend implements java.io.Serializable {
 	{
 		this.ooct = new OperationsOnCurrencyTrend(this);
 	}
+
 	public CurrencyTrend() {
 	}
 
@@ -159,6 +160,7 @@ public class CurrencyTrend implements java.io.Serializable {
 	public void setValueaskbtc(Double valueaskbtc) {
 		this.valueaskbtc = valueaskbtc;
 	}
+
 	// MIS EN COMM ALAIN 29/12
 	@Transient
 	public OperationsOnCurrencyTrend getOoct() {
@@ -172,8 +174,6 @@ public class CurrencyTrend implements java.io.Serializable {
 	// methods
 	// ----------------------------------------------------------------------
 
-
-
 	/*
 	 * Mise à jour de la tendance de la devise return true si tout c'est bien passé,
 	 * false sinon
@@ -183,10 +183,43 @@ public class CurrencyTrend implements java.io.Serializable {
 
 		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
 		this.getOoct().setNewCurrencyRates(crs);
+		this.getOoct().setTrendRule(tr);
+		this.getOoct().getTrendNotesToBuy().clear();
+		this.getOoct().getTrendNotesToSell().clear();
+		
 		Thread t = new Thread(ooct);
 		t.start();
+		
+		
+		int i =0;
+		
+		while (true) {
 
-		return false;
+			if (!t.isAlive()) {
+				System.out.println("resultat update*****************************************************");
+				System.out.println("note to buy : " + this.getNotetobuy());
+				System.out.println("note to sell : " + this.getNotetosell());
+
+				return true;
+			}
+			
+			if (i > 50) {
+				//time is exceeded
+				System.out.println("resultat update*****************************************************");
+				System.out.println("pas de calcul transmis à currency trend");
+				return false;
+			}
+			
+			i++;
+			
+			try {
+				Thread.sleep(21);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {

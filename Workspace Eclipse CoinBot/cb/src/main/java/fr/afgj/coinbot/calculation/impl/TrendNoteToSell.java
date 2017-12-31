@@ -58,7 +58,7 @@ public class TrendNoteToSell extends TrendNote {
 			this.treatmentNotationBid();
 		
 		}else {
-			System.out.println("opérations pas terminées, le calcul est abandonné");
+			System.out.println("Erreur note to Sell : au moment de procédé au calcul des notes; opérations précédentes pas terminées, le calcul est abandonné");
 		}
 		
 		// Stage 5 : SAVE RESULT

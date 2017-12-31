@@ -121,13 +121,76 @@ public class OperationsOnCurrencyTrend implements Runnable {
 
 		// Stage 0 : update lists
 		// Stage 0.1 : comparison between new and old list
-		comparisonCurrencyRatesList();
+		this.comparisonCurrencyRatesList();
 
 		// Stage 0.2 : update points list
-		updatePointsXY();
+		this.updatePointsXY();
 
-		// stage 1 : check if the calculation is possible
+		// stage 1 : check if the calculation is possible and transmit list of points to Trend Note
 		
+		this.checkAndTransmitForCalculation();
+		
+		// Stage 2 : wait result Note
+		
+		boolean checkFinish = this.waitResultNote();
+		
+		// stage 3 : sum calculation  of notes
+
+		//********************************************************************************
+		//definition note to buy or to sell : 
+		//********************************************************************************
+		if (checkFinish) {
+			System.out.println("on poursuit");
+			
+			this.treatmentCompilationNotationtoBuy();
+			this.treatmentCompilationNotationtoSell();
+		
+		}else {
+			System.out.println("erreur OOCT : avant de faire calcul des notes ; opérations pas terminées, le calcul est abandonné");
+		}
+	}
+
+	private void treatmentCompilationNotationtoSell() {
+		double note = 0.0;
+		CurrencyTrend ct = this.currencyTrend;
+		
+		if (this.getTrendNotesToSell()!= null) {
+			Iterator<TrendNoteToSell> ite = this.getTrendNotesToSell().iterator();
+			
+			while(ite.hasNext()) {
+				TrendNoteToSell tntb = ite.next();
+
+				note =  note + tntb.getNote();
+			}
+			
+			// save result in currency trend
+			ct.setNotetosell(note);
+
+		}
+	}
+
+	private void treatmentCompilationNotationtoBuy() {
+
+		double note = 0.0;
+		CurrencyTrend ct = this.currencyTrend;
+		
+		if (this.getTrendNotesToBuy()!= null) {
+			Iterator<TrendNoteToBuy> ite = this.getTrendNotesToBuy().iterator();
+			
+			while(ite.hasNext()) {
+				TrendNoteToBuy tntb = ite.next();
+
+				note =  note + tntb.getNote();
+			}
+			
+			// save result in currency trend
+			ct.setNotetobuy(note);
+			
+		}
+	}
+
+	private void checkAndTransmitForCalculation() {
+		// TODO Auto-generated method stub
 		if (this.getNewCurrencyRates() != null && this.getNewCurrencyRates().size() >= 2) {
 
 			List<TrendPointXY> ptsBid = new ArrayList<>(this.getPointsXYOfBid());
@@ -169,7 +232,7 @@ public class OperationsOnCurrencyTrend implements Runnable {
 				t1.start();
 				
 				}else {
-					System.out.println("erreur : pas assez de données, ne peut pas faire l'objet de calcul");
+					System.out.println("erreur OOCT: pas assez de données, ne peut pas faire l'objet de calcul");
 				}
 				
 				
@@ -177,6 +240,37 @@ public class OperationsOnCurrencyTrend implements Runnable {
 
 		} else {
 			this.log.error("error : le calcul ne peut pas être fait il n'y a pas assez de données ou liste null" + this.toString());
+		}
+		
+	}
+
+	private boolean waitResultNote() {
+		
+		int i = 0;
+		
+		while (true) {
+			
+			int nbOfnotesToBuy = this.getTrendNotesToBuy().size();
+			int nbOfnotesToSell = this.getTrendNotesToSell().size();
+			int nbOftrendRules = this.getTrendRule().getTrendRules().size(); 
+
+			if (nbOfnotesToBuy == nbOftrendRules && nbOfnotesToSell == nbOftrendRules) {
+
+				return true;
+			}
+			
+			if (i > 50) {
+				//time is exceeded
+				return false;
+			}
+			i++;
+			
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
