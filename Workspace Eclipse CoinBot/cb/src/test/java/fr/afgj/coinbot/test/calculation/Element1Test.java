@@ -33,6 +33,7 @@ public class Element1Test implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 
+		
 		for (int i = 0; i < 150; i++) {
 			System.out.println("------------------------------------");
 			int x = 1;
@@ -43,7 +44,7 @@ public class Element1Test implements Runnable {
 					x++;
 				}
 				try {
-					Thread.sleep(5);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

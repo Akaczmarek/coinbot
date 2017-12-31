@@ -140,7 +140,6 @@ public class OperationsOnCurrencyTrend implements Runnable {
 		//definition note to buy or to sell : 
 		//********************************************************************************
 		if (checkFinish) {
-			System.out.println("on poursuit");
 			
 			this.treatmentCompilationNotationtoBuy();
 			this.treatmentCompilationNotationtoSell();

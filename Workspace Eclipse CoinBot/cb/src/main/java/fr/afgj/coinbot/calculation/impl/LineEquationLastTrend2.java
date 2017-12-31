@@ -33,9 +33,7 @@ public class LineEquationLastTrend2 extends LineEquation implements ILineEquatio
 		// stage 2 : save line equation
 		this.getTrendNote().getLineEquationsLT().add(this);
 		
-		System.out.println("--------------------------------------------------------");
-		System.out.println("last trend 2 - point1, x :" + this.getAveragePt1().getX() + " y : " + this.getAveragePt1().getY());
-		System.out.println("last trend 2 - point2, x :" + this.getAveragePt2().getX() + " y : " + this.getAveragePt2().getY());
+		
 	}
 
 

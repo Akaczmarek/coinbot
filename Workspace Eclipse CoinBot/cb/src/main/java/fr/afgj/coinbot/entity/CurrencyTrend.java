@@ -50,6 +50,7 @@ public class CurrencyTrend implements java.io.Serializable {
 	private Double valueaskbtc;
 	// MIS EN COMM ALAIN 29/12
 	private OperationsOnCurrencyTrend ooct;
+	private boolean updateFinish;
 
 	{
 		this.ooct = new OperationsOnCurrencyTrend(this);
@@ -170,16 +171,27 @@ public class CurrencyTrend implements java.io.Serializable {
 	public void setOoct(OperationsOnCurrencyTrend ooct) {
 		this.ooct = ooct;
 	}
+	@Transient
+	public boolean isUpdateFinish() {
+		return updateFinish;
+	}
+
+	public void setUpdateFinish(boolean updateFinish) {
+		this.updateFinish = updateFinish;
+	}
+	
 
 	// methods
 	// ----------------------------------------------------------------------
+
+
 
 	/*
 	 * Mise à jour de la tendance de la devise return true si tout c'est bien passé,
 	 * false sinon
 	 * 
 	 */
-	public synchronized boolean update(TrendRule tr) {
+	public synchronized void update(TrendRule tr) {
 
 		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
 		this.getOoct().setNewCurrencyRates(crs);
@@ -196,18 +208,12 @@ public class CurrencyTrend implements java.io.Serializable {
 		while (true) {
 
 			if (!t.isAlive()) {
-				System.out.println("resultat update*****************************************************");
-				System.out.println("note to buy : " + this.getNotetobuy());
-				System.out.println("note to sell : " + this.getNotetosell());
-
-				return true;
+				this.setUpdateFinish(true);
 			}
 			
 			if (i > 50) {
 				//time is exceeded
-				System.out.println("resultat update*****************************************************");
-				System.out.println("pas de calcul transmis à currency trend");
-				return false;
+				this.setUpdateFinish(false);
 			}
 			
 			i++;
@@ -222,15 +228,21 @@ public class CurrencyTrend implements java.io.Serializable {
 		
 	}
 
+
+
 	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
 
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 			// TODO Auto-generated method stub
 
+			if (CT1.getNotetobuy()!=null && CT2.getNotetobuy()!=null) {
 			int noteCT1 = (int) (CT1.getNotetobuy() * 1000);
 			int noteCT2 = (int) (CT2.getNotetobuy() * 1000);
 			return noteCT2 - noteCT1;
+			}else {
+				return 0;
+			}
 		}
 	};
 
@@ -239,9 +251,14 @@ public class CurrencyTrend implements java.io.Serializable {
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 
+			if (CT1.getNotetosell()!=null && CT2.getNotetosell()!=null) {
 			int noteCT1 = (int) (CT1.getNotetosell() * 1000);
 			int noteCT2 = (int) (CT2.getNotetosell() * 1000);
 			return noteCT2 - noteCT1;
+			}else {
+				return 0;
+			}
+			
 
 		}
 	};

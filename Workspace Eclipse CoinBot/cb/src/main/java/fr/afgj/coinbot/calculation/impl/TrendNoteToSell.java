@@ -53,7 +53,6 @@ public class TrendNoteToSell extends TrendNote {
 		//definition note : 
 		//********************************************************************************
 		if (checkFinish) {
-			System.out.println("on poursuit");
 			
 			this.treatmentNotationBid();
 		

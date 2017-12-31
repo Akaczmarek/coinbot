@@ -28,8 +28,7 @@ public class CurrenciesTrendsBot implements Runnable {
 		((TrendRulesBot) this.getTrendRule()).loadTrendRulesBotEnum(); // loading trend rules
 		log.info("règles tendances chargées");
 	}
-	
-	
+
 	/*
 	 * private constructor
 	 */
@@ -76,11 +75,11 @@ public class CurrenciesTrendsBot implements Runnable {
 		this.currenciesTrendsOrderByNoteToBuy = currenciesTrendsOrderByNoteToBuy;
 	}
 
-	public List<CurrencyTrend> getCurrenciesTrends() {
+	public synchronized List<CurrencyTrend> getCurrenciesTrends() {
 		return currenciesTrends;
 	}
 
-	public void setCurrenciesTrends(List<CurrencyTrend> currenciesTrends) {
+	public synchronized void setCurrenciesTrends(List<CurrencyTrend> currenciesTrends) {
 		this.currenciesTrends = currenciesTrends;
 	}
 
@@ -92,7 +91,7 @@ public class CurrenciesTrendsBot implements Runnable {
 			List<CurrencyTrend> currenciesTrendsOrderByNoteToSell) {
 		this.currenciesTrendsOrderByNoteToSell = currenciesTrendsOrderByNoteToSell;
 	}
-	
+
 	public TrendRule getTrendRule() {
 		return trendRule;
 	}
@@ -103,17 +102,23 @@ public class CurrenciesTrendsBot implements Runnable {
 
 	// methods ----------------------------------------------------------
 
-
-
 	private void updateCurrenciesTrendsOrderByNoteToBuy() {
 		List<CurrencyTrend> cts = new ArrayList<>(this.getCurrenciesTrends());
-		Collections.sort(cts, CurrencyTrend.CTNoteToBuyComparator);
+
+		if (cts.size() > 2) {
+			Collections.sort(cts, CurrencyTrend.CTNoteToBuyComparator);
+		}
+
 		this.setCurrenciesTrendsOrderByNoteToBuy(cts);
 	}
 
 	private void updateCurrenciesTrendsOrderByNoteToSell() {
 		List<CurrencyTrend> cts = new ArrayList<>(this.getCurrenciesTrends());
-		Collections.sort(cts, CurrencyTrend.CTNoteToSellComparator);
+
+		if (cts.size() > 2) {
+			Collections.sort(cts, CurrencyTrend.CTNoteToSellComparator);
+		}
+
 		this.setCurrenciesTrendsOrderByNoteToSell(cts);
 	}
 
@@ -132,9 +137,24 @@ public class CurrenciesTrendsBot implements Runnable {
 		while (true) {
 
 			// parcourt de la liste de tendances et mise à jour
-//			for (CurrencyTrend ct : this.getCurrenciesTrends()) {
-//				ct.update(this.getTrendRule());
-//			}
+			for (CurrencyTrend ct : this.getCurrenciesTrends()) {
+
+				// Stage 0 : Launch update
+				ct.setUpdateFinish(false);
+				ct.update(this.getTrendRule());
+
+				// Stage 1 : wait result
+
+				boolean checkFinish = this.waitResultUpdateCurrencyTrend(ct);
+
+				// stage 2 : treatment if update finished
+				if (checkFinish) {
+
+				} else {
+					System.out.println("erreur ctb : une tendance n'a pas été mise à jour ");
+				}
+
+			}
 
 			// mise à jour des listes ordonnées
 			this.updateCurrenciesTrendsOrderByNoteToBuy();
@@ -148,6 +168,38 @@ public class CurrenciesTrendsBot implements Runnable {
 			}
 
 		}
+	}
+
+	private boolean waitResultUpdateCurrencyTrend(CurrencyTrend ct) {
+		// TODO Auto-generated method stub
+
+		ct.update(this.getTrendRule());
+
+		int i = 0;
+		if (ct != null) {
+
+			if (ct.isUpdateFinish()) {
+
+				return true;
+			}
+
+			if (i > 50) {
+				// time is exceeded
+				return false;
+			}
+
+			i++;
+
+			try {
+				Thread.sleep(22);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			return false;
+		}
+
 	}
 
 }
