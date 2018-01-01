@@ -102,7 +102,7 @@ public class CurrenciesTrendsBot implements Runnable {
 
 	// methods ----------------------------------------------------------
 
-	private void updateCurrenciesTrendsOrderByNoteToBuy() {
+	public void updateCurrenciesTrendsOrderByNoteToBuy() {
 		List<CurrencyTrend> cts = new ArrayList<>(this.getCurrenciesTrends());
 
 		if (cts.size() > 2) {
@@ -160,8 +160,8 @@ public class CurrenciesTrendsBot implements Runnable {
 			}
 
 			// mise à jour des listes ordonnées
-			this.updateCurrenciesTrendsOrderByNoteToBuy();
-			this.updateCurrenciesTrendsOrderByNoteToSell();
+			//this.updateCurrenciesTrendsOrderByNoteToBuy();
+			//this.updateCurrenciesTrendsOrderByNoteToSell();
 
 			
 //			System.out.println("**************************************");

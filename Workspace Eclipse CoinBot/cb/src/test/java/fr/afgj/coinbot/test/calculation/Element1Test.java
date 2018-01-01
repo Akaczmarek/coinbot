@@ -39,6 +39,7 @@ public class Element1Test implements Runnable {
 			System.out.println("test : " + i +" . ------------------------------------");
 			
 			int x = 1;
+			ctb.updateCurrenciesTrendsOrderByNoteToBuy();
 			for (CurrencyTrend ct : getCtb().getCurrenciesTrendsOrderByNoteToBuy()) {
 				if (ct.getCurrency() != null) {
 					System.out.println(x + ". nom test : " + this.getName() + " , nom élément liste : "
@@ -54,7 +55,7 @@ public class Element1Test implements Runnable {
 			}
 			
 			try {
-				Thread.sleep(200);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

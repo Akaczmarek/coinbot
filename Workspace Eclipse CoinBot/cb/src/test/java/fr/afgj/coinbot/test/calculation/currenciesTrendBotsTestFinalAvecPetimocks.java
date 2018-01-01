@@ -13,7 +13,7 @@ import fr.afgj.coinbot.entity.CurrencyTrend;
  *         une base sinusoidale et de déphaser les courbes pour contrôler leur
  *         états (valable à l'achat, vente )les unes par rapport aux autres
  */
-public class currenciesTrendBotsTestFinal {
+public class currenciesTrendBotsTestFinalAvecPetimocks {
 	public static void main(String[] args) {
 
 		// création de l'objet currenciesTrendBots
@@ -63,6 +63,18 @@ public class currenciesTrendBotsTestFinal {
 		Thread t2 = new Thread(el2);
 		t2.start();
 		
+		
+		try {
+			Thread.sleep(45);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//demande d'affichage de résultat, simule de piochage d'information
+		Element1Test el3 = new Element1Test("el3");
+		Thread t3 = new Thread(el3);
+		t3.start();
 
 		
 		
@@ -88,22 +100,22 @@ public class currenciesTrendBotsTestFinal {
 				
 				CurrencyRate crr2= new CurrencyRate();
 				crr2.setTimerecord(date);
-				crr2.setBidbtc(Math.sin(a+1)*10 +11);
-				crr2.setAskbtc(Math.sin(a+1)*10 +12);
+				crr2.setBidbtc(Math.sin(a+0.5)*10 +11);
+				crr2.setAskbtc(Math.sin(a+0.5)*10 +12);
 				
 				cr2.getCurrencyratesStudy().add(crr2);
 				
 				CurrencyRate crr3= new CurrencyRate();
 				crr3.setTimerecord(date);
-				crr3.setBidbtc(Math.sin(a+2)*10 +11);
-				crr3.setAskbtc(Math.sin(a+2)*10 +12);
+				crr3.setBidbtc(Math.sin(a+1)*10 +11);
+				crr3.setAskbtc(Math.sin(a+1)*10 +12);
 				
 				cr3.getCurrencyratesStudy().add(crr3);
 				
 				CurrencyRate crr4= new CurrencyRate();
 				crr4.setTimerecord(date);
-				crr4.setBidbtc(Math.sin(a+3)*10 +11);
-				crr4.setAskbtc(Math.sin(a+3)*10 +12);
+				crr4.setBidbtc(Math.sin(a+1.5)*10 +11);
+				crr4.setAskbtc(Math.sin(a+1.5)*10 +12);
 				
 				cr4.getCurrencyratesStudy().add(crr4);
 
