@@ -56,7 +56,7 @@ public class ConnexionServeurCoinbotApplication {
 		System.out.println("currency trouvé" + cr.getName() +  " (id = " + cr.getIdcurrency() + ")");
 		
 		
-		System.out.println("----------------");
+		System.out.println("--------------------------);
 		
 //		List<CurrencyRate> CurrencyRates = currencyRateRep.findByCurrency(cr);
 //		//Set<CurrencyRate> CurrencyRates = cr.getCurrencyrates();

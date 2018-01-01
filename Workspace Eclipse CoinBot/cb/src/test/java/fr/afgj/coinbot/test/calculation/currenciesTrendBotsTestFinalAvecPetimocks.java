@@ -80,7 +80,7 @@ public class currenciesTrendBotsTestFinalAvecPetimocks {
 		
 		
 		//ajout des données dans les currency trend (les données sont des objet currency rate)
-		// ajout de donnée à mesure que le temps passe
+		// ajout de données à mesure que le temps passe
 		
 		Date date0 = new Date();
 		while (true) {
