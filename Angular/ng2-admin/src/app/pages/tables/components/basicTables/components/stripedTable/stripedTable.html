@@ -1,22 +1,27 @@
 <div class="vertical-scroll">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Type d’ordre </th>
-      <th>Cryptomonnaie</th>
-      <th>Volume</th>
-      <th>Date</th>
-      <th>Valeur de gain en BTC</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of smartTableData">
-      <td>{{ item.ordertype }}</td>
-      <td>{{ item.currency }}</td>
-      <td>{{ item.volume }}</td>
-      <td>{{ item.timestampfinished | date: 'dd/MM/yyyy'}}</td>
-      <td>{{ item.gainbtc }}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div *ngIf="smartTableData">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Type d’ordre </th>
+          <th>Cryptomonnaie</th>
+          <th>Volume</th>
+          <th>Date</th>
+          <th>Valeur de gain en BTC</th>
+        </tr>
+
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let item of smartTableData">
+          <td>{{ item.ordertype }}</td>
+          <td>{{ item.currency.name }}</td>
+          <td>{{ item.volume }}</td>
+          <td>{{ item.timestampfinished | date: 'dd/MM/yyyy'}}</td>
+          <td>{{ item.gainbtc }}</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
 </div>
