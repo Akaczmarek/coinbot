@@ -1,8 +1,5 @@
 package fr.afgj.coinbot;
 
-import java.util.Date;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -18,7 +15,6 @@ import fr.afgj.coinbot.entity.User;
 import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserRepository;
-import fr.afgj.coinbot.service.CurrencyRateService;
 
 @SpringBootApplication
 public class ConnexionServeurCoinbotApplication {
@@ -26,83 +22,77 @@ public class ConnexionServeurCoinbotApplication {
 	private static final Logger log = LogManager.getLogger();
 	private static final SessionFactory sessionFactory;
 
-    static 
-    {
-     try 
-       {
-        // Create the SessionFactory from hibernate.cfg.xml
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-        } 
-        catch (Throwable ex)
-        {
-          // Make sure you log the exception, as it might be swallowed
-          System.err.println("Initial SessionFactory creation failed." + ex);
-          throw new ExceptionInInitializerError(ex);
-        }
-     }
+	static {
+		try {
+			// Create the SessionFactory from hibernate.cfg.xml
+			sessionFactory = new Configuration().configure().buildSessionFactory();
+		} catch (Throwable ex) {
+			// Make sure you log the exception, as it might be swallowed
+			System.err.println("Initial SessionFactory creation failed." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+	}
 
-     public static SessionFactory getSessionFactory()
-     {
-      return sessionFactory;
-     }
+	public static SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(ConnexionServeurCoinbotApplication.class, args);
 		CurrencyRepository currencyRep = ctx.getBean(CurrencyRepository.class);
 		CurrencyRateRepository currencyRateRep = ctx.getBean(CurrencyRateRepository.class);
-		
+
 		Currency cr = currencyRep.findOne(1);
-		
-		System.out.println("currency trouvé" + cr.getName() +  " (id = " + cr.getIdcurrency() + ")");
-		
-		
-		System.out.println("--------------------------);
-		
-//		List<CurrencyRate> CurrencyRates = currencyRateRep.findByCurrency(cr);
-//		//Set<CurrencyRate> CurrencyRates = cr.getCurrencyrates();
-//		
-//		int i = 0;
-//		for (CurrencyRate currencyRate : CurrencyRates) {
-//			System.out.println(i + ". currency rate (id = " + currencyRate.getIdcurrencyrate() + ") valeur bid :" + currencyRate.getBidbtc());
-//			i++;
-//		}
-//		
-// partie à conserver*********************************************************************************************************
-//		// first loading
-//		//loading data into currencies trends bot
-//		CurrenciesTrendsBot ctb = CurrenciesTrendsBot.getInstance();
-//		CurrencyTrendService cts = ctx.getBean(CurrencyTrendService.class);
-//		CurrencyService cs = ctx.getBean(CurrencyService.class);
-//		List<Currency> currencies = cs.currencies();
-//		
-//		for (Currency currency : currencies) {
-//			CurrencyTrend ct = ctx.getBean(CurrencyTrend.class);
-//			ct.setCurrency(currency);
-//			cts.saveCurrencyTrend(ct);
-//			ctb.getCurrenciesTrends().add(ct);
-//		}
-//		
-//		for (CurrencyTrend ct : ctb.getCurrenciesTrends()) {
-//			System.out.println(ct.getIdtrend() + " " + ct.getCurrency().getName());
-//		}
-//		**************************************************************************************************
-		
-//		//essai de récupération de données****************************************************************
-//		CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
-//		Date date0 = new Date(1514017735000L);
-//		Date Recentlydate = new Date(1514190535000L);
-//		List<CurrencyRate> currencyRates = crs.currencyRatesByDate(date0, Recentlydate, cr);
-//		
-//		System.out.println(currencyRates.size());
-//		//************************************************************************************************
-		
-		
-		
-		
-		
+
+		System.out.println("currency trouvé" + cr.getName() + " (id = " + cr.getIdcurrency() + ")");
+
+		System.out.println("--------------------------");
+
+		// List<CurrencyRate> CurrencyRates = currencyRateRep.findByCurrency(cr);
+		// //Set<CurrencyRate> CurrencyRates = cr.getCurrencyrates();
+		//
+		// int i = 0;
+		// for (CurrencyRate currencyRate : CurrencyRates) {
+		// System.out.println(i + ". currency rate (id = " +
+		// currencyRate.getIdcurrencyrate() + ") valeur bid :" +
+		// currencyRate.getBidbtc());
+		// i++;
+		// }
+		//
+		// partie à
+		// conserver*********************************************************************************************************
+		// // first loading
+		// //loading data into currencies trends bot
+		// CurrenciesTrendsBot ctb = CurrenciesTrendsBot.getInstance();
+		// CurrencyTrendService cts = ctx.getBean(CurrencyTrendService.class);
+		// CurrencyService cs = ctx.getBean(CurrencyService.class);
+		// List<Currency> currencies = cs.currencies();
+		//
+		// for (Currency currency : currencies) {
+		// CurrencyTrend ct = ctx.getBean(CurrencyTrend.class);
+		// ct.setCurrency(currency);
+		// cts.saveCurrencyTrend(ct);
+		// ctb.getCurrenciesTrends().add(ct);
+		// }
+		//
+		// for (CurrencyTrend ct : ctb.getCurrenciesTrends()) {
+		// System.out.println(ct.getIdtrend() + " " + ct.getCurrency().getName());
+		// }
+		// **************************************************************************************************
+
+		// //essai de récupération de
+		// données****************************************************************
+		// CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
+		// Date date0 = new Date(1514017735000L);
+		// Date Recentlydate = new Date(1514190535000L);
+		// List<CurrencyRate> currencyRates = crs.currencyRatesByDate(date0,
+		// Recentlydate, cr);
+		//
+		// System.out.println(currencyRates.size());
+		// //************************************************************************************************
+
 	}
-	
-	
+
 	public CommandLineRunner chargementDonnéesCurrency(CurrencyRateRepository repository) {
 		return (args) -> {
 			// save a couple of users
@@ -115,15 +105,13 @@ public class ConnexionServeurCoinbotApplication {
 			log.info("-------------------------------");
 			for (CurrencyRate cr : repository.findAll()) {
 
-
 			}
 
 			log.info("");
 
 		};
 	}
-	
-	
+
 	public CommandLineRunner chargementDonnéesCurrencyRate(CurrencyRateRepository repository) {
 		return (args) -> {
 			// save a couple of users
@@ -136,87 +124,88 @@ public class ConnexionServeurCoinbotApplication {
 			log.info("-------------------------------");
 			for (CurrencyRate cr : repository.findAll()) {
 
-
 			}
 
 			log.info("");
 
 		};
 	}
-	
 
-//	// ajout des currency rate mockés
-//
-//	public CommandLineRunner saveMockCurrency(CurrencyRateRepository repository) {
-//		return (args) -> {
-//
-//			// Sauvegarde des mocks
-//
-//			PrintWriter writer;
-//			try {
-//				writer = new PrintWriter("CurrencyMock6.csv", "UTF-8");
-//
-//				// création de l'objet currency rate
-//				Currency cr = new Currency(6, "mock currency 6", "mck6", false, 10005,0.06, 0.066, 36.0);
-//				final Long StartTimeLong = 1514050791000L; // 23 novembre 2017
-//				final Long EndTimeLong = 1517342118000L; // 30 janvier 2018
-//				//final Long EndTimeLong = 1514057991100L; // petit test
-//
-//				// valeur de départ
-//				double askbtc = 0.00007639;
-//				double bidbtc = 0.00007628;
-//				double delta = 0.00000130;
-//				double deltaBidAsk = 0.00000016;
-//
-//				// sens d'évolution
-//				double valueSens = 0.51;// valeur comprise entre 0 et 1; si = 0.5 => 1 chance sur deux de monter, si
-//										// >0.5 plus de chance de monter
-//				int signe = 1;
-//				
-//				// variable tampon
-//				String text ="";
-//
-//				for (Long date = StartTimeLong; date < EndTimeLong; date += 1800000) {
-//
-//					Date timerecord = new Date(date);
-//
-//					// définition du signe
-//
-//					if (Math.random() <= valueSens) {
-//						signe = 1;
-//					} else {
-//						signe = -1;
-//					}
-//
-//					if(askbtc<0.00001500) {
-//						askbtc=askbtc+0.00002000;
-//					}
-//					askbtc = askbtc + (signe) * (Math.random() * delta) ;
-//					bidbtc = askbtc - (Math.random() * delta) - 0.00000002 ;
-//
-//					CurrencyRate crr = new CurrencyRate(cr, timerecord, bidbtc, askbtc);
-//
-//					repository.save(crr);
-//					
-//					text = date + ";" + bidbtc + ";" + askbtc;
-//					
-//					writer.println(text.replace(".", ","));
-//
-//				}
-//
-//				writer.close();
-//			} catch (FileNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (UnsupportedEncodingException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			System.out.println("chargement des données fini");
-//
-//		};
-//	}
+	// // ajout des currency rate mockés
+	//
+	// public CommandLineRunner saveMockCurrency(CurrencyRateRepository repository)
+	// {
+	// return (args) -> {
+	//
+	// // Sauvegarde des mocks
+	//
+	// PrintWriter writer;
+	// try {
+	// writer = new PrintWriter("CurrencyMock6.csv", "UTF-8");
+	//
+	// // création de l'objet currency rate
+	// Currency cr = new Currency(6, "mock currency 6", "mck6", false, 10005,0.06,
+	// 0.066, 36.0);
+	// final Long StartTimeLong = 1514050791000L; // 23 novembre 2017
+	// final Long EndTimeLong = 1517342118000L; // 30 janvier 2018
+	// //final Long EndTimeLong = 1514057991100L; // petit test
+	//
+	// // valeur de départ
+	// double askbtc = 0.00007639;
+	// double bidbtc = 0.00007628;
+	// double delta = 0.00000130;
+	// double deltaBidAsk = 0.00000016;
+	//
+	// // sens d'évolution
+	// double valueSens = 0.51;// valeur comprise entre 0 et 1; si = 0.5 => 1 chance
+	// sur deux de monter, si
+	// // >0.5 plus de chance de monter
+	// int signe = 1;
+	//
+	// // variable tampon
+	// String text ="";
+	//
+	// for (Long date = StartTimeLong; date < EndTimeLong; date += 1800000) {
+	//
+	// Date timerecord = new Date(date);
+	//
+	// // définition du signe
+	//
+	// if (Math.random() <= valueSens) {
+	// signe = 1;
+	// } else {
+	// signe = -1;
+	// }
+	//
+	// if(askbtc<0.00001500) {
+	// askbtc=askbtc+0.00002000;
+	// }
+	// askbtc = askbtc + (signe) * (Math.random() * delta) ;
+	// bidbtc = askbtc - (Math.random() * delta) - 0.00000002 ;
+	//
+	// CurrencyRate crr = new CurrencyRate(cr, timerecord, bidbtc, askbtc);
+	//
+	// repository.save(crr);
+	//
+	// text = date + ";" + bidbtc + ";" + askbtc;
+	//
+	// writer.println(text.replace(".", ","));
+	//
+	// }
+	//
+	// writer.close();
+	// } catch (FileNotFoundException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (UnsupportedEncodingException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	//
+	// System.out.println("chargement des données fini");
+	//
+	// };
+	// }
 
 	// ajout des currency
 	// @Bean //le bean fait que ça s'éxécute au démarrage
@@ -240,7 +229,7 @@ public class ConnexionServeurCoinbotApplication {
 	// };
 	// }
 
-	//@Bean
+	// @Bean
 	public CommandLineRunner demo(UserRepository repository) {
 		return (args) -> {
 			// save a couple of users
