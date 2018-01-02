@@ -37,7 +37,7 @@ export class WebService {
     return this.http.put(this.url + type + '/' + id, bodyString, options).map(r => r.json());
   }
 
-  getAllByElement(type: string, elementId:number, element:string){
+  getAllByElement( element:string, elementId:number,type: string){
     return this.http.get(this.url + element + '/' + elementId +'/' + type +'s').map(r => r.json());
     // url : api/room/1/messages  //le s est obligatoire pour le transmettre à spring
   }

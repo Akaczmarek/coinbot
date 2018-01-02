@@ -104,4 +104,8 @@ export class SupervisionService {
     return this.webService.getBy('ohbbyuser', id);
   }
 
+  getActiveOHBByUser(id :number){
+    return this.webService.getAllByElement('ohbbyuser', id, 'activebid')
+  }
+
 }

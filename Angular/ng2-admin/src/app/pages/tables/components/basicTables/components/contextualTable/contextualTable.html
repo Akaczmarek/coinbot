@@ -1,12 +1,13 @@
 <table class="table">
   <tr>
-    <th>#</th>
     <th>Type d'ordre </th>
     <th>Cryptomonnaie</th>
     <th>Volume</th>
-    <th>Date</th>
+    <th>En cours depuis</th>
     <th>Annulation</th>
   </tr>
+
+  <!--
   <tr class="primary">
     <td>1</td>
     <td>Mark</td>
@@ -47,5 +48,14 @@
     <td>@jack</td>
     <td><a class="email-link" href="mailto:jack@yandex.ru">jack@yandex.ru</a></td>
     <td>30</td>
+  </tr> -->
+
+  <tr class="success" *ngFor="let item of ActiveOrders">
+    <td>{{ item.ordertype.type }}</td>
+    <td>{{ item.currency.name }}</td>
+    <td>{{ item.volume }}</td>
+    <td>{{ item.timestampactivated | date: 'dd/MM/yyyy'}}</td>
+    <td> Faudrait un bouton</td>
   </tr>
+
 </table>

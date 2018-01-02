@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 
 import {BasicTablesService} from '../../basicTables.service';
 import {SupervisionService} from '../../../../../../services/supervision.service';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'striped-table',

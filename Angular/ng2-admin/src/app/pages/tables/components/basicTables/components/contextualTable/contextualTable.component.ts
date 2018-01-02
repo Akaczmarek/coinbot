@@ -1,11 +1,33 @@
 import {Component} from '@angular/core';
 
+import {SupervisionService} from '../../../../../../services/supervision.service';
+
 @Component({
   selector: 'contextual-table',
   templateUrl: './contextualTable.html',
 })
 export class ContextualTable {
 
-  constructor() {
+  ActiveOrders : Array<any>;
+
+
+  constructor(private supervisionService : SupervisionService ) {
+    this.updateActiveOrders();
   }
-}
+
+  updateActiveOrders() {
+    this.supervisionService.getActiveOHBByUser(1).subscribe(reponse => this.ActiveOrders = reponse.sort((a: any, b: any) => {
+      let date1 = new Date(a.timestampfinished);
+      let date2 = new Date(b.timestampfinished);
+
+      if (date1 > date2) {
+          return 1;
+      } else if (date1 < date2) {
+          return -1;
+      } else {
+          return 0;
+      }
+  }))
+   
+  }
+  }

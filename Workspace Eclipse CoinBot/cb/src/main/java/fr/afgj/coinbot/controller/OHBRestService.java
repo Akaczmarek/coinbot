@@ -26,4 +26,11 @@ public class OHBRestService {
 		return gson.toJson(orderHistoryBotRepository.findOHBByIdUser(id));
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "api/ohbbyuser/{id}/activebids", method = RequestMethod.GET)
+	public String ohbActiveList(@PathVariable int id) {
+		Gson gson = new Gson();
+		return gson.toJson(orderHistoryBotRepository.findActiveList(id));
+	}
+
 }
