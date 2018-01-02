@@ -12,7 +12,7 @@ import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.service.CurrencyRateService;
 
 @Service
-public class CurrencyRateServiceImpl implements CurrencyRateService{
+public class CurrencyRateServiceImpl implements CurrencyRateService {
 
 	@Autowired
 	private CurrencyRateRepository currencyRateRepository;
@@ -47,9 +47,10 @@ public class CurrencyRateServiceImpl implements CurrencyRateService{
 		return null;
 	}
 
-
-
-
-	
+	@Override
+	public CurrencyRate findByIdCR(int idCR) {
+		// TODO Auto-generated method stub
+		return currencyRateRepository.findByIdCR(idCR);
+	}
 
 }

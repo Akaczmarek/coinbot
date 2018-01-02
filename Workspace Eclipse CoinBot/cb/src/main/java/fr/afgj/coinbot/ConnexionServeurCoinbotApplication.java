@@ -1,5 +1,7 @@
 package fr.afgj.coinbot;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -11,10 +13,13 @@ import org.springframework.context.ApplicationContext;
 
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyRate;
+import fr.afgj.coinbot.entity.OrderHistoryBot;
 import fr.afgj.coinbot.entity.User;
 import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserRepository;
+import fr.afgj.coinbot.service.CurrencyRateService;
+import fr.afgj.coinbot.service.OrderHistoryBotService;
 
 @SpringBootApplication
 public class ConnexionServeurCoinbotApplication {
@@ -44,9 +49,24 @@ public class ConnexionServeurCoinbotApplication {
 
 		Currency cr = currencyRep.findOne(1);
 
-		System.out.println("currency trouvé" + cr.getName() + " (id = " + cr.getIdcurrency() + ")");
+		System.out.println("currency trouvé------> " + cr.getName() + " (id = " + cr.getIdcurrency() + ")");
 
 		System.out.println("--------------------------");
+
+		CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
+		CurrencyRate crr = crs.findByIdCR(5);
+		System.out.println(crr.getIdcurrencyrate());
+
+		System.out.println("--------------------------");
+
+		System.out.println("-------------OHB BY USER -------------");
+		OrderHistoryBotService ohbs = ctx.getBean(OrderHistoryBotService.class);
+		List<OrderHistoryBot> ohbList = ohbs.findOHBByIdUser(1);
+		for (OrderHistoryBot orderHistoryBot : ohbList) {
+			System.out.println(orderHistoryBot.toString());
+		}
+
+		// OrderHistoryBot ohb2 = userRep.
 
 		// List<CurrencyRate> CurrencyRates = currencyRateRep.findByCurrency(cr);
 		// //Set<CurrencyRate> CurrencyRates = cr.getCurrencyrates();

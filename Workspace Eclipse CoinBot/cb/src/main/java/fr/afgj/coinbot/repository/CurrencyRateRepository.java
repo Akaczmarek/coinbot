@@ -15,14 +15,15 @@ import fr.afgj.coinbot.entity.CurrencyRate;
 
 @CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "currencyRate", path = "cr")
-public interface CurrencyRateRepository extends JpaRepository<CurrencyRate, Integer>, Serializable{
-	
+public interface CurrencyRateRepository extends JpaRepository<CurrencyRate, Integer>, Serializable {
+
 	public List<CurrencyRate> findByCurrency(@Param("currency") Currency currency);
-	
-	@Query("select c from CurrencyRate c where c.timerecord between :date0 and :Recentlydate and c.currency=:cr" )
-	public List<CurrencyRate> currencyRatesByDate(
-			@Param ("date0") Date date0, 
-			@Param ("Recentlydate") Date Recentlydate, 
-			@Param ("cr") Currency cr);
+
+	@Query("select c from CurrencyRate c where c.timerecord between :date0 and :Recentlydate and c.currency=:cr")
+	public List<CurrencyRate> currencyRatesByDate(@Param("date0") Date date0, @Param("Recentlydate") Date Recentlydate,
+			@Param("cr") Currency cr);
+
+	@Query("select cr from CurrencyRate cr where cr.idcurrencyrate = :idCurrencyRate ")
+	CurrencyRate findByIdCR(@Param("idCurrencyRate") int idCurrency);
 
 }

@@ -2,10 +2,12 @@ package fr.afgj.coinbot.entity;
 // Generated 21 d�c. 2017 09:38:56 by Hibernate Tools 5.1.6.Final
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "orderhistorybot", schema = "public")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class OrderHistoryBot implements java.io.Serializable {
 
 	/**
@@ -38,6 +40,7 @@ public class OrderHistoryBot implements java.io.Serializable {
 	private Double currencyvalue;
 	private Double volume;
 	private Double gainbtc;
+	private int idUser;
 
 	public OrderHistoryBot() {
 	}
@@ -65,7 +68,7 @@ public class OrderHistoryBot implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
