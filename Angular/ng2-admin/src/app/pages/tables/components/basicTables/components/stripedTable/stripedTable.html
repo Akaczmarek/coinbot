@@ -1,5 +1,5 @@
  <div class="vertical-scroll">
-  <div *ngIf="smartTableData">
+  <div *ngIf="OrderHistories">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -13,7 +13,7 @@
       </thead>
       <tbody>
 
-        <tr *ngFor="let item of smartTableData">
+        <tr *ngFor="let item of OrderHistories">
           <td>{{ item.ordertype.type }}</td>
           <td>{{ item.currency.name }}</td>
           <td>{{ item.volume }}</td>
