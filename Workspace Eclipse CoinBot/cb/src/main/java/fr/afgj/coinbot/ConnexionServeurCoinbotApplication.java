@@ -11,6 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import com.google.gson.Gson;
+
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyRate;
 import fr.afgj.coinbot.entity.OrderHistoryBot;
@@ -63,7 +65,9 @@ public class ConnexionServeurCoinbotApplication {
 		OrderHistoryBotService ohbs = ctx.getBean(OrderHistoryBotService.class);
 		List<OrderHistoryBot> ohbList = ohbs.findOHBByIdUser(1);
 		for (OrderHistoryBot orderHistoryBot : ohbList) {
-			System.out.println(orderHistoryBot.toString());
+			System.out.println(orderHistoryBot.getCurrency().getName());
+			Gson gson = new Gson();
+			System.out.println(gson.toJson(orderHistoryBot));
 		}
 
 		// OrderHistoryBot ohb2 = userRep.

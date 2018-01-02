@@ -17,6 +17,6 @@ export class StripedTable {
   }
 
   updateOHBUser() {
-    this.supervisionService.getOHBbyUser(1).subscribe(reponse => this.smartTableData = reponse._embedded.orderHistoryBot);
+    this.supervisionService.getOHBbyUser(1).subscribe(reponse => this.smartTableData = reponse);
   }
 }

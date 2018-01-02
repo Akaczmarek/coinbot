@@ -42,4 +42,10 @@ export class WebService {
     // url : api/room/1/messages  //le s est obligatoire pour le transmettre à spring
   }
 
+  getBy(element:string, elementId:number){
+    return this.http.get(this.url + element + '/' + elementId).map(r => r.json());
+  }
+
+
+
 }

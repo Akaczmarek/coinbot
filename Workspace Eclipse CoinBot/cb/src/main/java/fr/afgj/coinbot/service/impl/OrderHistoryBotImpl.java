@@ -17,7 +17,6 @@ public class OrderHistoryBotImpl implements OrderHistoryBotService {
 
 	@Override
 	public List<OrderHistoryBot> findOHBByIdUser(int id_user) {
-		// TODO Auto-generated method stub
 		return orderHistoryBotRepository.findOHBByIdUser(id_user);
 	}
 

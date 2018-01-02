@@ -101,6 +101,7 @@ export class SupervisionService {
 
 
   getOHBbyUser(id: number) {
-    return this.webService.getAllByElement('orderhistorybot', id, 'user');
+    return this.webService.getBy('ohbbyuser', id);
   }
+
 }
