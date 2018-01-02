@@ -10,7 +10,7 @@ import fr.afgj.coinbot.repository.OrderHistoryBotRepository;
 import fr.afgj.coinbot.service.OrderHistoryBotService;
 
 @Service
-public class OrderHistoryBotImpl implements OrderHistoryBotService {
+public class OrderHistoryBotServiceImpl implements OrderHistoryBotService {
 
 	@Autowired
 	private OrderHistoryBotRepository orderHistoryBotRepository;
