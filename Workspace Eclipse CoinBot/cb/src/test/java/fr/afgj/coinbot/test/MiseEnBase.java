@@ -14,19 +14,7 @@ public class MiseEnBase {
 
 	public static void main(String[] args) {
 		
-		ICoinMarketCapGetFirstHundredMarket cmc = new CoinMarketCapGetFirstHundredMarket();
-		CurrencyRepository cr;
 		
-		Iterable<Market> fhm = cmc.getMarket();
-		
-		cr.save(fhm);
-		
-		
-		
-		CurrencyTrendRepository ctr;
-		IBittrexGetMarketSummary bms = (IBittrexGetMarketSummary) new BittrexGetMarketServiceImpl();
-		
-		//ctr.save(bms.getMarketSummary(market));
 		
 	}
 	

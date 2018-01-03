@@ -33,7 +33,7 @@ public class User implements java.io.Serializable {
 	private String password;
 	private UserConfiguration userconfiguration;
 	private ApiKey apikey;
-	private Double securedgain;
+
 	private transient Set<OrderHistoryBot> orderhistorybots = new HashSet<OrderHistoryBot>(0);
 
 	public User() {
@@ -58,6 +58,7 @@ public class User implements java.io.Serializable {
 		this.lastname = lastname;
 		this.mail = mail;
 		this.password = password;
+
 	}
 
 	public User(int id, String firstname, String lastname, String pseudo, String mail, String password,
@@ -147,15 +148,6 @@ public class User implements java.io.Serializable {
 		this.apikey = apikey;
 	}
 
-	@Column(name = "securedgain", precision = 17, scale = 17)
-	public Double getSecuredgain() {
-		return securedgain;
-	}
-
-	public void setSecuredgain(Double securedgain) {
-		this.securedgain = securedgain;
-	}
-
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<OrderHistoryBot> getOrderhistorybots() {
@@ -185,8 +177,6 @@ public class User implements java.io.Serializable {
 		builder.append(userconfiguration);
 		builder.append(", apikey=");
 		builder.append(apikey);
-		builder.append(", securedgain=");
-		builder.append(securedgain);
 		builder.append("]");
 		return builder.toString();
 	}
