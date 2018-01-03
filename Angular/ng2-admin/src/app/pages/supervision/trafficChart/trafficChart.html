@@ -5,7 +5,9 @@
     <div class="canvas-holder">
       <canvas class="chart-area" width="300px" height="300px"></canvas>
       <div class="traffic-text">
-        <span translate> {{sum}} Euros</span>
+        <div *ngIf='sum'>
+        <span translate> {{sum}} € misés</span>
+      </div>
       </div>
     </div>
     <div class="traffic-legend"></div>

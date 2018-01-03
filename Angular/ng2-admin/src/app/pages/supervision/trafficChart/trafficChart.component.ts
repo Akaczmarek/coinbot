@@ -17,7 +17,7 @@ export class TrafficChart {
 
   constructor(private trafficChartService:TrafficChartService) {
     this.doughnutData = trafficChartService.getData();
-    this.sum = this.trafficChartService.sum;
+    this.sum = this.trafficChartService.startingBetValue;
 
   }
 

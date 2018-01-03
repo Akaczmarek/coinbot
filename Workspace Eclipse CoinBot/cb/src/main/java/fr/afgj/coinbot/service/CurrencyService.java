@@ -9,5 +9,7 @@ public interface CurrencyService {
 	public void deleteCurrency(Currency cr);
 	public Currency saveCurrency(Currency cr);
 	public List<Currency> currencies();
+	public Boolean existByName(String name);
+	public void updateByName(Currency currency);
 
 }

@@ -15,7 +15,7 @@ public class CoinMarketCapPublic implements CoinMarketCapPublicIntf{
 
 	public StringBuffer getFirstHundredMarket() throws IOException {
 
-		String url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=50";
+		String url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=20";
 		this.setApi(new ConnexionPublic(url));
 		return this.getApi().print_content();
 	}

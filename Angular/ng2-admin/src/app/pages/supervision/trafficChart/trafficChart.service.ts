@@ -6,7 +6,7 @@ import { SupervisionService} from '../../../services/supervision.service'
 @Injectable()
 export class TrafficChartService {
 
-  public sum : number = 0;
+  public startingBetValue : number = 0;
 
   constructor(private _baConfig:BaThemeConfigProvider, public superServ : SupervisionService) {
     this.getSumValues();
@@ -14,16 +14,12 @@ export class TrafficChartService {
   }
 
   getSumValues() {
-    for(let entry of this.superServ.mockVolume){
-      this.sum+=entry;
-
+    this.startingBetValue = (this.superServ.mockVolume[0] + this.superServ.mockVolume[2]);
     }
-  }
 
-  getPercentage(number : number){
-    return  number = (number / this.sum) * 100
-
-  }
+  getPerc(a:number, b :number){
+    return  (a / b) *100
+    }
 
 
 
@@ -37,22 +33,22 @@ export class TrafficChartService {
         value: this.superServ.mockVolume[0],
         color: dashboardColors.white,
         highlight: colorHelper.shade(dashboardColors.white, 15),
-        label: 'Mise de départ',
-        percentage: this.getPercentage(this.superServ.mockVolume[0]),
+        label: 'Ce qu\'il reste de la mise de départ', // Somme des mises actives + mise actuelle restante
+        percentage: this.getPerc(this.superServ.mockVolume[0], this.superServ.mockVolume[2]),
         order: 1,
       }, {
         value: this.superServ.mockVolume[1],
         color: dashboardColors.green,
         highlight: colorHelper.shade(dashboardColors.green, 15),
-        label: 'Gain sécurisé',
-        percentage:this.getPercentage(this.superServ.mockVolume[1]),
+        label: 'Gains sécurisés envoyés sur Bittrex',
+        percentage:this.getPerc(this.superServ.mockVolume[1],(this.superServ.mockVolume[0] + this.superServ.mockVolume[2])),
         order: 2,
       }, {
         value: this.superServ.mockVolume[2],
         color: dashboardColors.red,
         highlight: colorHelper.shade(dashboardColors.red, 15),
-        label: 'Gain non securisé',
-        percentage: this.getPercentage(this.superServ.mockVolume[2]),
+        label: 'Mises encore actives',
+        percentage: this.getPerc(this.superServ.mockVolume[2],(this.superServ.mockVolume[0] + this.superServ.mockVolume[2])),
         order: 3,
       }
     ];

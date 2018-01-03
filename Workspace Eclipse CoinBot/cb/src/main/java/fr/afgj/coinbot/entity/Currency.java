@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -25,12 +26,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "currency", schema = "public")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class Currency implements java.io.Serializable {
+public class Currency implements java.io.Serializable, Cloneable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8080303206280297143L;
+
 	private int idcurrency;
 	private String name;
 	private String symbol;
@@ -66,8 +68,8 @@ public class Currency implements java.io.Serializable {
 		this.humannote = humannote;
 	}
 
-	public Currency(String name, String symbol, boolean refcurrency, Integer rank, Double volumeeur,
-			Double volumeusd, Double humannote, Set<OrderHistoryBot> orderhistorybots, Set<CurrencyRate> currencyrates,
+	public Currency(String name, String symbol, boolean refcurrency, Integer rank, Double volumeeur, Double volumeusd,
+			Double humannote, Set<OrderHistoryBot> orderhistorybots, Set<CurrencyRate> currencyrates,
 			Set<CurrencyTrend> currencytrends) {
 		this.name = name;
 		this.symbol = symbol;
@@ -82,8 +84,9 @@ public class Currency implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idcurrency", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "currency_idcurrency_seq")
+	@SequenceGenerator(name = "currency_idcurrency_seq", sequenceName = "currency_idcurrency_seq", allocationSize = 1)
+	@Column(name = "idcurrency")
 	public int getIdcurrency() {
 		return this.idcurrency;
 	}
@@ -217,7 +220,5 @@ public class Currency implements java.io.Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 
 }
