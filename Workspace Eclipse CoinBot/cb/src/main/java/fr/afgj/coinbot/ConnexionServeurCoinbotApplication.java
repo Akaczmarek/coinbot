@@ -21,11 +21,13 @@ import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyRate;
 import fr.afgj.coinbot.entity.OrderHistoryBot;
 import fr.afgj.coinbot.entity.User;
+import fr.afgj.coinbot.entity.UserConfiguration;
 import fr.afgj.coinbot.external.api.entities.coinmarketcap.Market;
 import fr.afgj.coinbot.external.api.miscellaneous.CoinMarketCapGetFirstHundredMarket;
 import fr.afgj.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
 import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.repository.CurrencyRepository;
+import fr.afgj.coinbot.repository.UserConfigurationRepository;
 import fr.afgj.coinbot.repository.UserRepository;
 import fr.afgj.coinbot.service.CurrencyRateService;
 import fr.afgj.coinbot.service.CurrencyService;
@@ -61,27 +63,27 @@ public class ConnexionServeurCoinbotApplication {
 		
 		System.out.println("----------------- exist ?----------------------");
 		CurrencyService cs = ctx.getBean(CurrencyService.class);
-		ICoinMarketCapGetFirstHundredMarket cmc = new CoinMarketCapGetFirstHundredMarket();
-		Set<Market> markets = null;
-		try {
-			markets = cmc.getMarket();
-			System.out.println("nb currency : " + markets.size());
-			
-			for (Market market : markets) {
-				// if market.getName = bitcoin -> currency.refCurrency = true
-				Currency currency = new Currency();
-				currency.setName(market.getName());
-				currency.setSymbol(market.getSymbol());
-				currency.setRank( market.getRank() );
-				currency.setVolumeeur( market.getVolume_eur24h() );
-				currency.setVolumeusd( market.getVolume_usd24h() );
-				System.out.println( cs.existByName(currency.getName()) );
-			}
-			
-		} catch (IOException | JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		ICoinMarketCapGetFirstHundredMarket cmc = new CoinMarketCapGetFirstHundredMarket();
+//		Set<Market> markets = null;
+//		try {
+//			markets = cmc.getMarket();
+//			System.out.println("nb currency : " + markets.size());
+//			
+//			for (Market market : markets) {
+//				// if market.getName = bitcoin -> currency.refCurrency = true
+//				Currency currency = new Currency();
+//				currency.setName(market.getName());
+//				currency.setSymbol(market.getSymbol());
+//				currency.setRank( market.getRank() );
+//				currency.setVolumeeur( market.getVolume_eur24h() );
+//				currency.setVolumeusd( market.getVolume_usd24h() );
+//				System.out.println( cs.existByName(currency.getName()) );
+//			}
+//			
+//		} catch (IOException | JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		System.out.println("---------find one currency-----------------");
 		Currency cr = currencyRep.findOne(1);
@@ -118,6 +120,25 @@ public class ConnexionServeurCoinbotApplication {
 			Gson gson = new Gson();
 			System.out.println(gson.toJson(orderHistoryBot));
 		}
+		
+		System.out.println("-------------SAVE USERCONFIG -------------");
+		UserConfigurationRepository userConfigurationRepository = ctx.getBean(UserConfigurationRepository.class);
+		// récupération d'un user existant
+		UserRepository userRepository = ctx.getBean(UserRepository.class);
+		User user = userRepository.findOne(2);
+		UserConfiguration userConfiguration = new UserConfiguration(user);
+		
+		if (userConfigurationRepository.exists(user.getId())) {
+			System.out.println("existe déjà ne pas ajouter");
+		}else {
+			System.out.println("ajout de l'identité : " + user.getId());
+			userConfigurationRepository.save(userConfiguration);
+		}
+
+		
+		
+		
+		
 
 		System.out.println("********************************** FIN TESTS ***************************************");
 		
