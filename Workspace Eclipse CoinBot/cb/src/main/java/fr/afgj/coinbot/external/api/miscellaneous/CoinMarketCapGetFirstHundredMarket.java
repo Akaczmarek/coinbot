@@ -53,9 +53,9 @@ public class CoinMarketCapGetFirstHundredMarket implements ICoinMarketCapGetFirs
 			}
 
 			if (jsonObj.isNull("rank")) {
-				market.setRank("");
+				market.setRank(-1);
 			} else {
-				market.setRank(jsonObj.getString("rank"));
+				market.setRank(Integer.parseInt(jsonObj.getString("rank")));
 			}
 			
 			if (jsonObj.isNull("price_usd")) {
@@ -72,9 +72,9 @@ public class CoinMarketCapGetFirstHundredMarket implements ICoinMarketCapGetFirs
 			
 
 			if (jsonObj.isNull("volume_usd24h")) {
-				market.setVolume_usd24h("");
+				market.setVolume_usd24h(-1d);
 			} else {
-				market.setVolume_usd24h(jsonObj.getString("volume_usd24h"));
+				market.setVolume_usd24h(Double.parseDouble(jsonObj.getString("volume_usd24h")));
 			}
 
 			if (jsonObj.isNull("market_cap_usd")) {
@@ -132,9 +132,9 @@ public class CoinMarketCapGetFirstHundredMarket implements ICoinMarketCapGetFirs
 			}
 
 			if (jsonObj.isNull("volume_eur24h")) {
-				market.setVolume_eur24h("");
+				market.setVolume_eur24h(-1d);
 			} else {
-				market.setVolume_eur24h(jsonObj.getString("volume_eur24h"));
+				market.setVolume_eur24h(Double.parseDouble(jsonObj.getString("volume_eur24h")));
 			}
 
 			if (jsonObj.isNull("market_cap_eur")) {

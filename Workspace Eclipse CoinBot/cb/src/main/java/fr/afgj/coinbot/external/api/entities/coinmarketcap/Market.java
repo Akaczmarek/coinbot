@@ -5,10 +5,10 @@ public class Market {
 	private String id;
 	private String name;
 	private String symbol;
-	private String rank;
+	private Integer rank;
 	private String price_usd;
 	private String price_btc;
-	private String volume_usd24h;
+	private Double volume_usd24h;
 	private String market_cap_usd;
 	private String available_supply;
 	private String total_supply;
@@ -18,17 +18,17 @@ public class Market {
 	private String percent_change_7d;
 	private String last_updated;
 	private String price_eur;
-	private String volume_eur24h;
+	private Double volume_eur24h;
 	private String market_cap_eur;
 	
 	public Market() {
 		super();
 	}
 
-	public Market(String id, String name, String symbol, String rank, String price_usd, String price_btc,
-			String volume_usd24h, String market_cap_usd, String available_supply, String total_supply,
+	public Market(String id, String name, String symbol, Integer rank, String price_usd, String price_btc,
+			Double volume_usd24h, String market_cap_usd, String available_supply, String total_supply,
 			String max_supply, String percent_change_1h, String percent_change_24h, String percent_change_7d,
-			String last_updated, String price_eur, String volume_eur24h, String market_cap_eur) {
+			String last_updated, String price_eur, Double volume_eur24h, String market_cap_eur) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -74,11 +74,11 @@ public class Market {
 		this.symbol = symbol;
 	}
 
-	public String getRank() {
+	public Integer getRank() {
 		return rank;
 	}
 
-	public void setRank(String rank) {
+	public void setRank(Integer rank) {
 		this.rank = rank;
 	}
 
@@ -98,11 +98,11 @@ public class Market {
 		this.price_btc = price_btc;
 	}
 
-	public String getVolume_usd24h() {
+	public Double getVolume_usd24h() {
 		return volume_usd24h;
 	}
 
-	public void setVolume_usd24h(String volume_usd24h) {
+	public void setVolume_usd24h(Double volume_usd24h) {
 		this.volume_usd24h = volume_usd24h;
 	}
 
@@ -178,11 +178,11 @@ public class Market {
 		this.price_eur = price_eur;
 	}
 
-	public String getVolume_eur24h() {
+	public Double getVolume_eur24h() {
 		return volume_eur24h;
 	}
 
-	public void setVolume_eur24h(String volume_eur24h) {
+	public void setVolume_eur24h(Double volume_eur24h) {
 		this.volume_eur24h = volume_eur24h;
 	}
 
@@ -196,13 +196,176 @@ public class Market {
 
 	@Override
 	public String toString() {
-		return "Market [id=" + id + ", name=" + name + ", symbol=" + symbol + ", rank=" + rank + ", price_usd="
-				+ price_usd + ", price_btc=" + price_btc + ", volume_usd24h=" + volume_usd24h + ", market_cap_usd="
-				+ market_cap_usd + ", available_supply=" + available_supply + ", total_supply=" + total_supply
-				+ ", max_supply=" + max_supply + ", percent_change_1h=" + percent_change_1h + ", percent_change_24h="
-				+ percent_change_24h + ", percent_change_7d=" + percent_change_7d + ", last_updated=" + last_updated
-				+ ", price_eur=" + price_eur + ", volume_eur24h=" + volume_eur24h + ", market_cap_eur=" + market_cap_eur
-				+ "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Market [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", symbol=");
+		builder.append(symbol);
+		builder.append(", rank=");
+		builder.append(rank);
+		builder.append(", price_usd=");
+		builder.append(price_usd);
+		builder.append(", price_btc=");
+		builder.append(price_btc);
+		builder.append(", volume_usd24h=");
+		builder.append(volume_usd24h);
+		builder.append(", market_cap_usd=");
+		builder.append(market_cap_usd);
+		builder.append(", available_supply=");
+		builder.append(available_supply);
+		builder.append(", total_supply=");
+		builder.append(total_supply);
+		builder.append(", max_supply=");
+		builder.append(max_supply);
+		builder.append(", percent_change_1h=");
+		builder.append(percent_change_1h);
+		builder.append(", percent_change_24h=");
+		builder.append(percent_change_24h);
+		builder.append(", percent_change_7d=");
+		builder.append(percent_change_7d);
+		builder.append(", last_updated=");
+		builder.append(last_updated);
+		builder.append(", price_eur=");
+		builder.append(price_eur);
+		builder.append(", volume_eur24h=");
+		builder.append(volume_eur24h);
+		builder.append(", market_cap_eur=");
+		builder.append(market_cap_eur);
+		builder.append("]");
+		return builder.toString();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((available_supply == null) ? 0 : available_supply.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((last_updated == null) ? 0 : last_updated.hashCode());
+		result = prime * result + ((market_cap_eur == null) ? 0 : market_cap_eur.hashCode());
+		result = prime * result + ((market_cap_usd == null) ? 0 : market_cap_usd.hashCode());
+		result = prime * result + ((max_supply == null) ? 0 : max_supply.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((percent_change_1h == null) ? 0 : percent_change_1h.hashCode());
+		result = prime * result + ((percent_change_24h == null) ? 0 : percent_change_24h.hashCode());
+		result = prime * result + ((percent_change_7d == null) ? 0 : percent_change_7d.hashCode());
+		result = prime * result + ((price_btc == null) ? 0 : price_btc.hashCode());
+		result = prime * result + ((price_eur == null) ? 0 : price_eur.hashCode());
+		result = prime * result + ((price_usd == null) ? 0 : price_usd.hashCode());
+		result = prime * result + ((rank == null) ? 0 : rank.hashCode());
+		result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
+		result = prime * result + ((total_supply == null) ? 0 : total_supply.hashCode());
+		result = prime * result + ((volume_eur24h == null) ? 0 : volume_eur24h.hashCode());
+		result = prime * result + ((volume_usd24h == null) ? 0 : volume_usd24h.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Market other = (Market) obj;
+		if (available_supply == null) {
+			if (other.available_supply != null)
+				return false;
+		} else if (!available_supply.equals(other.available_supply))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (last_updated == null) {
+			if (other.last_updated != null)
+				return false;
+		} else if (!last_updated.equals(other.last_updated))
+			return false;
+		if (market_cap_eur == null) {
+			if (other.market_cap_eur != null)
+				return false;
+		} else if (!market_cap_eur.equals(other.market_cap_eur))
+			return false;
+		if (market_cap_usd == null) {
+			if (other.market_cap_usd != null)
+				return false;
+		} else if (!market_cap_usd.equals(other.market_cap_usd))
+			return false;
+		if (max_supply == null) {
+			if (other.max_supply != null)
+				return false;
+		} else if (!max_supply.equals(other.max_supply))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (percent_change_1h == null) {
+			if (other.percent_change_1h != null)
+				return false;
+		} else if (!percent_change_1h.equals(other.percent_change_1h))
+			return false;
+		if (percent_change_24h == null) {
+			if (other.percent_change_24h != null)
+				return false;
+		} else if (!percent_change_24h.equals(other.percent_change_24h))
+			return false;
+		if (percent_change_7d == null) {
+			if (other.percent_change_7d != null)
+				return false;
+		} else if (!percent_change_7d.equals(other.percent_change_7d))
+			return false;
+		if (price_btc == null) {
+			if (other.price_btc != null)
+				return false;
+		} else if (!price_btc.equals(other.price_btc))
+			return false;
+		if (price_eur == null) {
+			if (other.price_eur != null)
+				return false;
+		} else if (!price_eur.equals(other.price_eur))
+			return false;
+		if (price_usd == null) {
+			if (other.price_usd != null)
+				return false;
+		} else if (!price_usd.equals(other.price_usd))
+			return false;
+		if (rank == null) {
+			if (other.rank != null)
+				return false;
+		} else if (!rank.equals(other.rank))
+			return false;
+		if (symbol == null) {
+			if (other.symbol != null)
+				return false;
+		} else if (!symbol.equals(other.symbol))
+			return false;
+		if (total_supply == null) {
+			if (other.total_supply != null)
+				return false;
+		} else if (!total_supply.equals(other.total_supply))
+			return false;
+		if (volume_eur24h == null) {
+			if (other.volume_eur24h != null)
+				return false;
+		} else if (!volume_eur24h.equals(other.volume_eur24h))
+			return false;
+		if (volume_usd24h == null) {
+			if (other.volume_usd24h != null)
+				return false;
+		} else if (!volume_usd24h.equals(other.volume_usd24h))
+			return false;
+		return true;
+	}
+	
+	
+
+	
 
 }

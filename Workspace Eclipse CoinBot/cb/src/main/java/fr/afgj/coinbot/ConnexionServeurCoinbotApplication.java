@@ -1,12 +1,15 @@
 package fr.afgj.coinbot;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.json.JSONException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +21,9 @@ import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyRate;
 import fr.afgj.coinbot.entity.OrderHistoryBot;
 import fr.afgj.coinbot.entity.User;
+import fr.afgj.coinbot.external.api.entities.coinmarketcap.Market;
+import fr.afgj.coinbot.external.api.miscellaneous.CoinMarketCapGetFirstHundredMarket;
+import fr.afgj.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
 import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserRepository;
@@ -52,6 +58,30 @@ public class ConnexionServeurCoinbotApplication {
 		CurrencyRateRepository currencyRateRep = ctx.getBean(CurrencyRateRepository.class);
 
 		System.out.println("********************************** DEBUT TESTS ***************************************");
+		
+		System.out.println("----------------- exist ?----------------------");
+		CurrencyService cs = ctx.getBean(CurrencyService.class);
+		ICoinMarketCapGetFirstHundredMarket cmc = new CoinMarketCapGetFirstHundredMarket();
+		Set<Market> markets = null;
+		try {
+			markets = cmc.getMarket();
+			System.out.println("nb currency : " + markets.size());
+			
+			for (Market market : markets) {
+				// if market.getName = bitcoin -> currency.refCurrency = true
+				Currency currency = new Currency();
+				currency.setName(market.getName());
+				currency.setSymbol(market.getSymbol());
+				currency.setRank( market.getRank() );
+				currency.setVolumeeur( market.getVolume_eur24h() );
+				currency.setVolumeusd( market.getVolume_usd24h() );
+				System.out.println( cs.existByName(currency.getName()) );
+			}
+			
+		} catch (IOException | JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println("---------find one currency-----------------");
 		Currency cr = currencyRep.findOne(1);
@@ -94,7 +124,7 @@ public class ConnexionServeurCoinbotApplication {
 		
 		//Stage 0 : chargement de la liste de devises
 		//Stage 0 : loading the currencies list
-		CurrencyService cs = ctx.getBean(CurrencyService.class);
+		//CurrencyService cs = ctx.getBean(CurrencyService.class);
 		List<Currency> currencies = cs.currencies();
 		System.out.println("chargement des devises réalisé");
 		

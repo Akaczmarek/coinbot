@@ -32,6 +32,22 @@ public class CurrencyServiceImpl implements CurrencyService {
 		 currencyRepository.delete(cr);
 	}
 
+	@Override
+	public Boolean existByName(String name) {
+		// TODO Auto-generated method stub
+		if(currencyRepository.existByName(name) >=1) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void updateByName(Currency currency) {
+		// TODO Auto-generated method stub
+		currencyRepository.updateByName(currency.getSymbol(), currency.getRank(), currency.getVolumeeur(), currency.getVolumeusd());
+		
+	}
+
 	
 	
 	
