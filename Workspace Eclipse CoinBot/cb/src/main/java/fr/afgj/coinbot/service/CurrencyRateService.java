@@ -16,8 +16,8 @@ public interface CurrencyRateService {
 
 	public List<CurrencyRate> currencyRatesByCurrency(Currency cr);
 
-	public List<CurrencyRate> currencyRatesByDate(Date date0, Date Recentlydate, Currency cr);
+	public List<CurrencyRate> findByDatesAndCurrency(Date startDate, Date endDate, int idcr);
 
-	public CurrencyRate findByIdCR(int idCR);
+	public List<CurrencyRate> findByDates(Date startDate, Date endDate);
 
 }

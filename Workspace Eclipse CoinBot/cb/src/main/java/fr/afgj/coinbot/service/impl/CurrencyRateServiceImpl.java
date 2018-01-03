@@ -42,15 +42,17 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
 	}
 
 	@Override
-	public List<CurrencyRate> currencyRatesByDate(Date date0, Date Recentlydate, Currency cr) {
+	public List<CurrencyRate> findByDatesAndCurrency(Date startDate, Date endDate, int idcr) {
 		// TODO Auto-generated method stub
-		return null;
+		return currencyRateRepository.findByDatesAndCurrency(startDate, endDate, idcr);
 	}
 
 	@Override
-	public CurrencyRate findByIdCR(int idCR) {
+	public List<CurrencyRate> findByDates(Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
-		return currencyRateRepository.findByIdCR(idCR);
+		return currencyRateRepository.findByDates(startDate, endDate);
 	}
+
+
 
 }

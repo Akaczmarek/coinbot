@@ -19,11 +19,11 @@ public interface CurrencyRateRepository extends JpaRepository<CurrencyRate, Inte
 
 	public List<CurrencyRate> findByCurrency(@Param("currency") Currency currency);
 
-	@Query("select c from CurrencyRate c where c.timerecord between :date0 and :Recentlydate and c.currency=:cr")
-	public List<CurrencyRate> currencyRatesByDate(@Param("date0") Date date0, @Param("Recentlydate") Date Recentlydate,
-			@Param("cr") Currency cr);
+	@Query("select cr from CurrencyRate cr where cr.timerecord between :date0 and :date1 and cr.currency.id=:idcr")
+	public List<CurrencyRate> findByDatesAndCurrency(@Param("date0") Date startDate, @Param("date1") Date endDate,
+			@Param("idcr") int idcr);
 
-	@Query("select cr from CurrencyRate cr where cr.idcurrencyrate = :idCurrencyRate ")
-	CurrencyRate findByIdCR(@Param("idCurrencyRate") int idCurrency);
+	@Query("select cr from CurrencyRate cr where cr.timerecord between :date0 and :date1 ")
+	public List<CurrencyRate> findByDates(@Param("date0") Date startDate, @Param("date1") Date endDate);
 
 }

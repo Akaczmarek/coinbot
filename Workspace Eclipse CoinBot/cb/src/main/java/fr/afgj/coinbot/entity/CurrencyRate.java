@@ -4,6 +4,7 @@ package fr.afgj.coinbot.entity;
 import java.util.Comparator;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -78,7 +79,7 @@ public class CurrencyRate implements java.io.Serializable {
 		this.idcurrencyrate = idcurrencyrate;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "idcurrency", nullable = false)
 	public Currency getCurrency() {
 		return this.currency;
@@ -165,6 +166,8 @@ public class CurrencyRate implements java.io.Serializable {
 			return (int)(- dateLongCR1 + dateLongCR2);
 		}
 	};
+	
+	
 	
 
 	public static void main(String[] args) {

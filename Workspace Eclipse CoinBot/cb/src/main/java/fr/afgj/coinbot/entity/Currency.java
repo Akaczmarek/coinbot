@@ -194,4 +194,31 @@ public class Currency implements java.io.Serializable {
 		this.currencyratesStudy = currencyratesStudy;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Currency [idcurrency=");
+		builder.append(idcurrency);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", symbol=");
+		builder.append(symbol);
+		builder.append(", refcurrency=");
+		builder.append(refcurrency);
+		builder.append(", rank=");
+		builder.append(rank);
+		builder.append(", volumeeur=");
+		builder.append(volumeeur);
+		builder.append(", volumeusd=");
+		builder.append(volumeusd);
+		builder.append(", humannote=");
+		builder.append(humannote);
+		builder.append(", currencyratesStudy=");
+		builder.append(currencyratesStudy);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+
 }

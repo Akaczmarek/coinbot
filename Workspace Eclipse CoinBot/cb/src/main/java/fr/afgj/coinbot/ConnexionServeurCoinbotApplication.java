@@ -1,5 +1,6 @@
 package fr.afgj.coinbot;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,7 @@ import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserRepository;
 import fr.afgj.coinbot.service.CurrencyRateService;
+import fr.afgj.coinbot.service.CurrencyService;
 import fr.afgj.coinbot.service.OrderHistoryBotService;
 
 @SpringBootApplication
@@ -49,17 +51,34 @@ public class ConnexionServeurCoinbotApplication {
 		CurrencyRepository currencyRep = ctx.getBean(CurrencyRepository.class);
 		CurrencyRateRepository currencyRateRep = ctx.getBean(CurrencyRateRepository.class);
 
+		System.out.println("********************************** DEBUT TESTS ***************************************");
+		
+		System.out.println("---------find one currency-----------------");
 		Currency cr = currencyRep.findOne(1);
 
 		System.out.println("currency trouvé------> " + cr.getName() + " (id = " + cr.getIdcurrency() + ")");
 
 		System.out.println("--------------------------");
 
-		CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
-		CurrencyRate crr = crs.findByIdCR(5);
-		System.out.println(crr.getIdcurrencyrate());
 
-		System.out.println("--------------------------");
+
+		System.out.println("---------Currency Rate By dates-----------------");
+		
+		CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
+		Date startDate = new Date(1514946302000L);
+		Date endDate = new Date(1514953502000L);
+		
+		List<CurrencyRate> crr1 = crs.findByDates(startDate, endDate);
+		System.out.println(crr1);
+		
+		System.out.println("---------Currency Rate By dates and id Currency-----------------");
+		
+		int idcr = cr.getIdcurrency();
+		List<CurrencyRate> crr2 = crs.findByDatesAndCurrency(startDate, endDate, idcr);
+		
+		for (CurrencyRate currencyRate : crr2) {
+			System.out.println(currencyRate.getCurrency().getName());
+		}
 
 		System.out.println("-------------OHB BY USER -------------");
 		OrderHistoryBotService ohbs = ctx.getBean(OrderHistoryBotService.class);
@@ -70,6 +89,18 @@ public class ConnexionServeurCoinbotApplication {
 			System.out.println(gson.toJson(orderHistoryBot));
 		}
 
+		System.out.println("********************************** FIN TESTS ***************************************");
+		
+		
+		//Stage 0 : chargement de la liste de devises
+		//Stage 0 : loading the currencies list
+		CurrencyService cs = ctx.getBean(CurrencyService.class);
+		List<Currency> currencies = cs.currencies();
+		System.out.println("chargement des devises réalisé");
+		
+		//Stage 1 : loading the currencies Rates list and 
+		
+		
 		// OrderHistoryBot ohb2 = userRep.
 
 		// List<CurrencyRate> CurrencyRates = currencyRateRep.findByCurrency(cr);
