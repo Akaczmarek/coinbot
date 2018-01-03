@@ -12,7 +12,7 @@ export class SupervisionService {
 
 
   constructor(private http : Http, private webService : WebService) { 
-    this.mockVolume.push(100,250,350);
+    this.mockVolume.push(100,200,300);
     this.mockAchatVenteHisto = [
         {
           id: 1,
