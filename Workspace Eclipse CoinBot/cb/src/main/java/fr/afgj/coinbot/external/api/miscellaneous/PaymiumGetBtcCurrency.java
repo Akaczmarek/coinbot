@@ -1,12 +1,12 @@
-package fr.afjg.coinbot.external.api.miscellaneous;
+package fr.afgj.coinbot.external.api.miscellaneous;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.afjg.coinbot.external.api.PaymiumPublic;
-import fr.afjg.coinbot.external.api.entities.paymium.BtcCurrency;
-import fr.afjg.coinbot.external.api.intf.IPaymiumPublic;
-import fr.afjg.coinbot.external.api.miscellaneous.intf.IPaymiumGetBtcCurrency;
+import fr.afgj.coinbot.external.api.PaymiumPublic;
+import fr.afgj.coinbot.external.api.entities.paymium.BtcCurrency;
+import fr.afgj.coinbot.external.api.intf.IPaymiumPublic;
+import fr.afgj.coinbot.external.api.miscellaneous.intf.IPaymiumGetBtcCurrency;
 
 public class PaymiumGetBtcCurrency implements IPaymiumGetBtcCurrency {
 	

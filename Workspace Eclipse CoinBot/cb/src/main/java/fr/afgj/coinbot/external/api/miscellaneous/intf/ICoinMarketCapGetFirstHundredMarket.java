@@ -1,11 +1,11 @@
-package fr.afjg.coinbot.external.api.miscellaneous.intf;
+package fr.afgj.coinbot.external.api.miscellaneous.intf;
 
 import java.io.IOException;
 import java.util.Set;
 
 import org.json.JSONException;
 
-import fr.afjg.coinbot.external.api.entities.coinmarketcap.Market;
+import fr.afgj.coinbot.external.api.entities.coinmarketcap.Market;
 
 public interface ICoinMarketCapGetFirstHundredMarket {
 	

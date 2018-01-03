@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.external.api.miscellaneous.intf;
+package fr.afgj.coinbot.external.api.miscellaneous.intf;
 
 public interface IBittrexGetMarketSummary {
 	

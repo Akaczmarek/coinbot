@@ -1,14 +1,14 @@
-package fr.afjg.coinbot.external.api.miscellaneous;
+package fr.afgj.coinbot.external.api.miscellaneous;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.afjg.coinbot.external.api.BittrexPublic;
-import fr.afjg.coinbot.external.api.entites.bittrex.Markets;
-import fr.afjg.coinbot.external.api.entites.bittrex.Results;
-import fr.afjg.coinbot.external.api.intf.IBittrexPublic;
-import fr.afjg.coinbot.external.api.miscellaneous.intf.IBittrexGetMarketService;
+import fr.afgj.coinbot.external.api.BittrexPublic;
+import fr.afgj.coinbot.external.api.entites.bittrex.Markets;
+import fr.afgj.coinbot.external.api.entites.bittrex.Results;
+import fr.afgj.coinbot.external.api.intf.IBittrexPublic;
+import fr.afgj.coinbot.external.api.miscellaneous.intf.IBittrexGetMarketService;
 
 public class BittrexGetMarketServiceImpl implements IBittrexGetMarketService {
 

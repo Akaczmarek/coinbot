@@ -1,8 +1,8 @@
-package fr.afjg.coinbot.external.api;
+package fr.afgj.coinbot.external.api;
 
 import java.io.IOException;
 
-public class PaymiumPublic implements fr.afjg.coinbot.external.api.intf.IPaymiumPublic{
+public class PaymiumPublic implements fr.afgj.coinbot.external.api.intf.IPaymiumPublic{
 	private ConnexionPublic api;
 
 	public PaymiumPublic() {

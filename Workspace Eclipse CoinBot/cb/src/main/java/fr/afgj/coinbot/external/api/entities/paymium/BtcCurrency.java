@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.external.api.entities.paymium;
+package fr.afgj.coinbot.external.api.entities.paymium;
 
 public class BtcCurrency {
 	private double high;

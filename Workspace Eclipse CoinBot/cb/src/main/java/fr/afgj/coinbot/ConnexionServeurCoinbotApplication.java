@@ -100,7 +100,6 @@ public class ConnexionServeurCoinbotApplication {
 		
 		//Stage 1 : loading the currencies Rates list and 
 		
-		
 		// OrderHistoryBot ohb2 = userRep.
 
 		// List<CurrencyRate> CurrencyRates = currencyRateRep.findByCurrency(cr);

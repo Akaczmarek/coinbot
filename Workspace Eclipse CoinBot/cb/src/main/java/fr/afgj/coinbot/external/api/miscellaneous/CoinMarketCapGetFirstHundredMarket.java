@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.external.api.miscellaneous;
+package fr.afgj.coinbot.external.api.miscellaneous;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,10 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.afjg.coinbot.external.api.CoinMarketCapPublic;
-import fr.afjg.coinbot.external.api.entities.coinmarketcap.Market;
-import fr.afjg.coinbot.external.api.intf.CoinMarketCapPublicIntf;
-import fr.afjg.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
+import fr.afgj.coinbot.external.api.CoinMarketCapPublic;
+import fr.afgj.coinbot.external.api.entities.coinmarketcap.Market;
+import fr.afgj.coinbot.external.api.intf.CoinMarketCapPublicIntf;
+import fr.afgj.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
 
 public class CoinMarketCapGetFirstHundredMarket implements ICoinMarketCapGetFirstHundredMarket{
 	

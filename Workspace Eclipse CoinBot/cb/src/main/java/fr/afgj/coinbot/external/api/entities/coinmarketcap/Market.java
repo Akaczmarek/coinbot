@@ -1,4 +1,4 @@
-package fr.afjg.coinbot.external.api.entities.coinmarketcap;
+package fr.afgj.coinbot.external.api.entities.coinmarketcap;
 
 public class Market {
 

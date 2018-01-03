@@ -1,9 +1,9 @@
-package fr.afjg.coinbot.external.api;
+package fr.afgj.coinbot.external.api;
 
 import java.io.IOException;
 
-import fr.afjg.coinbot.external.api.ConnexionPublic;
-import fr.afjg.coinbot.external.api.intf.CoinMarketCapPublicIntf;
+import fr.afgj.coinbot.external.api.ConnexionPublic;
+import fr.afgj.coinbot.external.api.intf.CoinMarketCapPublicIntf;
 
 public class CoinMarketCapPublic implements CoinMarketCapPublicIntf{
 
