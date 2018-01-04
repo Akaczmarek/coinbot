@@ -30,11 +30,13 @@ public class OrderToBuy implements Runnable {
 			// on se fabrique une liste de qui peut miser
 			List<User> users = userServiceImpl.findByPositiveBetValue();
 			for (User user : users) {
-				System.out.println("user id :" + user.getId() + " name : " + user.getFirstname());
+				System.out.println(
+						"user id :" + user.getId() + " name : " + user.getFirstname() + " userconfiguration betvalue");
 			}
 
-			//user qui existe, avec un bet value positif et qui est autorisé à miser par rapport au dernier délai de mise
-			
+			// user qui existe, avec un bet value positif et qui est autorisé à miser par
+			// rapport au dernier délai de mise
+
 			// stage 2 :
 
 			System.out.println("---------------------------------------");

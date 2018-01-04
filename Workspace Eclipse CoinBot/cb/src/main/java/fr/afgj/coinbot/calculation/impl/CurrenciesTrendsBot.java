@@ -16,7 +16,6 @@ import fr.afgj.coinbot.rule.impl.TrendRulesBot;
 public class CurrenciesTrendsBot implements Runnable {
 	private Logger log = Logger.getLogger(this.getClass());
 
-	// private DataProcessingServiceIntf DPService;
 	private volatile List<CurrencyTrend> currenciesTrends;
 	private volatile List<CurrencyTrend> currenciesTrendsOrderByTimesRecord;
 	private volatile List<CurrencyTrend> currenciesTrendsOrderByNoteToBuy;
@@ -136,12 +135,11 @@ public class CurrenciesTrendsBot implements Runnable {
 		// boucle principale, boucle sur toutes les actions ci dessus
 		int j = 0;
 		while (true) {
-			
-			
+
 			// parcourt de la liste de tendances et mise à jour
 			int i = 0;
 			for (CurrencyTrend ct : this.getCurrenciesTrends()) {
-				
+
 				// Stage 0 : Launch update
 				ct.setUpdateFinish(false);
 				ct.update(this.getTrendRule());
@@ -160,15 +158,15 @@ public class CurrenciesTrendsBot implements Runnable {
 			}
 
 			// mise à jour des listes ordonnées
-			//this.updateCurrenciesTrendsOrderByNoteToBuy();
-			//this.updateCurrenciesTrendsOrderByNoteToSell();
+			// this.updateCurrenciesTrendsOrderByNoteToBuy();
+			// this.updateCurrenciesTrendsOrderByNoteToSell();
 
-			
-//			System.out.println("**************************************");
-//			for (CurrencyTrend ct : this.getCurrenciesTrendsOrderByNoteToBuy()) {
-//				System.out.println(ct.getCurrency().getName() + ", note" + ct.getNotetobuy());
-//			}
-			
+			// System.out.println("**************************************");
+			// for (CurrencyTrend ct : this.getCurrenciesTrendsOrderByNoteToBuy()) {
+			// System.out.println(ct.getCurrency().getName() + ", note" +
+			// ct.getNotetobuy());
+			// }
+
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
