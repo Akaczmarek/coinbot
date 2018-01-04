@@ -22,7 +22,8 @@ export const routes: Routes = [
       { path: 'supervision', loadChildren: './supervision/supervision.module#SupervisionModule' },
       { path: 'accueil', loadChildren: './accueil/accueil.module#AccueilModule' },
       { path: 'config-bot', loadChildren: './config-bot/config-bot.module#ConfigBotModule' },
-      { path: 'tutos', loadChildren: './tutos/tutos.module#TutosModule' }
+      { path: 'tutos', loadChildren: './tutos/tutos.module#TutosModule' },
+      { path: 'apropos', loadChildren: './apropos/apropos.module#AProposModule' }
     ]
   }
 ];

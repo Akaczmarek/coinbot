@@ -50,8 +50,20 @@ export const PAGES_MENU = [
             order: 0
           }
         }
-      }
+      },
 
+      {
+        path: 'apropos',
+        data: {
+          menu: {
+            title: 'A propos de nous',
+            icon: 'ion-information',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
+      }
 
     ]
   }
