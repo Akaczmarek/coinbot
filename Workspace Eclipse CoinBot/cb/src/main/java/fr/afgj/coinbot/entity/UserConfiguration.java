@@ -32,12 +32,20 @@ public class UserConfiguration implements java.io.Serializable {
 	private Boolean stopbot;
 	private Integer daysordersbloqued;
 	private Integer daysoneorderbloqued;
+	private double betfraction;
 
 	public UserConfiguration() {
 	}
 
 	public UserConfiguration(User user) {
 		this.user = user;
+	}
+
+	
+	public UserConfiguration(User user, Double betvalue) {
+		super();
+		this.user = user;
+		this.betvalue = betvalue;
 	}
 
 	public UserConfiguration(User user, Double betvalue, Double securevalue, Integer risklevel, Boolean stopbotafter,
@@ -137,5 +145,16 @@ public class UserConfiguration implements java.io.Serializable {
 	public void setDaysoneorderbloqued(Integer daysoneorderbloqued) {
 		this.daysoneorderbloqued = daysoneorderbloqued;
 	}
+
+	@Column(name = "betfraction", precision = 17, scale = 17)
+	public double getBetfraction() {
+		return betfraction;
+	}
+
+	public void setBetfraction(double betfraction) {
+		this.betfraction = betfraction;
+	}
+	
+	
 
 }

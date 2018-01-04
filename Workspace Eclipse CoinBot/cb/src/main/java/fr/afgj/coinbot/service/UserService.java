@@ -6,6 +6,7 @@ import fr.afgj.coinbot.entity.User;
 
 public interface UserService {
 
-	List<User> findAllUsers();
+	public List<User> findAllUsers();
+	public List<User> findByPositiveBetValue();
 
 }

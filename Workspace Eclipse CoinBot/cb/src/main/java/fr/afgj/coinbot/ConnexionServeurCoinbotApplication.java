@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,7 @@ import fr.afgj.coinbot.entity.UserConfiguration;
 import fr.afgj.coinbot.external.api.entities.coinmarketcap.Market;
 import fr.afgj.coinbot.external.api.miscellaneous.CoinMarketCapGetFirstHundredMarket;
 import fr.afgj.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
+import fr.afgj.coinbot.order.OrderToBuy;
 import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.UserConfigurationRepository;
@@ -37,22 +39,22 @@ import fr.afgj.coinbot.service.OrderHistoryBotService;
 public class ConnexionServeurCoinbotApplication {
 
 	private static final Logger log = LogManager.getLogger();
-	private static final SessionFactory sessionFactory;
-
-	static {
-		try {
-			// Create the SessionFactory from hibernate.cfg.xml
-			sessionFactory = new Configuration().configure().buildSessionFactory();
-		} catch (Throwable ex) {
-			// Make sure you log the exception, as it might be swallowed
-			System.err.println("Initial SessionFactory creation failed." + ex);
-			throw new ExceptionInInitializerError(ex);
-		}
-	}
-
-	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
+//	private static final SessionFactory sessionFactory;
+//
+//	static {
+//		try {
+//			// Create the SessionFactory from hibernate.cfg.xml
+//			sessionFactory = new Configuration().configure().buildSessionFactory();
+//		} catch (Throwable ex) {
+//			// Make sure you log the exception, as it might be swallowed
+//			System.err.println("Initial SessionFactory creation failed." + ex);
+//			throw new ExceptionInInitializerError(ex);
+//		}
+//	}
+//
+//	public static SessionFactory getSessionFactory() {
+//		return sessionFactory;
+//	}
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(ConnexionServeurCoinbotApplication.class, args);
@@ -92,52 +94,74 @@ public class ConnexionServeurCoinbotApplication {
 
 		System.out.println("--------------------------");
 
+//
+//
+//		System.out.println("---------Currency Rate By dates-----------------");
+//		
+//		CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
+//		Date startDate = new Date(1514946302000L);
+//		Date endDate = new Date(1514953502000L);
+//		
+//		List<CurrencyRate> crr1 = crs.findByDates(startDate, endDate);
+//		System.out.println(crr1);
+//		
+//		System.out.println("---------Currency Rate By dates and id Currency-----------------");
+//		
+//		int idcr = cr.getIdcurrency();
+//		List<CurrencyRate> crr2 = crs.findByDatesAndCurrency(startDate, endDate, idcr);
+//		
+//		for (CurrencyRate currencyRate : crr2) {
+//			System.out.println(currencyRate.getCurrency().getName());
+//		}
+//
+//		System.out.println("-------------OHB BY USER -------------");
+//		OrderHistoryBotService ohbs = ctx.getBean(OrderHistoryBotService.class);
+//		List<OrderHistoryBot> ohbList = ohbs.findOHBByIdUser(1);
+//		for (OrderHistoryBot orderHistoryBot : ohbList) {
+//			System.out.println(orderHistoryBot.getCurrency().getName());
+//			Gson gson = new Gson();
+//			System.out.println(gson.toJson(orderHistoryBot));
+//		}
+//		
+//		System.out.println("-------------SAVE USERCONFIG -------------");
+//		UserConfigurationRepository userConfigurationRepository = ctx.getBean(UserConfigurationRepository.class);
+//		// récupération d'un user existant
+//		UserRepository userRepository = ctx.getBean(UserRepository.class);
+//		User user; 
+//		UserConfiguration userConfiguration;
+//		
+//		for (int i = 0; i<11; i++) {
+//			
+//			user = userRepository.findOne(i+1);
+//			if(i%2==0) {
+//			userConfiguration = new UserConfiguration(user, 0.0);
+//			}else {
+//				userConfiguration = new UserConfiguration(user, (Math.random()*99+1));
+//			}
+//			if (userConfigurationRepository.exists(user.getId())) {
+//				System.out.println(user.getId() + " -------> existe déjà ne pas ajouter");
+//			}else {
+//				System.out.println("ajout de l'identité : " + userConfiguration.getId());
+//				userConfigurationRepository.save(userConfiguration);
+//			}
+//			
+//		}
 
-
-		System.out.println("---------Currency Rate By dates-----------------");
+//		System.out.println("-------------check the user with positive betvalue  VALIDE-------------");
+//		
+//		UserRepository userRepository = ctx.getBean(UserRepository.class);
+//		List<User> users = userRepository.findByPositiveBetValue();
+//		
+//		for (User user : users) {
+//			System.out.println("user id :" + user.getId() + " name : " + user.getFirstname());
+//		}
 		
-		CurrencyRateService crs = ctx.getBean(CurrencyRateService.class);
-		Date startDate = new Date(1514946302000L);
-		Date endDate = new Date(1514953502000L);
-		
-		List<CurrencyRate> crr1 = crs.findByDates(startDate, endDate);
-		System.out.println(crr1);
-		
-		System.out.println("---------Currency Rate By dates and id Currency-----------------");
-		
-		int idcr = cr.getIdcurrency();
-		List<CurrencyRate> crr2 = crs.findByDatesAndCurrency(startDate, endDate, idcr);
-		
-		for (CurrencyRate currencyRate : crr2) {
-			System.out.println(currencyRate.getCurrency().getName());
-		}
-
-		System.out.println("-------------OHB BY USER -------------");
-		OrderHistoryBotService ohbs = ctx.getBean(OrderHistoryBotService.class);
-		List<OrderHistoryBot> ohbList = ohbs.findOHBByIdUser(1);
-		for (OrderHistoryBot orderHistoryBot : ohbList) {
-			System.out.println(orderHistoryBot.getCurrency().getName());
-			Gson gson = new Gson();
-			System.out.println(gson.toJson(orderHistoryBot));
-		}
-		
-		System.out.println("-------------SAVE USERCONFIG -------------");
-		UserConfigurationRepository userConfigurationRepository = ctx.getBean(UserConfigurationRepository.class);
-		// récupération d'un user existant
-		UserRepository userRepository = ctx.getBean(UserRepository.class);
-		User user = userRepository.findOne(2);
-		UserConfiguration userConfiguration = new UserConfiguration(user);
-		
-		if (userConfigurationRepository.exists(user.getId())) {
-			System.out.println("existe déjà ne pas ajouter");
-		}else {
-			System.out.println("ajout de l'identité : " + user.getId());
-			userConfigurationRepository.save(userConfiguration);
-		}
-
+		System.out.println("-------------check the order to buy-------------");
 		
 		
-		
+		OrderToBuy orderToBuy = ctx.getBean(OrderToBuy.class);
+		Thread t0 = new Thread(orderToBuy);
+		t0.start();
 		
 
 		System.out.println("********************************** FIN TESTS ***************************************");
