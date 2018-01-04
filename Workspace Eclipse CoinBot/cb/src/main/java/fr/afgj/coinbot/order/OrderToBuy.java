@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import fr.afgj.coinbot.calculation.impl.CurrenciesTrendsBot;
 import fr.afgj.coinbot.entity.CurrencyTrend;
+import fr.afgj.coinbot.entity.OrderHistoryBot;
 import fr.afgj.coinbot.entity.User;
 import fr.afgj.coinbot.service.impl.UserServiceImpl;
 
@@ -30,8 +31,12 @@ public class OrderToBuy implements Runnable {
 			// on se fabrique une liste de qui peut miser
 			List<User> users = userServiceImpl.findByPositiveBetValue();
 			for (User user : users) {
-				System.out.println(
-						"user id :" + user.getId() + " name : " + user.getFirstname() + " userconfiguration betvalue");
+
+				for (OrderHistoryBot orderHistoryBot : user.getOrderhistorybots()) {
+					System.out.println("user id :" + user.getId() + " name : " + user.getFirstname()
+							+ " userconfiguration betvalue" + user.getUserconfiguration().getBetvalue()
+							+ " , order id :" + orderHistoryBot.getId());
+				}
 			}
 
 			// user qui existe, avec un bet value positif et qui est autorisé à miser par
