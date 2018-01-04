@@ -28,14 +28,23 @@ public class CurrencyRate implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private int idcurrencyrate;
+
 	private Currency currency;
+
 	private Date timerecord;
+
 	private Double bidbtc;
+
 	private Double askbtc;
+
 	private Double bidusd;
+
 	private Double askusd;
+
 	private Double bideur;
+
 	private Double askeur;
 
 	public CurrencyRate() {
@@ -46,9 +55,9 @@ public class CurrencyRate implements java.io.Serializable {
 		this.currency = currency;
 	}
 
-	public CurrencyRate( Currency currency, Date timerecord, Double bidbtc, Double askbtc) {
+	public CurrencyRate(Currency currency, Date timerecord, Double bidbtc, Double askbtc) {
 		super();
-		
+
 		this.currency = currency;
 		this.timerecord = timerecord;
 		this.bidbtc = bidbtc;
@@ -69,7 +78,7 @@ public class CurrencyRate implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idcurrencyrate", unique = true, nullable = false)
 	public int getIdcurrencyrate() {
 		return this.idcurrencyrate;
@@ -152,7 +161,7 @@ public class CurrencyRate implements java.io.Serializable {
 	public void setAskeur(Double askeur) {
 		this.askeur = askeur;
 	}
-	
+
 	// the youngest is the first, the oldest is the last after sort
 	public volatile static Comparator<CurrencyRate> CRComparatorByDate = new Comparator<CurrencyRate>() {
 
@@ -160,43 +169,37 @@ public class CurrencyRate implements java.io.Serializable {
 		public int compare(CurrencyRate CR1, CurrencyRate CR2) {
 			// TODO Auto-generated method stub
 
-			Long dateLongCR1 =  (CR1.getTimerecord().getTime());
-			Long dateLongCR2 =  (CR2.getTimerecord().getTime());
-			
-			return (int)(- dateLongCR1 + dateLongCR2);
+			Long dateLongCR1 = (CR1.getTimerecord().getTime());
+			Long dateLongCR2 = (CR2.getTimerecord().getTime());
+
+			return (int) (-dateLongCR1 + dateLongCR2);
 		}
 	};
-	
-	
-	
 
 	public static void main(String[] args) {
-		
-//		CurrencyRate cr1 = new CurrencyRate();
-//		cr1.setTimerecord(new Date(1514294745000L));
-//		CurrencyRate cr2 = new CurrencyRate();
-//		cr2.setTimerecord(new Date(1514294747000L));
-//		CurrencyRate cr3 = new CurrencyRate();
-//		cr3.setTimerecord(new Date(1514294746000L));
-//		
-//		List<CurrencyRate> crs  =  new ArrayList<>();
-//		crs.add(cr1);
-//		crs.add(cr2);
-//		crs.add(cr3);
-//		
-//		for (CurrencyRate currencyRate : crs) {
-//			System.out.println(currencyRate.getTimerecord());
-//		}
-//		
-//		Collections.sort(crs, CurrencyRate.CRComparatorByDate);
-//		
-//		for (CurrencyRate currencyRate : crs) {
-//			System.out.println(currencyRate.getTimerecord());
-//		}
-		
-		
 
-		
+		// CurrencyRate cr1 = new CurrencyRate();
+		// cr1.setTimerecord(new Date(1514294745000L));
+		// CurrencyRate cr2 = new CurrencyRate();
+		// cr2.setTimerecord(new Date(1514294747000L));
+		// CurrencyRate cr3 = new CurrencyRate();
+		// cr3.setTimerecord(new Date(1514294746000L));
+		//
+		// List<CurrencyRate> crs = new ArrayList<>();
+		// crs.add(cr1);
+		// crs.add(cr2);
+		// crs.add(cr3);
+		//
+		// for (CurrencyRate currencyRate : crs) {
+		// System.out.println(currencyRate.getTimerecord());
+		// }
+		//
+		// Collections.sort(crs, CurrencyRate.CRComparatorByDate);
+		//
+		// for (CurrencyRate currencyRate : crs) {
+		// System.out.println(currencyRate.getTimerecord());
+		// }
+
 	}
-	
+
 }

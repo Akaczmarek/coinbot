@@ -39,17 +39,28 @@ public class CurrencyTrend implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private int idtrend;
+
 	private Currency currency;
+
 	private Boolean lasttrendgrowing;
+
 	private Integer lasttrendweight;
+
 	private Date timerecord;
+
 	private Double notetobuy;
+
 	private Double notetosell;
+
 	private Double valuebidbtc;
+
 	private Double valueaskbtc;
 	// MIS EN COMM ALAIN 29/12
+
 	private OperationsOnCurrencyTrend ooct;
+
 	private boolean updateFinish;
 
 	{
@@ -88,7 +99,7 @@ public class CurrencyTrend implements java.io.Serializable {
 		this.idtrend = idtrend;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idcurrency", nullable = false)
 	public Currency getCurrency() {
 		return this.currency;
@@ -171,6 +182,7 @@ public class CurrencyTrend implements java.io.Serializable {
 	public void setOoct(OperationsOnCurrencyTrend ooct) {
 		this.ooct = ooct;
 	}
+
 	@Transient
 	public boolean isUpdateFinish() {
 		return updateFinish;
@@ -179,12 +191,9 @@ public class CurrencyTrend implements java.io.Serializable {
 	public void setUpdateFinish(boolean updateFinish) {
 		this.updateFinish = updateFinish;
 	}
-	
 
 	// methods
 	// ----------------------------------------------------------------------
-
-
 
 	/*
 	 * Mise à jour de la tendance de la devise return true si tout c'est bien passé,
@@ -198,27 +207,27 @@ public class CurrencyTrend implements java.io.Serializable {
 		this.getOoct().setTrendRule(tr);
 		this.getOoct().getTrendNotesToBuy().clear();
 		this.getOoct().getTrendNotesToSell().clear();
-		
+
 		Thread t = new Thread(ooct);
 		t.start();
-		
-		int i =0;
-		
+
+		int i = 0;
+
 		while (true) {
 
 			if (!t.isAlive()) {
 				this.setUpdateFinish(true);
 				break;
 			}
-			
+
 			if (i > 50) {
-				//time is exceeded
+				// time is exceeded
 				this.setUpdateFinish(false);
 				break;
 			}
-			
+
 			i++;
-			
+
 			try {
 				Thread.sleep(21);
 			} catch (InterruptedException e) {
@@ -226,10 +235,8 @@ public class CurrencyTrend implements java.io.Serializable {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-
-
 
 	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
 
@@ -237,11 +244,11 @@ public class CurrencyTrend implements java.io.Serializable {
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 			// TODO Auto-generated method stub
 
-			if (CT1.getNotetobuy()!=null && CT2.getNotetobuy()!=null) {
-			int noteCT1 = (int) (CT1.getNotetobuy() * 1000);
-			int noteCT2 = (int) (CT2.getNotetobuy() * 1000);
-			return noteCT2 - noteCT1;
-			}else {
+			if (CT1.getNotetobuy() != null && CT2.getNotetobuy() != null) {
+				int noteCT1 = (int) (CT1.getNotetobuy() * 1000);
+				int noteCT2 = (int) (CT2.getNotetobuy() * 1000);
+				return noteCT2 - noteCT1;
+			} else {
 				return 0;
 			}
 		}
@@ -252,14 +259,13 @@ public class CurrencyTrend implements java.io.Serializable {
 		@Override
 		public int compare(CurrencyTrend CT1, CurrencyTrend CT2) {
 
-			if (CT1.getNotetosell()!=null && CT2.getNotetosell()!=null) {
-			int noteCT1 = (int) (CT1.getNotetosell() * 1000);
-			int noteCT2 = (int) (CT2.getNotetosell() * 1000);
-			return noteCT2 - noteCT1;
-			}else {
+			if (CT1.getNotetosell() != null && CT2.getNotetosell() != null) {
+				int noteCT1 = (int) (CT1.getNotetosell() * 1000);
+				int noteCT2 = (int) (CT2.getNotetosell() * 1000);
+				return noteCT2 - noteCT1;
+			} else {
 				return 0;
 			}
-			
 
 		}
 	};

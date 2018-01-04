@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -23,16 +24,24 @@ public class UserConfiguration implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private int id;
+
 	private User user;
+
 	private Double betvalue;
+
 	private Double securevalue;
+
 	private Integer risklevel;
+
 	private Boolean stopbotafter;
+
 	private Boolean stopbot;
+
 	private Integer daysordersbloqued;
+
 	private Integer daysoneorderbloqued;
-	private double betfraction;
 
 	public UserConfiguration() {
 	}
@@ -41,7 +50,6 @@ public class UserConfiguration implements java.io.Serializable {
 		this.user = user;
 	}
 
-	
 	public UserConfiguration(User user, Double betvalue) {
 		super();
 		this.user = user;
@@ -145,16 +153,5 @@ public class UserConfiguration implements java.io.Serializable {
 	public void setDaysoneorderbloqued(Integer daysoneorderbloqued) {
 		this.daysoneorderbloqued = daysoneorderbloqued;
 	}
-
-	@Column(name = "betfraction", precision = 17, scale = 17)
-	public double getBetfraction() {
-		return betfraction;
-	}
-
-	public void setBetfraction(double betfraction) {
-		this.betfraction = betfraction;
-	}
-	
-	
 
 }
