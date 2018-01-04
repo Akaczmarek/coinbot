@@ -1,5 +1,6 @@
 <table class="table">
   <tr>
+    <th>ID </th>
     <th>Type d'ordre </th>
     <th>Cryptomonnaie</th>
     <th>Volume</th>
@@ -51,11 +52,14 @@
   </tr> -->
 
   <tr class="success" *ngFor="let item of ActiveOrders">
+    <td>{{ item.id }}</td>
     <td>{{ item.ordertype.type }}</td>
     <td>{{ item.currency.name }}</td>
     <td>{{ item.volume }}</td>
     <td>{{ item.timestampactivated | date: 'dd/MM/yyyy'}}</td>
-    <td> Faudrait un bouton</td>
+    <td>
+      <button class="btn btn-danger" (click)="deleteOrder(item.id)"> Annuler</button>
+    </td>
   </tr>
 
 </table>

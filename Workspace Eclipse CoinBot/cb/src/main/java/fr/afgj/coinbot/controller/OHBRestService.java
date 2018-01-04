@@ -36,4 +36,11 @@ public class OHBRestService {
 		return gson.toJson(orderHistoryBotRepository.findActiveList(id));
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "api/ohbbyuser/{idOrder}", method = RequestMethod.DELETE)
+	public boolean deleteOrder(@PathVariable int idOrder) {
+		this.orderHistoryBotRepository.delete(idOrder);
+		return true;
+	}
+
 }

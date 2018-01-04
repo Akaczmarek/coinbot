@@ -24,11 +24,11 @@ export class WebService {
     const options = new RequestOptions({ headers: headers });
     console.log(this.http.post(this.url + type, bodyString, options).map(r => r.json()));
     return this.http.post(this.url + type, bodyString, options).map(r => r.json());
-
   }
 
-  delete(type: string, id: number) {
-    return this.http.delete(this.url + type + '/' + id).map(r => r.json());
+  delete(element:string, elementId:number) {
+    return this.http.delete(this.url + element + '/' + elementId).map(r => r.json());
+    //ohbbyuser/9
   }
   update(type: string, body: Object, id : number) {
     const bodyString = JSON.stringify(body);

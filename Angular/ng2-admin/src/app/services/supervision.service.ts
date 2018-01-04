@@ -3,6 +3,10 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { WebService } from 'app/services/web.service';
 import { User } from 'app/_models/user';
+import { Observable } from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { StripedTable } from 'app/pages/tables/components/basicTables/components/stripedTable';
+
 
 @Injectable()
 export class SupervisionService {
@@ -11,7 +15,8 @@ export class SupervisionService {
   mockUserActions : Array<any> = [];
 
 
-  constructor(private http : Http, private webService : WebService) { 
+  constructor(private http : Http, private webService : WebService) {
+
     this.mockVolume.push(100,200,300);
     this.mockAchatVenteHisto = [
         {
@@ -105,7 +110,11 @@ export class SupervisionService {
   }
 
   getActiveOHBByUser(id :number){
-    return this.webService.getAllByElement('ohbbyuser', id, 'activebid')
+    return this.webService.getAllByElement('ohbbyuser', id, 'activebid');
+  }
+
+  deleteOrder(idOrder :number){
+    return this.webService.delete('ohbbyuser',idOrder);
   }
 
 }

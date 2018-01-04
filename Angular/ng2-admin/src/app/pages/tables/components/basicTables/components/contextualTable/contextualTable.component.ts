@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { StripedTable } from '../stripedTable/stripedTable.component'
 
-import {SupervisionService} from '../../../../../../services/supervision.service';
+import { SupervisionService } from '../../../../../../services/supervision.service';
 
 @Component({
   selector: 'contextual-table',
@@ -8,10 +9,12 @@ import {SupervisionService} from '../../../../../../services/supervision.service
 })
 export class ContextualTable {
 
-  ActiveOrders : Array<any>;
+  ActiveOrders: Array<any>;
+  idOrder: number;
+  strippedTable: StripedTable;
 
 
-  constructor(private supervisionService : SupervisionService ) {
+  constructor(private supervisionService: SupervisionService) {
     this.updateActiveOrders();
   }
 
@@ -21,13 +24,18 @@ export class ContextualTable {
       let date2 = new Date(b.timestampfinished);
 
       if (date1 > date2) {
-          return 1;
+        return 1;
       } else if (date1 < date2) {
-          return -1;
+        return -1;
       } else {
-          return 0;
+        return 0;
       }
-  }))
-   
+    }))
+
   }
+
+  deleteOrder(idOrder: number) {
+    this.supervisionService.deleteOrder(idOrder).subscribe(reponse => this.updateActiveOrders());
+
   }
+}
