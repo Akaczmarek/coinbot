@@ -31,6 +31,11 @@ public interface UserRepository extends JpaRepository<User, Integer>, Serializab
 			+ "where uc.betvalue>0")
 	public List<User> findByPositiveBetValueAndLastDateOrderToBuy();
 
+	@Query("select u from User u JOIN(select oh.user , max(oh.timestampactivated)" + "from OrderHistoryBot oh "
+			+ "group by oh.user)ohs on u.id = ohs.user left join UserConfiguration uc on u.id = uc.id "
+			+ "where uc.betvalue>0")
+	public List<User> findByLastDateOrderToBuy();
+
 	// select * from public.user u
 	// inner join (select id_user , max(timestampactivated) as maxdate
 	// from public.orderhistorybot oh
