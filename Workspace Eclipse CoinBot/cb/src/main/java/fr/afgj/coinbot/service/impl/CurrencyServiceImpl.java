@@ -44,7 +44,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 	@Override
 	public void updateByName(Currency currency) {
 		// TODO Auto-generated method stub
-		currencyRepository.updateByName(currency.getSymbol(), currency.getRank(), currency.getVolumeeur(), currency.getVolumeusd());
+		currencyRepository.updateByName( currency.getSymbol(), currency.getRank(), currency.getVolumeeur(), currency.getVolumeusd(), currency.getIdcurrency());
 		
 	}
 

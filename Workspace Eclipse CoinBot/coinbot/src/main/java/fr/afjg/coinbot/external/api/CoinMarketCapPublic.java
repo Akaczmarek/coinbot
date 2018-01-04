@@ -13,11 +13,17 @@ public class CoinMarketCapPublic implements CoinMarketCapPublicIntf{
 		super();
 	}
 
-	public StringBuffer getFirstHundredMarket() throws IOException {
+	public StringBuffer getFirstHundredMarket(){
 
 		String url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=50";
-		this.setApi(new ConnexionPublic(url));
-		return this.getApi().print_content();
+		try {
+			this.setApi(new ConnexionPublic(url));
+			return this.getApi().print_content();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Impossible de récupérer l'API");
+		}
+		return null;
 	}
 
 	public ConnexionPublic getApi() {

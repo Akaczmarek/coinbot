@@ -6,13 +6,13 @@ import org.json.JSONObject;
 import fr.afgj.coinbot.external.api.PaymiumPublic;
 import fr.afgj.coinbot.external.api.entities.paymium.BtcCurrency;
 import fr.afgj.coinbot.external.api.intf.IPaymiumPublic;
-import fr.afgj.coinbot.external.api.miscellaneous.intf.IPaymiumGetBtcCurrency;
+import fr.afgj.coinbot.external.api.miscellaneous.intf.IGetBtcCurrency;
 
-public class PaymiumGetBtcCurrency implements IPaymiumGetBtcCurrency {
+public class GetBtcCurrencyImpl implements IGetBtcCurrency {
 	
 	IPaymiumPublic paymiumPublic;
 
-	public PaymiumGetBtcCurrency() {
+	public GetBtcCurrencyImpl() {
 		super();
 		this.setPaymiumPublic(new PaymiumPublic());
 	}

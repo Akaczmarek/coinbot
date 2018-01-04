@@ -19,7 +19,7 @@ public interface CurrencyRepository extends JpaRepository<Currency, Integer>, Se
 	@Query("SELECT COUNT(*) FROM Currency cr WHERE cr.name = :name")
 	public Integer existByName(@Param("name") String name);
 	
-	@Query("UPDATE Currency cr SET cr.symbol=:symbol, cr.rank=:rank, cr.volumeeur=:volumeeur, cr.volumeusd=:volumeusd")
-	public Boolean updateByName(@Param("symbol") String symbol, @Param("rank") int rank, @Param("volumeeur") Double volumeeur, @ Param("volumeusd") Double volumeusd);
+	@Query("UPDATE Currency cr SET cr=:symbol, cr.rank=:rank, cr.volumeeur=:volumeeur, cr.volumeusd=:volumeusd WHERE cr.idcurrency=:idcurrency")
+	public void updateByName(@Param("symbol") String symbol, @Param("rank") int rank, @Param("volumeeur") Double volumeeur, @Param("volumeusd") Double volumeusd, @Param("idcurrency") int idcurrency);
 	
 }

@@ -6,29 +6,29 @@ public class Market {
 	private String name;
 	private String symbol;
 	private Integer rank;
-	private String price_usd;
-	private String price_btc;
+	private Double price_usd;
+	private Double price_btc;
 	private Double volume_usd24h;
-	private String market_cap_usd;
-	private String available_supply;
-	private String total_supply;
-	private String max_supply;
-	private String percent_change_1h;
-	private String percent_change_24h;
-	private String percent_change_7d;
+	private Double market_cap_usd;
+	private Double available_supply;
+	private Double total_supply;
+	private Double max_supply;
+	private Double percent_change_1h;
+	private Double percent_change_24h;
+	private Double percent_change_7d;
 	private String last_updated;
-	private String price_eur;
+	private Double price_eur;
 	private Double volume_eur24h;
-	private String market_cap_eur;
-	
+	private Double market_cap_eur;
+
 	public Market() {
 		super();
 	}
 
-	public Market(String id, String name, String symbol, Integer rank, String price_usd, String price_btc,
-			Double volume_usd24h, String market_cap_usd, String available_supply, String total_supply,
-			String max_supply, String percent_change_1h, String percent_change_24h, String percent_change_7d,
-			String last_updated, String price_eur, Double volume_eur24h, String market_cap_eur) {
+	public Market(String id, String name, String symbol, Integer rank, Double price_usd, Double price_btc,
+			Double volume_usd24h, Double market_cap_usd, Double available_supply, Double total_supply,
+			Double max_supply, Double percent_change_1h, Double percent_change_24h, Double percent_change_7d,
+			String last_updated, Double price_eur, Double volume_eur24h, Double market_cap_eur) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -82,19 +82,19 @@ public class Market {
 		this.rank = rank;
 	}
 
-	public String getPrice_usd() {
+	public Double getPrice_usd() {
 		return price_usd;
 	}
 
-	public void setPrice_usd(String price_usd) {
+	public void setPrice_usd(Double price_usd) {
 		this.price_usd = price_usd;
 	}
 
-	public String getPrice_btc() {
+	public Double getPrice_btc() {
 		return price_btc;
 	}
 
-	public void setPrice_btc(String price_btc) {
+	public void setPrice_btc(Double price_btc) {
 		this.price_btc = price_btc;
 	}
 
@@ -106,59 +106,59 @@ public class Market {
 		this.volume_usd24h = volume_usd24h;
 	}
 
-	public String getMarket_cap_usd() {
+	public Double getMarket_cap_usd() {
 		return market_cap_usd;
 	}
 
-	public void setMarket_cap_usd(String market_cap_usd) {
+	public void setMarket_cap_usd(Double market_cap_usd) {
 		this.market_cap_usd = market_cap_usd;
 	}
 
-	public String getAvailable_supply() {
+	public Double getAvailable_supply() {
 		return available_supply;
 	}
 
-	public void setAvailable_supply(String available_supply) {
+	public void setAvailable_supply(Double available_supply) {
 		this.available_supply = available_supply;
 	}
 
-	public String getTotal_supply() {
+	public Double getTotal_supply() {
 		return total_supply;
 	}
 
-	public void setTotal_supply(String total_supply) {
+	public void setTotal_supply(Double total_supply) {
 		this.total_supply = total_supply;
 	}
 
-	public String getMax_supply() {
+	public Double getMax_supply() {
 		return max_supply;
 	}
 
-	public void setMax_supply(String max_supply) {
+	public void setMax_supply(Double max_supply) {
 		this.max_supply = max_supply;
 	}
 
-	public String getPercent_change_1h() {
+	public Double getPercent_change_1h() {
 		return percent_change_1h;
 	}
 
-	public void setPercent_change_1h(String percent_change_1h) {
+	public void setPercent_change_1h(Double percent_change_1h) {
 		this.percent_change_1h = percent_change_1h;
 	}
 
-	public String getPercent_change_24h() {
+	public Double getPercent_change_24h() {
 		return percent_change_24h;
 	}
 
-	public void setPercent_change_24h(String percent_change_24h) {
+	public void setPercent_change_24h(Double percent_change_24h) {
 		this.percent_change_24h = percent_change_24h;
 	}
 
-	public String getPercent_change_7d() {
+	public Double getPercent_change_7d() {
 		return percent_change_7d;
 	}
 
-	public void setPercent_change_7d(String percent_change_7d) {
+	public void setPercent_change_7d(Double percent_change_7d) {
 		this.percent_change_7d = percent_change_7d;
 	}
 
@@ -170,11 +170,11 @@ public class Market {
 		this.last_updated = last_updated;
 	}
 
-	public String getPrice_eur() {
+	public Double getPrice_eur() {
 		return price_eur;
 	}
 
-	public void setPrice_eur(String price_eur) {
+	public void setPrice_eur(Double price_eur) {
 		this.price_eur = price_eur;
 	}
 
@@ -186,11 +186,11 @@ public class Market {
 		this.volume_eur24h = volume_eur24h;
 	}
 
-	public String getMarket_cap_eur() {
+	public Double getMarket_cap_eur() {
 		return market_cap_eur;
 	}
 
-	public void setMarket_cap_eur(String market_cap_eur) {
+	public void setMarket_cap_eur(Double market_cap_eur) {
 		this.market_cap_eur = market_cap_eur;
 	}
 
@@ -363,9 +363,5 @@ public class Market {
 			return false;
 		return true;
 	}
-	
-	
-
-	
 
 }

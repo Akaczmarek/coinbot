@@ -8,13 +8,13 @@ import fr.afgj.coinbot.external.api.BittrexPublic;
 import fr.afgj.coinbot.external.api.entites.bittrex.Markets;
 import fr.afgj.coinbot.external.api.entites.bittrex.Results;
 import fr.afgj.coinbot.external.api.intf.IBittrexPublic;
-import fr.afgj.coinbot.external.api.miscellaneous.intf.IBittrexGetMarketService;
+import fr.afgj.coinbot.external.api.miscellaneous.intf.IGetMarket;
 
-public class BittrexGetMarketServiceImpl implements IBittrexGetMarketService {
+public class GetMarketImpl implements IGetMarket {
 
 	IBittrexPublic bittrexPublic;
 
-	public BittrexGetMarketServiceImpl() {
+	public GetMarketImpl() {
 		super();
 		this.setBittrexPublic(new BittrexPublic());
 	}
