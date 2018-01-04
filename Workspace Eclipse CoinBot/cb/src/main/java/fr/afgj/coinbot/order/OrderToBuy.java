@@ -29,7 +29,7 @@ public class OrderToBuy implements Runnable {
 			// Stage 1 : who can buy?
 			// user qui existe, avec un bet value positif -> dans ce cas il peut miser
 			// on se fabrique une liste de qui peut miser
-			List<User> users = userServiceImpl.findByPositiveBetValue();
+			List<User> users = userServiceImpl.findByPositiveBetValueAndLastDateOrderToBuy();
 			for (User user : users) {
 
 				for (OrderHistoryBot orderHistoryBot : user.getOrderhistorybots()) {
