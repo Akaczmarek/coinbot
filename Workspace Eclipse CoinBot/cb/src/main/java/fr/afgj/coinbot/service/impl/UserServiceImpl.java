@@ -26,10 +26,4 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByPositiveBetValue();
 	}
 
-	@Override
-	public List<User> findByPositiveBetValueAndLastDateOrderToBuy() {
-		// TODO Auto-generated method stub
-		return userRepository.findByPositiveBetValueAndLastDateOrderToBuy();
-	}
-
 }

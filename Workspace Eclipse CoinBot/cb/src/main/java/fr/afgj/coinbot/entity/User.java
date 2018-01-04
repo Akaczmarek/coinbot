@@ -155,7 +155,7 @@ public class User implements java.io.Serializable {
 		this.apikey = apikey;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<OrderHistoryBot> getOrderhistorybots() {
 		return this.orderhistorybots;
 	}

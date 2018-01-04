@@ -10,6 +10,4 @@ public interface UserService {
 
 	public List<User> findByPositiveBetValue();
 
-	public List<User> findByPositiveBetValueAndLastDateOrderToBuy();
-
 }
