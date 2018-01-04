@@ -24,14 +24,23 @@ public class UserConfiguration implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private int id;
+
 	private User user;
+
 	private Double betvalue;
+
 	private Double securevalue;
+
 	private Integer risklevel;
+
 	private Boolean stopbotafter;
+
 	private Boolean stopbot;
+
 	private Integer daysordersbloqued;
+
 	private Integer daysoneorderbloqued;
 
 	public UserConfiguration() {
