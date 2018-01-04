@@ -13,9 +13,11 @@ export class SupervisionService {
   mockVolume : Array<number> = [];
   mockAchatVenteHisto : Array<any> = [];
   mockUserActions : Array<any> = [];
+  emitter : BehaviorSubject<any>;
 
 
   constructor(private http : Http, private webService : WebService) {
+    this.emitter = new BehaviorSubject<number>(1);
 
     this.mockVolume.push(100,200,300);
     this.mockAchatVenteHisto = [

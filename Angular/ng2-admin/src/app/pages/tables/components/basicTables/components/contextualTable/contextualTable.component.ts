@@ -11,7 +11,6 @@ export class ContextualTable {
 
   ActiveOrders: Array<any>;
   idOrder: number;
-  strippedTable: StripedTable;
 
 
   constructor(private supervisionService: SupervisionService) {
@@ -35,7 +34,6 @@ export class ContextualTable {
   }
 
   deleteOrder(idOrder: number) {
-    this.supervisionService.deleteOrder(idOrder).subscribe(reponse => this.updateActiveOrders());
-
+    this.supervisionService.deleteOrder(idOrder).subscribe(reponse => {this.updateActiveOrders(); this.supervisionService.emitter.next(2)});
   }
 }
