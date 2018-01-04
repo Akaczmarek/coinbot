@@ -18,7 +18,14 @@ public class MiseEnBase {
 		// Verifier que les données ne sont pas deja entrées dans la base
 		// update si deja existant sinon insert
 		// premiere entrée en base
+		MiseEnBase miseEnBase = new MiseEnBase();
 		ApplicationContext ctx = SpringApplication.run(ConnexionServeurCoinbotApplication.class, args);
+
+		MiseEnBase.persistCurrency(ctx);
+
+	}
+
+	public static void persistCurrency(ApplicationContext ctx) {
 		CurrencyService cs = ctx.getBean(CurrencyService.class);
 		IGetFirstHundredMarket cmc = new GetFirstHundredMarketImpl();
 		Set<Market> markets = null;
@@ -33,16 +40,20 @@ public class MiseEnBase {
 			currency.setRank(market.getRank());
 			currency.setVolumeeur(market.getVolume_eur24h());
 			currency.setVolumeusd(market.getVolume_usd24h());
+			// System.out.println("Currency : " + currency.toString());
 			if (cs.existsByName(currency.getName())) {
+				// System.out.println("Updating ...");
 				currency = cs.findByName(currency.getName());
 				cs.updateById(currency);
+				// System.out.println("Updated !");
 
 			} else {
+				// System.out.println("Saving ...");
 				cs.saveCurrency(currency);
+				// System.out.println("Saved !");
 			}
-			// System.out.println(currency);
-		}
 
+		}
 	}
 
 }
