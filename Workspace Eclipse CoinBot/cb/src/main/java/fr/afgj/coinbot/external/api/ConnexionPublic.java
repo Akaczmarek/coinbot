@@ -66,8 +66,6 @@ public class ConnexionPublic {
 		if (this.getCon() != null) {
 			StringBuffer sb = new StringBuffer();
 			try {
-
-				System.out.println("****** Content of the URL ********");
 				BufferedReader br = new BufferedReader(new InputStreamReader(this.getCon().getInputStream()));
 				
 				while (br.ready()) {

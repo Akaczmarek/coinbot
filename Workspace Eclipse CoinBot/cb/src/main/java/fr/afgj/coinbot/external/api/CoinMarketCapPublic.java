@@ -2,10 +2,9 @@ package fr.afgj.coinbot.external.api;
 
 import java.io.IOException;
 
-import fr.afgj.coinbot.external.api.ConnexionPublic;
-import fr.afgj.coinbot.external.api.intf.CoinMarketCapPublicIntf;
+import fr.afgj.coinbot.external.api.intf.ICoinMarketCapPublic;
 
-public class CoinMarketCapPublic implements CoinMarketCapPublicIntf{
+public class CoinMarketCapPublic implements ICoinMarketCapPublic {
 
 	public ConnexionPublic api;
 
@@ -13,11 +12,17 @@ public class CoinMarketCapPublic implements CoinMarketCapPublicIntf{
 		super();
 	}
 
-	public StringBuffer getFirstHundredMarket() throws IOException {
+	public StringBuffer getFirstHundredMarket() {
 
-		String url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=20";
-		this.setApi(new ConnexionPublic(url));
-		return this.getApi().print_content();
+		String url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=25";
+		try {
+			this.setApi(new ConnexionPublic(url));
+			return this.getApi().print_content();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Impossible de récupérer l'API");
+		}
+		return null;
 	}
 
 	public ConnexionPublic getApi() {
@@ -27,5 +32,5 @@ public class CoinMarketCapPublic implements CoinMarketCapPublicIntf{
 	public void setApi(ConnexionPublic api) {
 		this.api = api;
 	}
-	
+
 }

@@ -5,11 +5,17 @@ import java.util.List;
 import fr.afgj.coinbot.entity.Currency;
 
 public interface CurrencyService {
-	
+
 	public void deleteCurrency(Currency cr);
+
 	public Currency saveCurrency(Currency cr);
+
 	public List<Currency> currencies();
-	public Boolean existByName(String name);
-	public void updateByName(Currency currency);
+
+	public Boolean existsByName(String name);
+
+	public Currency findByName(String name);
+
+	public void updateById(Currency currency);
 
 }

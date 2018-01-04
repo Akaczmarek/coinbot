@@ -1,22 +1,16 @@
 package fr.afgj.coinbot.test;
 
-import java.io.IOException;
 import java.util.Set;
 
-import org.json.JSONException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
-import fr.afgj.coinbot.repository.CurrencyRepository;
-import fr.afgj.coinbot.repository.CurrencyTrendRepository;
-import fr.afgj.coinbot.service.CurrencyService;
 import fr.afgj.coinbot.ConnexionServeurCoinbotApplication;
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.external.api.entities.coinmarketcap.Market;
-import fr.afgj.coinbot.external.api.miscellaneous.BittrexGetMarketServiceImpl;
-import fr.afgj.coinbot.external.api.miscellaneous.CoinMarketCapGetFirstHundredMarket;
-import fr.afgj.coinbot.external.api.miscellaneous.intf.IBittrexGetMarketSummary;
-import fr.afgj.coinbot.external.api.miscellaneous.intf.ICoinMarketCapGetFirstHundredMarket;
+import fr.afgj.coinbot.external.api.miscellaneous.GetFirstHundredMarketImpl;
+import fr.afgj.coinbot.external.api.miscellaneous.intf.IGetFirstHundredMarket;
+import fr.afgj.coinbot.service.CurrencyService;
 
 public class MiseEnBase {
 
@@ -26,32 +20,29 @@ public class MiseEnBase {
 		// premiere entrée en base
 		ApplicationContext ctx = SpringApplication.run(ConnexionServeurCoinbotApplication.class, args);
 		CurrencyService cs = ctx.getBean(CurrencyService.class);
-		ICoinMarketCapGetFirstHundredMarket cmc = new CoinMarketCapGetFirstHundredMarket();
+		IGetFirstHundredMarket cmc = new GetFirstHundredMarketImpl();
 		Set<Market> markets = null;
-		try {
-			markets = cmc.getMarket();
-			System.out.println("nb currency : " + markets.size());
-			
-			for (Market market : markets) {
-				// if market.getName = bitcoin -> currency.refCurrency = true
-				Currency currency = new Currency();
-				currency.setName(market.getName());
-				currency.setSymbol(market.getSymbol());
-				currency.setRank( market.getRank() );
-				currency.setVolumeeur( market.getVolume_eur24h() );
-				currency.setVolumeusd( market.getVolume_usd24h() );
-				if( cs.existByName(currency.getName()) ) {
-					cs.updateByName(currency);
-				}
+
+		markets = cmc.getMarket();
+		System.out.println("nb currency : " + markets.size());
+
+		for (Market market : markets) {
+			Currency currency = new Currency();
+			currency.setName(market.getName());
+			currency.setSymbol(market.getSymbol());
+			currency.setRank(market.getRank());
+			currency.setVolumeeur(market.getVolume_eur24h());
+			currency.setVolumeusd(market.getVolume_usd24h());
+			if (cs.existsByName(currency.getName())) {
+				currency = cs.findByName(currency.getName());
+				cs.updateById(currency);
+
+			} else {
 				cs.saveCurrency(currency);
-				System.out.println(currency);
 			}
-			
-		} catch (IOException | JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// System.out.println(currency);
 		}
-		
+
 	}
-	
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.repository.CurrencyRepository;
@@ -29,36 +30,26 @@ public class CurrencyServiceImpl implements CurrencyService {
 	@Override
 	public void deleteCurrency(Currency cr) {
 		// TODO Auto-generated method stub
-		 currencyRepository.delete(cr);
+		currencyRepository.delete(cr);
 	}
 
 	@Override
-	public Boolean existByName(String name) {
+	public Boolean existsByName(String name) {
 		// TODO Auto-generated method stub
-		if(currencyRepository.existByName(name) >=1) {
-			return true;
-		}
-		return false;
+		return currencyRepository.existsByName(name);
 	}
 
 	@Override
-	public void updateByName(Currency currency) {
+	public Currency findByName(String name) {
 		// TODO Auto-generated method stub
-		currencyRepository.updateByName(currency.getSymbol(), currency.getRank(), currency.getVolumeeur(), currency.getVolumeusd());
-		
+		return currencyRepository.findByName(name);
 	}
 
-	
-	
-	
-
-
-
-
-
-
-
-	
-	
+	@Override
+	@Transactional
+	public void updateById(Currency currency) {
+		// TODO Auto-generated method stub
+		currencyRepository.updateById(currency);
+	}
 
 }
