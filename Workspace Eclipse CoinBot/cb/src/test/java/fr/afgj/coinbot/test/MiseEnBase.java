@@ -5,12 +5,12 @@ import java.util.Set;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
-import fr.afgj.coinbot.service.CurrencyService;
 import fr.afgj.coinbot.ConnexionServeurCoinbotApplication;
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.external.api.entities.coinmarketcap.Market;
 import fr.afgj.coinbot.external.api.miscellaneous.GetFirstHundredMarketImpl;
 import fr.afgj.coinbot.external.api.miscellaneous.intf.IGetFirstHundredMarket;
+import fr.afgj.coinbot.service.CurrencyService;
 
 public class MiseEnBase {
 
@@ -22,28 +22,27 @@ public class MiseEnBase {
 		CurrencyService cs = ctx.getBean(CurrencyService.class);
 		IGetFirstHundredMarket cmc = new GetFirstHundredMarketImpl();
 		Set<Market> markets = null;
-		
+
 		markets = cmc.getMarket();
 		System.out.println("nb currency : " + markets.size());
-		
+
 		for (Market market : markets) {
 			Currency currency = new Currency();
 			currency.setName(market.getName());
 			currency.setSymbol(market.getSymbol());
-			currency.setRank( market.getRank() );
-			currency.setVolumeeur( market.getVolume_eur24h() );
-			currency.setVolumeusd( market.getVolume_usd24h() );
-			if( cs.existByName(currency.getName()) ) {
-				currency.setName("test");
-				cs.updateByName(currency);
-				System.out.println("Updated !");
+			currency.setRank(market.getRank());
+			currency.setVolumeeur(market.getVolume_eur24h());
+			currency.setVolumeusd(market.getVolume_usd24h());
+			if (cs.existsByName(currency.getName())) {
+				currency = cs.findByName(currency.getName());
+				cs.updateById(currency);
+
 			} else {
 				cs.saveCurrency(currency);
-				System.out.println("Saved !");
 			}
-			//System.out.println(currency);
+			// System.out.println(currency);
 		}
-		
+
 	}
-	
+
 }
