@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import fr.afgj.coinbot.repository.OrderHistoryBotRepository;
 
@@ -22,14 +23,16 @@ public class OHBRestService {
 	@ResponseBody
 	@RequestMapping(value = "api/ohbbyuser/{id}", method = RequestMethod.GET)
 	public String ohblist(@PathVariable int id) {
-		Gson gson = new Gson();
+		// Gson gson = new Gson();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		return gson.toJson(orderHistoryBotRepository.findOHBByIdUser(id));
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "api/ohbbyuser/{id}/activebids", method = RequestMethod.GET)
 	public String ohbActiveList(@PathVariable int id) {
-		Gson gson = new Gson();
+		// Gson gson = new Gson();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		return gson.toJson(orderHistoryBotRepository.findActiveList(id));
 	}
 
