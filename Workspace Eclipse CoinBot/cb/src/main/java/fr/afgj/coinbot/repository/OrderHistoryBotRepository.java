@@ -20,5 +20,8 @@ public interface OrderHistoryBotRepository extends CrudRepository<OrderHistoryBo
 
 	@Query("from OrderHistoryBot ohb where (ohb.user.id = :iduser and ohb.timestampcancelled= null and ohb.timestampfinished= null) ")
 	List<OrderHistoryBot> findActiveList(@Param("iduser") int iduser);
+	
+	@Query("select oh.user.id, max(oh.timestampactivated) from OrderHistoryBot oh where oh.ordertype.id = 1 group by oh.user.id")
+	List<OrderHistoryBot> findLastOrderToBuyByUser();
 
 }
