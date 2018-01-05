@@ -23,22 +23,22 @@ import fr.afgj.coinbot.service.CurrencyService;
 public class ConnexionServeurCoinbotApplication {
 
 	private static final Logger log = LogManager.getLogger();
-//	private static final SessionFactory sessionFactory;
-//
-//	static {
-//		try {
-//			// Create the SessionFactory from hibernate.cfg.xml
-//			sessionFactory = new Configuration().configure().buildSessionFactory();
-//		} catch (Throwable ex) {
-//			// Make sure you log the exception, as it might be swallowed
-//			System.err.println("Initial SessionFactory creation failed." + ex);
-//			throw new ExceptionInInitializerError(ex);
-//		}
-//	}
-//
-//	public static SessionFactory getSessionFactory() {
-//		return sessionFactory;
-//	}
+	// private static final SessionFactory sessionFactory;
+	//
+	// static {
+	// try {
+	// // Create the SessionFactory from hibernate.cfg.xml
+	// sessionFactory = new Configuration().configure().buildSessionFactory();
+	// } catch (Throwable ex) {
+	// // Make sure you log the exception, as it might be swallowed
+	// System.err.println("Initial SessionFactory creation failed." + ex);
+	// throw new ExceptionInInitializerError(ex);
+	// }
+	// }
+	//
+	// public static SessionFactory getSessionFactory() {
+	// return sessionFactory;
+	// }
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(ConnexionServeurCoinbotApplication.class, args);
@@ -146,22 +146,22 @@ public class ConnexionServeurCoinbotApplication {
 		// user.getFirstname());
 		// }
 
-//		System.out.println("-------------check the order to buy-------------");
-//
-//		OrderToBuy orderToBuy = ctx.getBean(OrderToBuy.class);
-//		Thread t0 = new Thread(orderToBuy);
-//		t0.start();
+		// System.out.println("-------------check the order to buy-------------");
+		//
+		// OrderToBuy orderToBuy = ctx.getBean(OrderToBuy.class);
+		// Thread t0 = new Thread(orderToBuy);
+		// t0.start();
 
 		System.out.println("-------------recover the last order to buy by user-------------");
-		
+
 		OrderHistoryBotRepository ohbr = ctx.getBean(OrderHistoryBotRepository.class);
-		
-		List<OrderHistoryBot> ohbs = ohbr.findActiveList(1);
-		//List<OrderHistoryBot> ohbs = ohbr.findLastOrderToBuyByUser();
+
+		// List<OrderHistoryBot> ohbs = ohbr.findActiveList(1);
+		List<OrderHistoryBot> ohbs = ohbr.findLastOrderToBuyByUser();
 		for (OrderHistoryBot orderHistoryBot : ohbs) {
-			System.out.println(orderHistoryBot);
+			System.out.println(orderHistoryBot.getUser().getId());
 		}
-		
+
 		System.out.println("********************************** FIN TESTS ***************************************");
 
 		// Stage 0 : chargement de la liste de devises

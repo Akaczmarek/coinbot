@@ -20,8 +20,17 @@ public interface OrderHistoryBotRepository extends CrudRepository<OrderHistoryBo
 
 	@Query("from OrderHistoryBot ohb where (ohb.user.id = :iduser and ohb.timestampcancelled= null and ohb.timestampfinished= null) ")
 	List<OrderHistoryBot> findActiveList(@Param("iduser") int iduser);
-	
-	@Query("select oh.user.id, max(oh.timestampactivated) from OrderHistoryBot oh where oh.ordertype.id = 1 group by oh.user.id")
+
+	@Query("select oh from OrderHistoryBot oh where oh.ordertype.id = 1 and timestampactivated in ("
+			+ " select max(oh1.timestampactivated) from OrderHistoryBot oh1 group by oh1.user.id)")
 	List<OrderHistoryBot> findLastOrderToBuyByUser();
+
+	// select *
+	// from public.orderhistorybot
+	// where timestampactivated in (
+	// select max(timestampactivated)
+	// from public.orderhistorybot
+	// group by id_user
+	// ) and id_ordertype = 1;
 
 }
