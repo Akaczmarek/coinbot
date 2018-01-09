@@ -20,4 +20,10 @@ public class OrderHistoryBotServiceImpl implements OrderHistoryBotService {
 		return orderHistoryBotRepository.findOHBByIdUser(id_user);
 	}
 
+	@Override
+	public List<OrderHistoryBot> findLastOrderToBuyByUser() {
+		// TODO Auto-generated method stub
+		return orderHistoryBotRepository.findLastOrderToBuyByUser();
+	}
+
 }

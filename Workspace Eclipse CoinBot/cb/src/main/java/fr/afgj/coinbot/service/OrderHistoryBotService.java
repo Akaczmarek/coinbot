@@ -8,4 +8,6 @@ public interface OrderHistoryBotService {
 
 	public List<OrderHistoryBot> findOHBByIdUser(int id_user);
 
+	public List<OrderHistoryBot> findLastOrderToBuyByUser();
+
 }
