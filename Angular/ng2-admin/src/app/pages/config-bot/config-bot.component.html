@@ -1,3 +1,48 @@
-<p>
-  config-bot works!
-</p>
+<div ng-style="width : 300px">
+
+
+  <div class="widgets">
+    <ba-card cardTitle="Activation du BOT" baCardClass="with-scroll">
+
+      <div class="checkbox-demo-row">
+        <div class="input-demo checkbox-demo row">
+          <ba-multi-checkbox [(ngModel)]="checkboxModel" [propertiesMapping]="checkboxPropertiesMapping"></ba-multi-checkbox>
+        </div>
+        <div class="input-demo radio-demo row">
+          <div class="col-md-4">
+            <label class="radio-inline custom-radio nowrap">
+              <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+              <span translate>Activé</span>
+            </label>
+          </div>
+          <div class="col-md-4">
+            <label class="radio-inline custom-radio nowrap">
+              <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+              <span>Desactivé</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </ba-card>
+  </div>
+
+
+  <div class="widgets">
+    <ba-card cardTitle="Personnalisation du BOT" baCardClass="with-scroll">
+
+
+
+
+      <div class="form-group">
+        <label for="exampleSelect1">Niveau de risque du BOT</label>
+        <select class="form-control" id="exampleSelect1">
+          <option>Sans Risques</option>
+          <option>Risque intermédiaire</option>
+          <option>Risque Elevé</option>
+
+        </select>
+      </div>
+    </ba-card>
+  </div>
+</div>
