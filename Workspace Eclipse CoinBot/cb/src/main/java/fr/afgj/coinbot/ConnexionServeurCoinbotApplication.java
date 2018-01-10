@@ -161,6 +161,9 @@ public class ConnexionServeurCoinbotApplication {
 		for (OrderHistoryBot orderHistoryBot : ohbs) {
 			System.out.println(orderHistoryBot.getUser().getId());
 		}
+		
+		
+		
 
 		System.out.println("********************************** FIN TESTS ***************************************");
 
