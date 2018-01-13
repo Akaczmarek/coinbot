@@ -62,13 +62,16 @@ public class ConnexionPublic {
 
 	}
 
+	// Permet de récupérer le Json des apis
 	public StringBuffer print_content() {
 		if (this.getCon() != null) {
 			StringBuffer sb = new StringBuffer();
 			try {
+				// On met les données dans un BufferReader
 				BufferedReader br = new BufferedReader(new InputStreamReader(this.getCon().getInputStream()));
 				
 				while (br.ready()) {
+					// On incremente la chaine de caractere, afin de renvoyer le json a la couche superieur
 					sb.append(br.readLine());
 				}
 				br.close();

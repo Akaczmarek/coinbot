@@ -28,21 +28,26 @@ public class GetFirstHundredMarketImpl implements IGetFirstHundredMarket {
 		Set<Market> listMarket = new HashSet<>();
 
 		listMarket = new HashSet<>();
+		
+		// Ici on va parser la chaines recu en objet 
 		try {
+			// instanciation de la lib Gson pour parser
 			Gson gson = new Gson();
-			// System.out.println(CmcDao.getFirstHundredMarket());
-
+			
+			// Cette ligne parse tous les objets de la chaine de caractere, pas besoin de boucle.
 			List<Market> liste = gson.fromJson(CmcDao.getFirstHundredMarket().toString(),
 					new TypeToken<ArrayList<Market>>() {
 					}.getType());
+			
+			// On ajoute a listMarket les objets precedemment creer
 			listMarket = new HashSet<Market>(liste);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Problemes de parsage");
-
 		}
-
+		
+		// On renvoie la liste d'objet
 		return listMarket;
 
 	}
