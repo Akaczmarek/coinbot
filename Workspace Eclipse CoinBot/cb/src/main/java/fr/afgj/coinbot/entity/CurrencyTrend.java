@@ -199,7 +199,7 @@ public class CurrencyTrend implements java.io.Serializable {
 	 * 
 	 */
 	public synchronized void update(TrendRule tr) {
-		log.info("update -- currency trend : " + this.getCurrency().getName());
+		log.info("début update -- currency trend : " + this.getCurrency().getName());
 		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
 		this.getOoct().setNewCurrencyRates(crs);
 		this.getOoct().setTrendRule(tr);
@@ -233,7 +233,7 @@ public class CurrencyTrend implements java.io.Serializable {
 				e.printStackTrace();
 			}
 		}
-		log.warn("update -- currency trend : " + this.getCurrency().getName() + " -- non terminé");
+		log.warn("fin update -- currency trend : " + this.getCurrency().getName() + " -- non terminé");
 	}
 
 	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
