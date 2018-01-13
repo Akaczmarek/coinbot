@@ -29,36 +29,37 @@ public class OrderToBuy implements Runnable {
 	private UserConfigurationService userConfigurationService;
 	@Autowired
 	private BetRule1 betRule;
-	
-	
+
 	public OrderToBuy() {
-		
+
 	}
 
 	@Override
 	public void run() {
 
+		CurrenciesTrendsBot currenciesTrendsBot = CurrenciesTrendsBot.getInstance();
 
 		while (true) {
-			// Stage 0 : loading currenciesTrendsBot
-			CurrenciesTrendsBot currenciesTrendsBot = CurrenciesTrendsBot.getInstance();
-			List<CurrencyTrend> currencyTrends = currenciesTrendsBot.getCurrenciesTrendsOrderByNoteToBuy();
+			// Stage 0 : loading currencyiestrendToBuy and the best currency to buy
+			List<CurrencyTrend> currencyTrendsToBuy = currenciesTrendsBot.getCurrenciesTrendsOrderByNoteToBuy();
+			if (currencyTrendsToBuy.size() > 0) {
+				Currency theBestCurrencyTobuy = currencyTrendsToBuy.get(0).getCurrency();
 
-			// Stage 1 : who can buy?
-			// user qui existe, avec un bet value positif -> dans ce cas il peut miser et s'il n'a pas passer d'ordre d'achat dernièrement
-			// on se fabrique une liste de qui peut miser
-			Date refDateWithoutBet = new Date (System.currentTimeMillis()-betRule.getDurationNoBet().getTime());
+				// Stage 1 : who can buy?
+				// user qui existe, avec un bet value positif -> dans ce cas il peut miser et
+				// s'il n'a pas passer d'ordre d'achat dernièrement
+				// on se fabrique une liste de qui peut miser
+				Date refDateWithoutBet = new Date(System.currentTimeMillis() - betRule.getDurationNoBet().getTime());
 
-			List<User> users = this.updateUserListForOrderToBuy(refDateWithoutBet);
+				List<User> users = this.updateUserListForOrderToBuy(refDateWithoutBet);
 
+				// stage 2 : make a purchase order
 
-			// stage 2 : make a purchase order
-			
-			for (User user : users) {
-				Currency currency = currencyTrends.get(0).getCurrency();
-				//makeOrderToBuy(currency, user);
+				for (User user : users) {
+
+					makeOrderToBuy(theBestCurrencyTobuy, user);
+				}
 			}
-			
 
 			System.out.println("---------------------------------------");
 			try {
@@ -72,43 +73,43 @@ public class OrderToBuy implements Runnable {
 	}
 
 	private void makeOrderToBuy(Currency currency, User user) {
-		//Stage 0 : initialization variable
+		// Stage 0 : initialization variable
 		int idUser = user.getId();
-	
+
 		UserConfiguration uc;
 		double betValue;
-		
-		
-		//Stage 1 : recover user configuration
+
+		// Stage 1 : recover user configuration
 		uc = userConfigurationService.findById(idUser);
-		
+
+		// Stage 2 :
+		System.out.println("user config : betvalue " + uc.getBetvalue());
+
 	}
 
 	private List<User> updateUserListForOrderToBuy(Date date) {
 		// Stage 0 : create variable, recover the data
 		List<User> users0 = userService.findByPositiveBetValue();
-		List<OrderHistoryBot> orderHistoryBots= orderHistoryBotService.findLastOrderToBuyByUser();
-		List <User> users1 =  new ArrayList<>();
-		
-		
+		List<OrderHistoryBot> orderHistoryBots = orderHistoryBotService.findLastOrderToBuyByUser();
+		List<User> users1 = new ArrayList<>();
+
 		// stage 1 : retain users whose last order has passed since the date
 		for (OrderHistoryBot orderHistoryBot : orderHistoryBots) {
-			if (orderHistoryBot.getTimestampsend().getTime()<date.getTime()) {
-			users1.add(orderHistoryBot.getUser());
+			if (orderHistoryBot.getTimestampsend().getTime() < date.getTime()) {
+				users1.add(orderHistoryBot.getUser());
 			}
 		}
-		
+
 		// Stage 2 : comparison between users0 and user1, we only keep the join on id.
 		users0.retainAll(users1);
 		System.out.println("liste de user retenu " + users0.size());
 
-
 		return users0;
 
 	}
-	
+
 	public static void main(String[] args) {
-		List<User> nobre1 =  new ArrayList<>();
+		List<User> nobre1 = new ArrayList<>();
 		User u1 = new User(1);
 		User u2 = new User(2);
 		User u3 = new User(4);
@@ -117,12 +118,12 @@ public class OrderToBuy implements Runnable {
 		nobre1.add(u2);
 		nobre1.add(u3);
 		nobre1.add(u4);
-		
+
 		for (User user : nobre1) {
 			System.out.println(user);
 		}
 
-		List<User> nobre2 =  new ArrayList<>();
+		List<User> nobre2 = new ArrayList<>();
 		User u21 = new User(1);
 		User u22 = new User(3);
 		User u23 = new User(5);
@@ -132,30 +133,25 @@ public class OrderToBuy implements Runnable {
 		nobre2.add(u23);
 		nobre2.add(u24);
 
-		
-		
-//		nobre1.addAll(nobre2);
-//		for (Integer integer : nobre1) {
-//			System.out.println(integer);
-//		}
+		// nobre1.addAll(nobre2);
+		// for (Integer integer : nobre1) {
+		// System.out.println(integer);
+		// }
 		nobre1.retainAll(nobre2);
 		System.out.println("Tableau : " + nobre1.size() + "-----------------------------------");
 		for (User user : nobre1) {
 
-		System.out.println(user);
-		
-		
-		
-		System.out.println("date : -----------------------------------");
-		BetRule1 betRule =  new BetRule1();
-		
-		Date refDateWithoutBet = new Date (System.currentTimeMillis()-betRule.getDurationNoBet().getTime());
+			System.out.println(user);
 
-		System.out.println(refDateWithoutBet);
-		
-	}
-		
-		
+			System.out.println("date : -----------------------------------");
+			BetRule1 betRule = new BetRule1();
+
+			Date refDateWithoutBet = new Date(System.currentTimeMillis() - betRule.getDurationNoBet().getTime());
+
+			System.out.println(refDateWithoutBet);
+
+		}
+
 	}
 
 }

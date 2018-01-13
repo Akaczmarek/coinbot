@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -34,10 +35,7 @@ import fr.afgj.coinbot.rule.impl.TrendRule;
 @Table(name = "currencytrend", schema = "public")
 public class CurrencyTrend implements java.io.Serializable {
 
-	/**
-	 * 
-	 * 
-	 */
+	private Logger log = Logger.getLogger(this.getClass());
 	private static final long serialVersionUID = 1L;
 
 	private int idtrend;
@@ -201,7 +199,7 @@ public class CurrencyTrend implements java.io.Serializable {
 	 * 
 	 */
 	public synchronized void update(TrendRule tr) {
-
+		log.info("update -- currency trend : " + this.getCurrency().getName());
 		List<CurrencyRate> crs = new ArrayList<>(this.getCurrency().getCurrencyratesStudy());
 		this.getOoct().setNewCurrencyRates(crs);
 		this.getOoct().setTrendRule(tr);
@@ -235,7 +233,7 @@ public class CurrencyTrend implements java.io.Serializable {
 				e.printStackTrace();
 			}
 		}
-
+		log.warn("update -- currency trend : " + this.getCurrency().getName() + " -- non terminé");
 	}
 
 	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {

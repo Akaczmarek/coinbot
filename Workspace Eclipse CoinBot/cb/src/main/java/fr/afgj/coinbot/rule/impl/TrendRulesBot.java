@@ -22,8 +22,8 @@ public class TrendRulesBot extends TrendRule{
 			TrendRulesBot trendRulesBot = new TrendRulesBot();
 
 			TrendRulesBotEnum trbe = ite.next();
-			log.info(
-					trbe + " " + trbe.getNumberDays() + " " + trbe.getNumberHours() + " " + trbe.getMultiplier());
+			log.info("règle de bot chargée : " + 
+					trbe + " - " + trbe.getNumberDays() + " " + trbe.getNumberHours() + " " + trbe.getMultiplier());
 
 			trendRulesBot.setName(trbe.toString());
 			trendRulesBot.setNumberDays(trbe.getNumberDays());

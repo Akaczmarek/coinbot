@@ -124,7 +124,7 @@ public class CurrenciesTrendsBot implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-
+		log.info("Service currencies TrendsBots démarré");
 		/*
 		 * ordre d'éxécution 1) on charge une liste de currency trend // se charge avec
 		 * josé 2) on regarde quelle currency doit être mise à jour 3) on lance les
