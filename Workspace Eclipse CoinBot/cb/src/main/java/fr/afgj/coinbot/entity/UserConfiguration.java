@@ -44,6 +44,8 @@ public class UserConfiguration implements java.io.Serializable {
 	private Integer daysordersbloqued;
 	@Expose
 	private Integer daysoneorderbloqued;
+	@Expose
+	private Double betfraction;
 
 	public UserConfiguration() {
 	}
@@ -68,6 +70,22 @@ public class UserConfiguration implements java.io.Serializable {
 		this.stopbot = stopbot;
 		this.daysordersbloqued = daysordersbloqued;
 		this.daysoneorderbloqued = daysoneorderbloqued;
+	}
+	
+	
+
+	public UserConfiguration(User user, Double betvalue, Double securevalue, Integer risklevel, Boolean stopbotafter,
+			Boolean stopbot, Integer daysordersbloqued, Integer daysoneorderbloqued, Double betfraction) {
+		super();
+		this.user = user;
+		this.betvalue = betvalue;
+		this.securevalue = securevalue;
+		this.risklevel = risklevel;
+		this.stopbotafter = stopbotafter;
+		this.stopbot = stopbot;
+		this.daysordersbloqued = daysordersbloqued;
+		this.daysoneorderbloqued = daysoneorderbloqued;
+		this.betfraction = betfraction;
 	}
 
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
@@ -155,5 +173,16 @@ public class UserConfiguration implements java.io.Serializable {
 	public void setDaysoneorderbloqued(Integer daysoneorderbloqued) {
 		this.daysoneorderbloqued = daysoneorderbloqued;
 	}
+
+	@Column(name = "betfraction")
+	public Double getBetfraction() {
+		return betfraction;
+	}
+
+	public void setBetfraction(Double betfraction) {
+		this.betfraction = betfraction;
+	}
+	
+	
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ import fr.afgj.coinbot.service.UserService;
 
 @Component
 public class OrderToBuy implements Runnable {
+	private Logger log = Logger.getLogger(this.getClass());
 
 	@Autowired
 	private UserService userService;
@@ -56,7 +58,6 @@ public class OrderToBuy implements Runnable {
 				// stage 2 : make a purchase order
 
 				for (User user : users) {
-
 					makeOrderToBuy(theBestCurrencyTobuy, user);
 				}
 			}
@@ -75,15 +76,33 @@ public class OrderToBuy implements Runnable {
 	private void makeOrderToBuy(Currency currency, User user) {
 		// Stage 0 : initialization variable
 		int idUser = user.getId();
-
 		UserConfiguration uc;
 		double betValue;
+		double betFraction;
+		double accountValue;
+		double realBet;
 
 		// Stage 1 : recover user configuration
 		uc = userConfigurationService.findById(idUser);
 
-		// Stage 2 :
-		System.out.println("user config : betvalue " + uc.getBetvalue());
+		// Stage 2 : recover data
+		betValue = uc.getBetvalue();
+		System.out.println("user config userid : " + uc.getUser().getId() + " : betvalue " + uc.getBetvalue());
+		
+		// Stage 3 : check the value of an account
+		
+		//méthode pour vérifier la valeur d'un compte voir avec josé on injecte la valeurdans la variable suivante
+		accountValue = 0.0;
+		
+		//Stage 4 : comparison data account and user configuration
+		if (uc.getBetvalue()> accountValue) {
+			
+		}
+		
+		// Stage 5 : passage of a purchase order
+		
+		//méthode pour passer un ordre d'achat voir avec josé
+		
 
 	}
 

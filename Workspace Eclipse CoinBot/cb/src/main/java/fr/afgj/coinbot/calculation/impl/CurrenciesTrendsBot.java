@@ -109,6 +109,10 @@ public class CurrenciesTrendsBot implements Runnable {
 		}
 
 		this.setCurrenciesTrendsOrderByNoteToBuy(cts);
+		log.info("résultat des ordres d'achat ordonné------------------------- ");
+		for (int i =0; i< 2; i++) {
+			log.info("tri cr : " + (i+1) + " --- "+ cts.get(i).getCurrency().getName() + " --- note to buy" + cts.get(i).getNotetobuy() );
+		}
 	}
 
 	private void updateCurrenciesTrendsOrderByNoteToSell() {
@@ -152,14 +156,14 @@ public class CurrenciesTrendsBot implements Runnable {
 				if (checkFinish) {
 					System.out.println("calcul de 1 tendance fini : " + j + "-" + i);
 				} else {
-					System.out.println("erreur ctb : une tendance n'a pas été mise à jour ");
+					log.warn("currency trend : " + ct.getCurrency().getName() + " n'a pas été mise à jour");
 				}
 				i++;
 			}
-
-			// mise à jour des listes ordonnées
-			// this.updateCurrenciesTrendsOrderByNoteToBuy();
-			// this.updateCurrenciesTrendsOrderByNoteToSell();
+			
+			// updating ordered lists
+			this.updateCurrenciesTrendsOrderByNoteToBuy();
+			this.updateCurrenciesTrendsOrderByNoteToSell();
 
 			// System.out.println("**************************************");
 			// for (CurrencyTrend ct : this.getCurrenciesTrendsOrderByNoteToBuy()) {
@@ -168,12 +172,12 @@ public class CurrenciesTrendsBot implements Runnable {
 			// }
 
 			try {
-				Thread.sleep(10);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 			j++;
 		}
 	}

@@ -215,12 +215,14 @@ public class CurrencyTrend implements java.io.Serializable {
 
 			if (!t.isAlive()) {
 				this.setUpdateFinish(true);
+				log.warn("fin update -- currency trend : " + this.getCurrency().getName() + " -- bien terminé");
 				break;
 			}
 
 			if (i > 50) {
 				// time is exceeded
 				this.setUpdateFinish(false);
+				log.warn("fin update -- currency trend : " + this.getCurrency().getName() + " -- non terminé");
 				break;
 			}
 
@@ -233,7 +235,7 @@ public class CurrencyTrend implements java.io.Serializable {
 				e.printStackTrace();
 			}
 		}
-		log.warn("fin update -- currency trend : " + this.getCurrency().getName() + " -- non terminé");
+		
 	}
 
 	public volatile static Comparator<CurrencyTrend> CTNoteToBuyComparator = new Comparator<CurrencyTrend>() {
