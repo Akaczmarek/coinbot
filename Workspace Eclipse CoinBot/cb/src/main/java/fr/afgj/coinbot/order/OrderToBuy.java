@@ -87,7 +87,10 @@ public class OrderToBuy implements Runnable {
 
 		// Stage 2 : recover data
 		betValue = uc.getBetvalue();
+		System.out.println("Passage d'une commande **********************************************************");
 		System.out.println("user config userid : " + uc.getUser().getId() + " : betvalue " + uc.getBetvalue());
+		System.out.println("currency: " + currency.getName());
+		System.out.println("fin commande ********************************************************************");
 		
 		// Stage 3 : check the value of an account
 		
