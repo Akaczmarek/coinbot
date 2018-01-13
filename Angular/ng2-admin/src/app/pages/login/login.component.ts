@@ -13,6 +13,8 @@ export class Login {
   public password:AbstractControl;
   public submitted:boolean = false;
 
+  mockLogs : Array<any> = [];
+
   constructor(fb:FormBuilder) {
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
@@ -21,13 +23,34 @@ export class Login {
 
     this.email = this.form.controls['email'];
     this.password = this.form.controls['password'];
+
+    this.mockLogs = [
+      {
+        id: 1,
+        email : 'alain@gmail.com',
+        password : 'test'
+      },
+      {
+        id: 2,
+        email : 'ghislain@gmail.com',
+        password : 'test'
+      },
+    ];
+
   }
 
-  public onSubmit(values:Object):void {
+  onSubmit():void {
     this.submitted = true;
     if (this.form.valid) {
-      // your code goes here
+      for (const mocklog of this.mockLogs) {
+        if (mocklog.email == this.email && mocklog.password == this.password){
+          console.log('ok => ',this.mockLogs[1])
+        }
+        
+      }
       // console.log(values);
     }
   }
+
+
 }

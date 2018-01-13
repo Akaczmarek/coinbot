@@ -80,25 +80,25 @@ export class SupervisionService {
     this.mockUserActions = [
       {
         typeAction: 'Achat',
-        commentaire: 'Suce moi',
+        commentaire: 'Test 1',
         date: new Date(),
         etat	: 'En cours',
       },
       {
         typeAction: 'Vente',
-        commentaire: 'Leche moi',
+        commentaire: 'Test 2',
         date: new Date(),
         etat	: 'En cours',
       },
       {
         typeAction: 'Achat',
-        commentaire: 'Sois goulue',
+        commentaire: 'Test 3',
         date: new Date(),
         etat	: 'En cours',
       },
       {
         typeAction: 'Vente',
-        commentaire: 'Qui êtes vous ?',
+        commentaire: 'Test 4',
         date: new Date(),
         etat	: 'En cours',
       },

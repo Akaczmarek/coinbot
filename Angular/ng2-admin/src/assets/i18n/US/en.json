@@ -1,15 +1,15 @@
 {
   "login": {
-    "title": "Sign in to ng2-admin",
-    "signup_link": "New to ng2-admin? Sign up!",
+    "title": "Se connecter à CoinBot",
+    "signup_link": "Pas de compte ? Inscrivez-vous ici",
     "email": "Email",
-    "password": "Password",
-    "sign_in": "Sign in",
-    "forgot_password": "Forgot password?",
-    "sign_from_app_text": "or Sign in with one click",
-    "share_on_facebook": "Share on Facebook",
-    "share_on_twitter": "Share on Twitter",
-    "share_on_google_plus": "Share on Google Plus"
+    "password": "Mot de passe",
+    "sign_in": "Se connecter",
+    "forgot_password": "Mot de passe oublié ?",
+    "sign_from_app_text": "Ou connectez vous en un clic !",
+    "share_on_facebook": "Partager sur Facebook",
+    "share_on_twitter": "Partager sur Twitter",
+    "share_on_google_plus": "Partager sur  Google Plus"
   },
   "general": {
     "akveo": "Akveo",

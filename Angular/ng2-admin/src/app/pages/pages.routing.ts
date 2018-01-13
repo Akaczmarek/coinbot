@@ -23,7 +23,9 @@ export const routes: Routes = [
       { path: 'accueil', loadChildren: './accueil/accueil.module#AccueilModule' },
       { path: 'config-bot', loadChildren: './config-bot/config-bot.module#ConfigBotModule' },
       { path: 'tutos', loadChildren: './tutos/tutos.module#TutosModule' },
-      { path: 'apropos', loadChildren: './apropos/apropos.module#AProposModule' }
+      { path: 'apropos', loadChildren: './apropos/apropos.module#AProposModule' },
+      { path: 'register', loadChildren: './register/register.module#RegisterModule' },
+      { path: 'login', loadChildren: './login/login.module#LoginModule' }
     ]
   }
 ];

@@ -13,11 +13,11 @@ export class PieChartService {
       {
         color: pieColor,
         description: 'Gain BTC',
-        stats: '57,820 bites'
+        stats: '0.04252 btc'
       }, {
         color: pieColor,
         description: 'Equivalence en Euros',
-        stats: '89,745 €'
+        stats: '500.00 €'
       }, 
     ];
   }
