@@ -13,7 +13,8 @@ import fr.afgj.coinbot.external.api.miscellaneous.intf.IGetFirstHundredMarket;
 import fr.afgj.coinbot.service.ICurrencyService;
 
 public class MiseEnBase {
-
+	//pour tentative de push
+	
 	public static void main(String[] args) {
 		// Verifier que les données ne sont pas deja entrées dans la base
 		// update si deja existant sinon insert
