@@ -6,4 +6,6 @@ public interface IBittrexPublic {
 	
 	public StringBuffer getMarketSummary(String market);
 	
+	public StringBuffer setOrderToBuy(String apiKey, String market, double quantity, double rate);
+	
 }

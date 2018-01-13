@@ -14,6 +14,7 @@ import fr.afgj.coinbot.entity.CurrencyTrend;
 import fr.afgj.coinbot.entity.OrderHistoryBot;
 import fr.afgj.coinbot.entity.User;
 import fr.afgj.coinbot.entity.UserConfiguration;
+import fr.afgj.coinbot.external.api.intf.IBittrexPublic;
 import fr.afgj.coinbot.rule.impl.BetRule1;
 import fr.afgj.coinbot.service.OrderHistoryBotService;
 import fr.afgj.coinbot.service.UserConfigurationService;
@@ -31,6 +32,8 @@ public class OrderToBuy implements Runnable {
 	private UserConfigurationService userConfigurationService;
 	@Autowired
 	private BetRule1 betRule;
+	@Autowired
+	private IBittrexPublic bittrexPublic;
 
 	public OrderToBuy() {
 
@@ -58,7 +61,7 @@ public class OrderToBuy implements Runnable {
 				// stage 2 : make a purchase order
 
 				for (User user : users) {
-					makeOrderToBuy(theBestCurrencyTobuy, user);
+					this.makeOrderToBuy(theBestCurrencyTobuy, user);
 				}
 			}
 
@@ -81,6 +84,12 @@ public class OrderToBuy implements Runnable {
 		double betFraction;
 		double accountValue;
 		double realBet;
+		
+		// variables for order
+		String apiKey ="";
+		String market =""; 
+		double quantity =-1.0;
+		double rate =-1.0;
 
 		// Stage 1 : recover user configuration
 		uc = userConfigurationService.findById(idUser);
@@ -106,13 +115,21 @@ public class OrderToBuy implements Runnable {
 		
 		//méthode pour passer un ordre d'achat voir avec josé
 		
+		
+		if (!"".equals(apiKey) && !"".equals(market) && quantity!=-1.0 && rate!= -1.0) {
+			this.bittrexPublic.setOrderToBuy(apiKey, market, quantity, rate);
+		}
+		
+		String url = "https://bittrex.com/api/v1.1/market/buylimit?apikey="+ apiKey + "&market=" + market + "&quantity=" + quantity + "&rate=" + rate;
+
+		
 
 	}
 
 	private List<User> updateUserListForOrderToBuy(Date date) {
 		// Stage 0 : create variable, recover the data
-		List<User> users0 = userService.findByPositiveBetValue();
-		List<OrderHistoryBot> orderHistoryBots = orderHistoryBotService.findLastOrderToBuyByUser();
+		List<User> users0 = this.userService.findByPositiveBetValue();
+		List<OrderHistoryBot> orderHistoryBots = this.orderHistoryBotService.findLastOrderToBuyByUser();
 		List<User> users1 = new ArrayList<>();
 
 		// stage 1 : retain users whose last order has passed since the date

@@ -6,7 +6,7 @@ import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyRate;
 import fr.afgj.coinbot.entity.CurrencyTrend;
 
-public interface CurrencyTrendService {
+public interface ICurrencyTrendService {
 
 	
 	public void deleteCurrencyTrend(CurrencyTrend crt);

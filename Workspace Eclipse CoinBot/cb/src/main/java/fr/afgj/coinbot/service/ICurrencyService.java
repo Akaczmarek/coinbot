@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.afgj.coinbot.entity.Currency;
 
-public interface CurrencyService {
+public interface ICurrencyService {
 
 	public void deleteCurrency(Currency cr);
 

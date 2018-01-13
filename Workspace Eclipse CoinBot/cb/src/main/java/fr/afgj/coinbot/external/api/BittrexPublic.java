@@ -2,9 +2,12 @@ package fr.afgj.coinbot.external.api;
 
 import java.io.IOException;
 
+import org.springframework.stereotype.Component;
+
 import fr.afgj.coinbot.external.api.ConnexionPublic;
 import fr.afgj.coinbot.external.api.intf.IBittrexPublic;
 
+@Component
 public class BittrexPublic implements IBittrexPublic{
 	
 	public ConnexionPublic api;

@@ -6,7 +6,7 @@ import java.util.List;
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyRate;
 
-public interface CurrencyRateService {
+public interface ICurrencyRateService {
 
 	public void deleteCurrencyRate(CurrencyRate crr);
 

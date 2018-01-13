@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.afgj.coinbot.entity.OrderHistoryBot;
 
-public interface OrderHistoryBotService {
+public interface IOrderHistoryBotService {
 
 	public List<OrderHistoryBot> findOHBByIdUser(int id_user);
 

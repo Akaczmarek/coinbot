@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 
 import fr.afgj.coinbot.entity.UserConfiguration;
 import fr.afgj.coinbot.repository.UserConfigurationRepository;
-import fr.afgj.coinbot.service.UserConfigurationService;
+import fr.afgj.coinbot.service.IUserConfigurationService;
 
 @Service
-public class UserConfigurationServiceImpl implements UserConfigurationService {
+public class UserConfigurationServiceImpl implements IUserConfigurationService {
 	
 	@Autowired
 	private UserConfigurationRepository userConfigurationRepository;

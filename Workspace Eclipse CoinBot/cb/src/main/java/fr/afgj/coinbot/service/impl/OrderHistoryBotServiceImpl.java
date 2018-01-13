@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import fr.afgj.coinbot.entity.OrderHistoryBot;
 import fr.afgj.coinbot.repository.OrderHistoryBotRepository;
-import fr.afgj.coinbot.service.OrderHistoryBotService;
+import fr.afgj.coinbot.service.IOrderHistoryBotService;
 
 @Service
-public class OrderHistoryBotServiceImpl implements OrderHistoryBotService {
+public class OrderHistoryBotServiceImpl implements IOrderHistoryBotService {
 
 	@Autowired
 	private OrderHistoryBotRepository orderHistoryBotRepository;

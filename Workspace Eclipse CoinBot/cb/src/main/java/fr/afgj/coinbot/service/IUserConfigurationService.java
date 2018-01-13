@@ -4,7 +4,7 @@ import org.springframework.data.repository.query.Param;
 
 import fr.afgj.coinbot.entity.UserConfiguration;
 
-public interface UserConfigurationService {
+public interface IUserConfigurationService {
 
 	public UserConfiguration findById(int idUser);
 

@@ -10,7 +10,7 @@ import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.external.api.entities.coinmarketcap.Market;
 import fr.afgj.coinbot.external.api.miscellaneous.GetFirstHundredMarketImpl;
 import fr.afgj.coinbot.external.api.miscellaneous.intf.IGetFirstHundredMarket;
-import fr.afgj.coinbot.service.CurrencyService;
+import fr.afgj.coinbot.service.ICurrencyService;
 
 public class MiseEnBase {
 
@@ -26,7 +26,7 @@ public class MiseEnBase {
 	}
 
 	public static void persistCurrency(ApplicationContext ctx) {
-		CurrencyService cs = ctx.getBean(CurrencyService.class);
+		ICurrencyService cs = ctx.getBean(ICurrencyService.class);
 		IGetFirstHundredMarket cmc = new GetFirstHundredMarketImpl();
 		Set<Market> markets = null;
 

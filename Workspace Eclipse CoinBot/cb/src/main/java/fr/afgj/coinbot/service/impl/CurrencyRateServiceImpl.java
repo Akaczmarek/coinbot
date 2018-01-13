@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyRate;
 import fr.afgj.coinbot.repository.CurrencyRateRepository;
-import fr.afgj.coinbot.service.CurrencyRateService;
+import fr.afgj.coinbot.service.ICurrencyRateService;
 
 @Service
-public class CurrencyRateServiceImpl implements CurrencyRateService {
+public class CurrencyRateServiceImpl implements ICurrencyRateService {
 
 	@Autowired
 	private CurrencyRateRepository currencyRateRepository;

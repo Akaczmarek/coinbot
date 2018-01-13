@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import fr.afgj.coinbot.entity.User;
 import fr.afgj.coinbot.repository.UserRepository;
-import fr.afgj.coinbot.service.UserService;
+import fr.afgj.coinbot.service.IUserService;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUserService {
 	@Autowired
 	private UserRepository userRepository;
 

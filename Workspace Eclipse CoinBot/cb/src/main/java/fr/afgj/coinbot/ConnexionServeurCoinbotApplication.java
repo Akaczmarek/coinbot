@@ -17,7 +17,7 @@ import fr.afgj.coinbot.repository.CurrencyRateRepository;
 import fr.afgj.coinbot.repository.CurrencyRepository;
 import fr.afgj.coinbot.repository.OrderHistoryBotRepository;
 import fr.afgj.coinbot.repository.UserRepository;
-import fr.afgj.coinbot.service.CurrencyService;
+import fr.afgj.coinbot.service.ICurrencyService;
 
 @SpringBootApplication
 public class ConnexionServeurCoinbotApplication {
@@ -48,7 +48,7 @@ public class ConnexionServeurCoinbotApplication {
 		System.out.println("********************************** DEBUT TESTS ***************************************");
 
 		System.out.println("----------------- exist ?----------------------");
-		CurrencyService cs = ctx.getBean(CurrencyService.class);
+		ICurrencyService cs = ctx.getBean(ICurrencyService.class);
 		// ICoinMarketCapGetFirstHundredMarket cmc = new
 		// CoinMarketCapGetFirstHundredMarket();
 		// Set<Market> markets = null;

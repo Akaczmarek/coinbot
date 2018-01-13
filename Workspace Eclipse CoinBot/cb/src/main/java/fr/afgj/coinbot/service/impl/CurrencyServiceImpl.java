@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.repository.CurrencyRepository;
-import fr.afgj.coinbot.service.CurrencyService;
+import fr.afgj.coinbot.service.ICurrencyService;
 
 @Service
-public class CurrencyServiceImpl implements CurrencyService {
+public class CurrencyServiceImpl implements ICurrencyService {
 	@Autowired
 	private CurrencyRepository currencyRepository;
 

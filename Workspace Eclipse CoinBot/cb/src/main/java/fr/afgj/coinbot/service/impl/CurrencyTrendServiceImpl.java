@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyTrend;
 import fr.afgj.coinbot.repository.CurrencyTrendRepository;
-import fr.afgj.coinbot.service.CurrencyTrendService;
+import fr.afgj.coinbot.service.ICurrencyTrendService;
 
 @Service
-public class CurrencyTrendServiceImpl implements CurrencyTrendService {
+public class CurrencyTrendServiceImpl implements ICurrencyTrendService {
 
 	@Autowired
 	private CurrencyTrendRepository currencyTrendRepository;
