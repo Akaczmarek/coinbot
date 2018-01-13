@@ -16,24 +16,27 @@ import fr.afgj.coinbot.entity.User;
 import fr.afgj.coinbot.entity.UserConfiguration;
 import fr.afgj.coinbot.external.api.intf.IBittrexPublic;
 import fr.afgj.coinbot.rule.impl.BetRule1;
-import fr.afgj.coinbot.service.OrderHistoryBotService;
-import fr.afgj.coinbot.service.UserConfigurationService;
-import fr.afgj.coinbot.service.UserService;
+import fr.afgj.coinbot.service.IApiKeyService;
+import fr.afgj.coinbot.service.IOrderHistoryBotService;
+import fr.afgj.coinbot.service.IUserConfigurationService;
+import fr.afgj.coinbot.service.IUserService;
 
 @Component
 public class OrderToBuy implements Runnable {
 	private Logger log = Logger.getLogger(this.getClass());
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	@Autowired
-	private OrderHistoryBotService orderHistoryBotService;
+	private IOrderHistoryBotService orderHistoryBotService;
 	@Autowired
-	private UserConfigurationService userConfigurationService;
+	private IUserConfigurationService userConfigurationService;
 	@Autowired
 	private BetRule1 betRule;
 	@Autowired
 	private IBittrexPublic bittrexPublic;
+	@Autowired
+	private IApiKeyService apiKeyService;
 
 	public OrderToBuy() {
 
