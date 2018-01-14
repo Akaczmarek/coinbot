@@ -215,14 +215,14 @@ public class CurrencyTrend implements java.io.Serializable {
 
 			if (!t.isAlive()) {
 				this.setUpdateFinish(true);
-				log.warn("fin update -- currency trend : " + this.getCurrency().getName() + " -- bien terminé");
+				log.info("fin update -- currency trend : " + this.getCurrency().getName() + " -- cloturé");
 				break;
 			}
 
 			if (i > 50) {
 				// time is exceeded
 				this.setUpdateFinish(false);
-				log.warn("fin update -- currency trend : " + this.getCurrency().getName() + " -- non terminé");
+				log.warn("fin update -- currency trend : " + this.getCurrency().getName() + " -- non terminé - cloturé");
 				break;
 			}
 

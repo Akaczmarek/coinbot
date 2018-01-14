@@ -104,7 +104,7 @@ public class CurrenciesTrendsBot implements Runnable {
 	public void updateCurrenciesTrendsOrderByNoteToBuy() {
 		List<CurrencyTrend> cts = new ArrayList<>(this.getCurrenciesTrends());
 
-		if (cts.size() > 2) {
+		if (cts.size() >= 2) {
 			Collections.sort(cts, CurrencyTrend.CTNoteToBuyComparator);
 		}
 

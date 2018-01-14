@@ -229,6 +229,7 @@ public class Currency implements java.io.Serializable, Cloneable {
 		return builder.toString();
 	}
 	
+	@Transient
 	public double getLastCurrencyRateAskValue() {
 		List<CurrencyRate> currencyRates = new ArrayList<>(this.getCurrencyratesStudy());
 		Date recentlyDate = new Date(System.currentTimeMillis()+2000);

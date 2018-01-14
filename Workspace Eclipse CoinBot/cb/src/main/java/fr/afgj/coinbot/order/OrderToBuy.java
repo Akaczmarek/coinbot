@@ -105,10 +105,7 @@ public class OrderToBuy implements Runnable {
 		// Stage 2 : recover data of user configuration
 		betValue = uc.getBetvalue();
 		betFraction = uc.getBetfraction();
-		System.out.println("Passage d'une commande **********************************************************");
-		System.out.println("user config userid : " + uc.getUser().getId() + " : betvalue " + uc.getBetvalue() + ", betFraction : " + uc.getBetfraction());
-		System.out.println("currency: " + currency.getName());
-		System.out.println("fin commande ********************************************************************");
+
 		
 		// Stage 3 : check the value of an account with api bittrex
 		
@@ -117,7 +114,7 @@ public class OrderToBuy implements Runnable {
 		accountValue = 100.0;
 		
 		//Stage 4 : comparison data account and user configuration
-		if (uc.getBetvalue()>= accountValue && uc.getBetfraction()>accountValue) {
+		if (uc.getBetvalue()<= accountValue && uc.getBetfraction()<=accountValue) {
 			// the account is properly stocked -> proceed to order to buy
 			quantity = uc.getBetfraction();
 			rate = currency.getLastCurrencyRateAskValue();
@@ -128,20 +125,29 @@ public class OrderToBuy implements Runnable {
 		//méthode pour passer un ordre d'achat voir avec josé
 		
 		
-		if (!"".equals(apiKey) && !"".equals(market) && quantity!=-1.0 && rate!= -1.0) {
-			
-			// Stage 5.0 : passage of a purchase order on api Bittrex
-			this.bittrexPublic.setOrderToBuy(apiKey, market, quantity, rate);
-			
-			
-			// Stage 5.1 :save order in bdd
-			
-			OrderHistoryBot orderHistoryBot = new OrderHistoryBot();
-			orderHistoryBot.setCurrency(currency);
-			orderHistoryBot.setUser(user);
-			orderHistoryBot.setCurrencyvalue(rate);
-			
-		}
+		
+		
+		System.out.println("Passage d'une commande **********************************************************");
+		System.out.println("user config userid : " + uc.getUser().getId() + " : betvalue " + uc.getBetvalue() + ", betFraction : " + uc.getBetfraction());
+		System.out.println("currency: " + currency.getName());
+		System.out.println("commande volume : " + quantity + ", valeur d'achat  : " + rate);
+		System.out.println("fin commande ********************************************************************");
+		
+		
+//		if (!"".equals(apiKey) && !"".equals(market) && quantity!=-1.0 && rate!= -1.0) {
+//			
+//			// Stage 5.0 : passage of a purchase order on api Bittrex
+//			this.bittrexPublic.setOrderToBuy(apiKey, market, quantity, rate);
+//			
+//			
+//			// Stage 5.1 :save order in bdd
+//			
+//			OrderHistoryBot orderHistoryBot = new OrderHistoryBot();
+//			orderHistoryBot.setCurrency(currency);
+//			orderHistoryBot.setUser(user);
+//			orderHistoryBot.setCurrencyvalue(rate);
+//			
+//		}
 		
 		
 		// Stage 6 : save order in bdd

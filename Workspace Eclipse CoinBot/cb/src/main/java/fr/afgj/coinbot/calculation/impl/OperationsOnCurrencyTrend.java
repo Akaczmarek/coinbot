@@ -238,7 +238,7 @@ public class OperationsOnCurrencyTrend implements Runnable {
 			}
 
 		} else {
-			this.log.error("error : le calcul ne peut pas être fait il n'y a pas assez de données ou liste null" + this.toString());
+			this.log.warn("error : le calcul ne peut pas être fait il n'y a pas assez de données ou liste null" + this.toString());
 		}
 		
 	}
@@ -294,7 +294,7 @@ public class OperationsOnCurrencyTrend implements Runnable {
 			this.setOldCurrencyRates(this.getNewCurrencyRates());
 
 		} else {
-			log.info("erreur lors la comparaison des currency rate list");
+			log.warn("erreur lors la comparaison des currency rate list");
 		}
 
 	}
@@ -321,7 +321,7 @@ public class OperationsOnCurrencyTrend implements Runnable {
 				this.getPointsXYOfAsk().add(ptAsk);
 			}
 		}else {
-			log.info("pas d'update liste des points");
+			log.warn("pas d'update liste des points");
 		}
 
 	}

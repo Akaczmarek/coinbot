@@ -2,8 +2,6 @@ package fr.afgj.coinbot.calculation.impl;
 
 import java.util.Comparator;
 
-import fr.afgj.coinbot.entity.CurrencyRate;
-
 public class TrendPointXY {
 	
 
