@@ -2,6 +2,8 @@ package fr.afgj.coinbot.entity;
 // Generated 21 d�c. 2017 09:38:56 by Hibernate Tools 5.1.6.Final
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -225,6 +227,19 @@ public class Currency implements java.io.Serializable, Cloneable {
 		builder.append(currencyratesStudy);
 		builder.append("]");
 		return builder.toString();
+	}
+	
+	public double getLastCurrencyRateAskValue() {
+		List<CurrencyRate> currencyRates = new ArrayList<>(this.getCurrencyratesStudy());
+		Date recentlyDate = new Date(System.currentTimeMillis()+2000);
+		currencyRates.removeIf((CurrencyRate cr) -> cr.getTimerecord().getTime()>recentlyDate.getTime());
+		
+		Collections.sort(currencyRates, CurrencyRate.CRComparatorByDate);
+		
+		double askValue = currencyRates.get(0).getAskbtc();
+		
+		return askValue;
+	
 	}
 
 }

@@ -25,5 +25,8 @@ public interface CurrencyRateRepository extends JpaRepository<CurrencyRate, Inte
 
 	@Query("select cr from CurrencyRate cr where cr.timerecord between :date0 and :date1 ")
 	public List<CurrencyRate> findByDates(@Param("date0") Date startDate, @Param("date1") Date endDate);
+	
+	@Query("select cr from CurrencyRate cr where cr.currency.id=:idcr and cr.timerecord in (select max(cr1.timerecord) from CurrencyRate cr1 group by cr1.currency.id)")
+	public CurrencyRate findByLastDateAndCurrency(@Param("idcr") int idcr);
 
 }

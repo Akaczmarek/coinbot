@@ -40,6 +40,7 @@ public class OrderToBuy implements Runnable {
 
 	public OrderToBuy() {
 
+		
 	}
 
 	@Override
@@ -54,9 +55,8 @@ public class OrderToBuy implements Runnable {
 				Currency theBestCurrencyTobuy = currencyTrendsToBuy.get(0).getCurrency();
 
 				// Stage 1 : who can buy?
-				// user qui existe, avec un bet value positif -> dans ce cas il peut miser et
-				// s'il n'a pas passer d'ordre d'achat dernièrement
-				// on se fabrique une liste de qui peut miser
+				// user with positive account
+				// user with last bet is during
 				Date refDateWithoutBet = new Date(System.currentTimeMillis() - betRule.getDurationNoBet().getTime());
 
 				List<User> users = this.updateUserListForOrderToBuy(refDateWithoutBet);
@@ -87,31 +87,40 @@ public class OrderToBuy implements Runnable {
 		double betFraction;
 		double accountValue;
 		double realBet;
+		double askValue;
 		
 		// variables for order
 		String apiKey ="";
 		String market =""; 
 		double quantity =-1.0;
 		double rate =-1.0;
+		
+		//variables for persistence order
+		Date dateSend;
+		Date dateActivated;
 
 		// Stage 1 : recover user configuration
 		uc = userConfigurationService.findById(idUser);
 
-		// Stage 2 : recover data
+		// Stage 2 : recover data of user configuration
 		betValue = uc.getBetvalue();
+		betFraction = uc.getBetfraction();
 		System.out.println("Passage d'une commande **********************************************************");
-		System.out.println("user config userid : " + uc.getUser().getId() + " : betvalue " + uc.getBetvalue());
+		System.out.println("user config userid : " + uc.getUser().getId() + " : betvalue " + uc.getBetvalue() + ", betFraction : " + uc.getBetfraction());
 		System.out.println("currency: " + currency.getName());
 		System.out.println("fin commande ********************************************************************");
 		
-		// Stage 3 : check the value of an account
+		// Stage 3 : check the value of an account with api bittrex
+		
 		
 		//méthode pour vérifier la valeur d'un compte voir avec josé on injecte la valeurdans la variable suivante
-		accountValue = 0.0;
+		accountValue = 100.0;
 		
 		//Stage 4 : comparison data account and user configuration
-		if (uc.getBetvalue()> accountValue) {
-			
+		if (uc.getBetvalue()>= accountValue && uc.getBetfraction()>accountValue) {
+			// the account is properly stocked -> proceed to order to buy
+			quantity = uc.getBetfraction();
+			rate = currency.getLastCurrencyRateAskValue();
 		}
 		
 		// Stage 5 : passage of a purchase order
@@ -120,10 +129,24 @@ public class OrderToBuy implements Runnable {
 		
 		
 		if (!"".equals(apiKey) && !"".equals(market) && quantity!=-1.0 && rate!= -1.0) {
+			
+			// Stage 5.0 : passage of a purchase order on api Bittrex
 			this.bittrexPublic.setOrderToBuy(apiKey, market, quantity, rate);
+			
+			
+			// Stage 5.1 :save order in bdd
+			
+			OrderHistoryBot orderHistoryBot = new OrderHistoryBot();
+			orderHistoryBot.setCurrency(currency);
+			orderHistoryBot.setUser(user);
+			orderHistoryBot.setCurrencyvalue(rate);
+			
 		}
 		
-		String url = "https://bittrex.com/api/v1.1/market/buylimit?apikey="+ apiKey + "&market=" + market + "&quantity=" + quantity + "&rate=" + rate;
+		
+		// Stage 6 : save order in bdd
+		
+
 
 		
 
