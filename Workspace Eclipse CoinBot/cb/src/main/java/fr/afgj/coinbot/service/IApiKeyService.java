@@ -1,5 +1,9 @@
 package fr.afgj.coinbot.service;
 
-public interface IApiKeyService {
+import fr.afgj.coinbot.entity.ApiKey;
+import fr.afgj.coinbot.entity.User;
 
+public interface IApiKeyService {
+	
+	public ApiKey findByUser(User user);
 }

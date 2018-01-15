@@ -15,6 +15,6 @@ public class ApiKeyServiceImpl implements IApiKeyService {
 	ApiKeyRepository apiKeyRepository;
 	
 	public ApiKey findByUser(User user) {
-		return apiKeyRepository.findByUser(user);
+		return apiKeyRepository.findOne(user.getId());
 	}
 }

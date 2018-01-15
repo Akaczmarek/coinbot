@@ -74,7 +74,7 @@ public class ConnexionServeurCoinbotApplication {
 
 		System.out.println("---------find one currency-----------------");
 		Currency cr = currencyRep.findOne(1);
-
+		
 		System.out.println("currency trouvé------> " + cr.getName() + " (id = " + cr.getIdcurrency() + ")");
 
 		System.out.println("--------------------------");

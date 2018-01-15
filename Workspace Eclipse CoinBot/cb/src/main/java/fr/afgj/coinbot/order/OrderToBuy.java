@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.afgj.coinbot.calculation.impl.CurrenciesTrendsBot;
+import fr.afgj.coinbot.entity.ApiKey;
 import fr.afgj.coinbot.entity.Currency;
 import fr.afgj.coinbot.entity.CurrencyTrend;
 import fr.afgj.coinbot.entity.OrderHistoryBot;
@@ -40,7 +41,6 @@ public class OrderToBuy implements Runnable {
 
 	public OrderToBuy() {
 
-		
 	}
 
 	@Override
@@ -88,14 +88,14 @@ public class OrderToBuy implements Runnable {
 		double accountValue;
 		double realBet;
 		double askValue;
-		
+
 		// variables for order
-		String apiKey ="";
-		String market =""; 
-		double quantity =-1.0;
-		double rate =-1.0;
-		
-		//variables for persistence order
+		String apiKey = "";
+		String market = "";
+		double quantity = -1.0;
+		double rate = -1.0;
+
+		// variables for persistence order
 		Date dateSend;
 		Date dateActivated;
 
@@ -106,55 +106,55 @@ public class OrderToBuy implements Runnable {
 		betValue = uc.getBetvalue();
 		betFraction = uc.getBetfraction();
 
-		
 		// Stage 3 : check the value of an account with api bittrex
-		
-		
-		//méthode pour vérifier la valeur d'un compte voir avec josé on injecte la valeurdans la variable suivante
+
+		// méthode pour vérifier la valeur d'un compte voir avec josé on injecte la
+		// valeurdans la variable suivante
 		accountValue = 100.0;
-		
-		//Stage 4 : comparison data account and user configuration
-		if (uc.getBetvalue()<= accountValue && uc.getBetfraction()<=accountValue) {
+
+		// Stage 4 : comparison data account and user configuration
+		if (uc.getBetvalue() <= accountValue && uc.getBetfraction() <= accountValue) {
 			// the account is properly stocked -> proceed to order to buy
 			quantity = uc.getBetfraction();
 			rate = currency.getLastCurrencyRateAskValue();
 		}
-		
-		// Stage 5 : passage of a purchase order
-		
-		//méthode pour passer un ordre d'achat voir avec josé
-		
-		
-		
-		
+
+		// Stage 5 : récupération d'information api key et market
+		market = "BTC-" + currency.getSymbol();
+
+		ApiKey apiKeyInit = apiKeyService.findByUser(user);
+		apiKey = apiKeyInit.getApikey();
+
+		// Stage 6 : passage of a purchase order
+
+		// méthode pour passer un ordre d'achat voir avec josé
+
 		System.out.println("Passage d'une commande **********************************************************");
-		System.out.println("user config userid : " + uc.getUser().getId() + " : betvalue " + uc.getBetvalue() + ", betFraction : " + uc.getBetfraction());
+		System.out.println("user config userid : " + uc.getUser().getId() + " : betvalue " + uc.getBetvalue()
+				+ ", betFraction : " + uc.getBetfraction());
 		System.out.println("currency: " + currency.getName());
 		System.out.println("commande volume : " + quantity + ", valeur d'achat  : " + rate);
+		System.out.println("apiKey : " + apiKey);
+		System.out.println("Market : " + market);
 		System.out.println("fin commande ********************************************************************");
-		
-		
-//		if (!"".equals(apiKey) && !"".equals(market) && quantity!=-1.0 && rate!= -1.0) {
-//			
-//			// Stage 5.0 : passage of a purchase order on api Bittrex
-//			this.bittrexPublic.setOrderToBuy(apiKey, market, quantity, rate);
-//			
-//			
-//			// Stage 5.1 :save order in bdd
-//			
-//			OrderHistoryBot orderHistoryBot = new OrderHistoryBot();
-//			orderHistoryBot.setCurrency(currency);
-//			orderHistoryBot.setUser(user);
-//			orderHistoryBot.setCurrencyvalue(rate);
-//			
-//		}
-		
-		
+
+		// if (!"".equals(apiKey) && !"".equals(market) && quantity!=-1.0 && rate!=
+		// -1.0) {
+		//
+		// // Stage 5.0 : passage of a purchase order on api Bittrex
+		// this.bittrexPublic.setOrderToBuy(apiKey, market, quantity, rate);
+		//
+		//
+		// // Stage 5.1 :save order in bdd
+		//
+		// OrderHistoryBot orderHistoryBot = new OrderHistoryBot();
+		// orderHistoryBot.setCurrency(currency);
+		// orderHistoryBot.setUser(user);
+		// orderHistoryBot.setCurrencyvalue(rate);
+		//
+		// }
+
 		// Stage 6 : save order in bdd
-		
-
-
-		
 
 	}
 
