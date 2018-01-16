@@ -1,10 +1,7 @@
-<div id="configbot">
-  <div ng-style="width : 300px">
-
-
-    <div class="widgets">
-      <ba-card cardTitle="Activation du BOT" baCardClass="with-scroll">
-
+<div class="row">
+  <div class="col-lg-6 col-md-12">
+    <ba-card cardTitle="Activation du BOT" baCardClass="with-scroll">
+      <div class="widgets">
         <div class="checkbox-demo-row">
           <div class="input-demo checkbox-demo row">
             <ba-multi-checkbox [(ngModel)]="checkboxModel" [propertiesMapping]="checkboxPropertiesMapping"></ba-multi-checkbox>
@@ -24,11 +21,10 @@
             </div>
           </div>
         </div>
-
-      </ba-card>
-    </div>
-
-
+      </div>
+    </ba-card>
+  </div>
+  <div class="col-lg-6 col-md-12">
     <div class="widgets">
       <ba-card cardTitle="Personnalisation du BOT" baCardClass="with-scroll">
 
@@ -44,16 +40,57 @@
       </ba-card>
     </div>
   </div>
+</div>
 
-  <div class="widgets">
-    <ba-card cardTitle="Bet Value" baCardClass="with-scroll">
 
-      <div class="slidecontainer">
-        <input type="range" min="1" max="1000" [(ngModel)]="betvalue" class="slider" id="myRange">
-        <p>Valeur à miser :
-          <span [innerHTML]="betvalue"> </span>
-        </p>
-      </div>
-    </ba-card>
+<div class="row">
+  <div class="col-lg-6 col-md-12">
+    <div class="widgets">
+      <ba-card cardTitle="Mise" baCardClass="with-scroll">
+
+        <div class="slidecontainer">
+          <input type="range" min="1" max="1000" [(ngModel)]="betValue" class="slider" id="myRange">
+          <p>Valeur à miser en €:
+            <span [innerHTML]="betValue"> </span>
+          </p>
+        </div>
+      </ba-card>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-md-12">
+    <div class="widgets">
+      <ba-card cardTitle="Securisation des gains" baCardClass="with-scroll">
+
+        <div class="slidecontainer">
+          <input type="range" min="1" max="1000" [(ngModel)]="secureValue" class="slider" id="myRange">
+          <p>Valeur à partir de laquelle sécuriser les gains en € :
+            <span [innerHTML]="secureValue"> </span>
+          </p>
+        </div>
+      </ba-card>
+    </div>
   </div>
 </div>
+
+
+  <div class="centerblock">
+      <div class="center">
+    <div class="widgets">
+      <ba-card cardTitle="Jours avant arrêt d'un pari bloqué" baCardClass="with-scroll">
+          <div class="slidecontainer">
+              <input type="range" min="1" max="10" [(ngModel)]="daysordersbloqued" class="slider" id="myRange">
+              <p>Jours avant arrêt :
+                <span [innerHTML]="daysordersbloqued"> </span>
+              </p>
+            </div>
+          
+
+      </ba-card>
+      </div>
+    </div>
+
+
+
+  </div>
+
