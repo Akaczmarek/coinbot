@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SupervisionService } from 'app/services/supervision.service';
 
 @Component({
   selector: 'app-config-bot',
@@ -10,8 +11,11 @@ export class ConfigBotComponent implements OnInit {
  betValue : number;
  secureValue : number;
  daysordersbloqued : number;
+ isConnected : boolean;
 
-  constructor() { }
+  constructor(private supService : SupervisionService) { 
+
+  }
 
   ngOnInit() {
   }

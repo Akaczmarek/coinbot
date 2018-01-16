@@ -1,35 +1,42 @@
-<div class="row">
-  <div class="col-lg-6 col-md-12">
-      <ba-card cardTitle="Récapitulatif des gains" baCardClass="with-scroll table-panel">
-         <div style="display:block" > <pie-chart></pie-chart>
-         </div>
-        </ba-card>
-    
-  </div>
+<div *ngIf="!connected; else connected">
+  <h1>Vous devez être connecté pour accèder à cette page !</h1>
+</div>
 
-  <div class="col-lg-6 col-md-12">
-    <ba-card cardTitle="Historique des ordres d'achat / vente" baCardClass="with-scroll table-panel">
-      <striped-table></striped-table>
+<ng-template #connected>
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+      <ba-card cardTitle="Récapitulatif des gains" baCardClass="with-scroll table-panel">
+        <div style="display:block">
+          <pie-chart></pie-chart>
+        </div>
+      </ba-card>
+
+    </div>
+
+    <div class="col-lg-6 col-md-12">
+      <ba-card cardTitle="Historique des ordres d'achat / vente" baCardClass="with-scroll table-panel">
+        <striped-table></striped-table>
+      </ba-card>
+    </div>
+
+  </div>
+  <div class="row">
+    <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-12" cardTitle="Recapitulatif du volume global" baCardClass="traffic-panel medium-card">
+      <traffic-chart></traffic-chart>
     </ba-card>
   </div>
 
-</div>
-<div class="row">
-  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-12" cardTitle="Recapitulatif du volume global" baCardClass="traffic-panel medium-card">
-    <traffic-chart></traffic-chart>
-  </ba-card>
-</div>
 
-
-<div class="row">
+  <div class="row">
     <div class="col-lg-6 col-md-12">
       <ba-card cardTitle="Mises encore actives" baCardClass="with-scroll table-panel">
         <contextual-table></contextual-table>
       </ba-card>
     </div>
     <div class="col-lg-6 col-md-12">
-        <ba-card cardTitle="Historique des actions utilisateur" baCardClass="with-scroll table-panel">
-          <app-stripped-user-actions></app-stripped-user-actions>
-        </ba-card>
-      </div>
+      <ba-card cardTitle="Historique des actions utilisateur" baCardClass="with-scroll table-panel">
+        <app-stripped-user-actions></app-stripped-user-actions>
+      </ba-card>
+    </div>
   </div>
+</ng-template>

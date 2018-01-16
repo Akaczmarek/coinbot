@@ -20,7 +20,6 @@ export const PAGES_MENU = [
           menu: {
             title: 'Supervision', // menu title
             icon: 'ion-edit', // menu icon
-            pathMatch: 'prefix', // use it if item children not displayed in menu
             selected: false,
             expanded: false,
             order: 0

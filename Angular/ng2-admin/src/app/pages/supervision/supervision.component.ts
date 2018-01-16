@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SupervisionService } from 'app/services/supervision.service';
 
 @Component({
   selector: 'supervision',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SupervisionComponent implements OnInit {
 
-  constructor() { }
+  isConnected : boolean;
+
+  constructor(private supService: SupervisionService) {
+    this.isConnected = this.supService.connexion;
+
+  }
 
   ngOnInit() {
+    console.log("supservice connexion dans le supcomp", this.supService.connexion)
+  }
+
+  ngAfterViewInit() {
+    console.log("supservice connexion ngAfterViewInit dans le supcomp", this.supService.connexion)
+    
   }
 
 }

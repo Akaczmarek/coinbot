@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { SupervisionService } from 'app/services/supervision.service';
 
 @Component({
   selector: 'login',
@@ -16,7 +17,7 @@ export class Login {
 
   mockLogs : Array<any> = [];
 
-  constructor(fb:FormBuilder, private router : Router) {
+  constructor(fb:FormBuilder, private router : Router, private supService : SupervisionService) {
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
@@ -48,7 +49,10 @@ export class Login {
         console.log('ok => ',mocklog.email, this.email.value,  mocklog.password, this.password.value)
         if (mocklog.email == this.email.value && mocklog.password == this.password.value){
           console.log('ok email verifié => ',mocklog.email)
+          this.supService.setCnx(true);
+          this.supService.emitterCnx.next(2)
           this.router.navigate(['pages/supervision'])
+          return;
         }
         else{
           console.log("mdp incorrect")

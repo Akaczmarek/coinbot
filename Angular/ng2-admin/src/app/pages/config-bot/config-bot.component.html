@@ -1,92 +1,99 @@
-<div class="row">
-  <div class="col-lg-6 col-md-12">
-    <ba-card cardTitle="Activation du BOT" baCardClass="with-scroll">
+<div *ngIf="!connected; else connected">
+  <h1>Vous devez être connecté pour accèder à cette page !</h1>
+</div>
+
+<ng-template #connected>
+
+
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+      <ba-card cardTitle="Activation du BOT" baCardClass="with-scroll">
+        <div class="widgets">
+          <div class="checkbox-demo-row">
+            <div class="input-demo checkbox-demo row">
+              <ba-multi-checkbox [(ngModel)]="checkboxModel" [propertiesMapping]="checkboxPropertiesMapping"></ba-multi-checkbox>
+            </div>
+            <div class="input-demo radio-demo row">
+              <div class="col-md-4">
+                <label class="radio-inline custom-radio nowrap">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                  <span translate>Activé</span>
+                </label>
+              </div>
+              <div class="col-md-4">
+                <label class="radio-inline custom-radio nowrap">
+                  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                  <span>Desactivé</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ba-card>
+    </div>
+    <div class="col-lg-6 col-md-12">
       <div class="widgets">
-        <div class="checkbox-demo-row">
-          <div class="input-demo checkbox-demo row">
-            <ba-multi-checkbox [(ngModel)]="checkboxModel" [propertiesMapping]="checkboxPropertiesMapping"></ba-multi-checkbox>
+        <ba-card cardTitle="Personnalisation du BOT" baCardClass="with-scroll">
+
+          <div class="form-group">
+            <label for="exampleSelect1">Niveau de risque du BOT</label>
+            <select class="form-control" id="exampleSelect1">
+              <option>Sans Risques</option>
+              <option>Risque intermédiaire</option>
+              <option>Risque Elevé</option>
+
+            </select>
           </div>
-          <div class="input-demo radio-demo row">
-            <div class="col-md-4">
-              <label class="radio-inline custom-radio nowrap">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                <span translate>Activé</span>
-              </label>
-            </div>
-            <div class="col-md-4">
-              <label class="radio-inline custom-radio nowrap">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                <span>Desactivé</span>
-              </label>
-            </div>
-          </div>
-        </div>
+        </ba-card>
       </div>
-    </ba-card>
-  </div>
-  <div class="col-lg-6 col-md-12">
-    <div class="widgets">
-      <ba-card cardTitle="Personnalisation du BOT" baCardClass="with-scroll">
-
-        <div class="form-group">
-          <label for="exampleSelect1">Niveau de risque du BOT</label>
-          <select class="form-control" id="exampleSelect1">
-            <option>Sans Risques</option>
-            <option>Risque intermédiaire</option>
-            <option>Risque Elevé</option>
-
-          </select>
-        </div>
-      </ba-card>
-    </div>
-  </div>
-</div>
-
-
-<div class="row">
-  <div class="col-lg-6 col-md-12">
-    <div class="widgets">
-      <ba-card cardTitle="Mise" baCardClass="with-scroll">
-
-        <div class="slidecontainer">
-          <input type="range" min="1" max="1000" [(ngModel)]="betValue" class="slider" id="myRange">
-          <p>Valeur à miser en €:
-            <span [innerHTML]="betValue"> </span>
-          </p>
-        </div>
-      </ba-card>
     </div>
   </div>
 
-  <div class="col-lg-6 col-md-12">
-    <div class="widgets">
-      <ba-card cardTitle="Securisation des gains" baCardClass="with-scroll">
 
-        <div class="slidecontainer">
-          <input type="range" min="1" max="1000" [(ngModel)]="secureValue" class="slider" id="myRange">
-          <p>Valeur à partir de laquelle sécuriser les gains en € :
-            <span [innerHTML]="secureValue"> </span>
-          </p>
-        </div>
-      </ba-card>
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+      <div class="widgets">
+        <ba-card cardTitle="Mise" baCardClass="with-scroll">
+
+          <div class="slidecontainer">
+            <input type="range" min="1" max="1000" [(ngModel)]="betValue" class="slider" id="myRange">
+            <p>Valeur à miser en €:
+              <span [innerHTML]="betValue"> </span>
+            </p>
+          </div>
+        </ba-card>
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-md-12">
+      <div class="widgets">
+        <ba-card cardTitle="Securisation des gains" baCardClass="with-scroll">
+
+          <div class="slidecontainer">
+            <input type="range" min="1" max="1000" [(ngModel)]="secureValue" class="slider" id="myRange">
+            <p>Valeur à partir de laquelle sécuriser les gains en € :
+              <span [innerHTML]="secureValue"> </span>
+            </p>
+          </div>
+        </ba-card>
+      </div>
     </div>
   </div>
-</div>
 
 
   <div class="centerblock">
-      <div class="center">
-    <div class="widgets">
-      <ba-card cardTitle="Jours avant arrêt d'un pari bloqué" baCardClass="with-scroll">
+    <div class="center">
+      <div class="widgets">
+        <ba-card cardTitle="Jours avant arrêt d'un pari bloqué" baCardClass="with-scroll">
           <div class="slidecontainer">
-              <input type="range" min="1" max="10" [(ngModel)]="daysordersbloqued" class="slider" id="myRange">
-              <p>Jours avant arrêt :
-                <span [innerHTML]="daysordersbloqued"> </span>
-              </p>
-            </div>
-          
+            <input type="range" min="1" max="10" [(ngModel)]="daysordersbloqued" class="slider" id="myRange">
+            <p>Jours avant arrêt :
+              <span [innerHTML]="daysordersbloqued"> </span>
+            </p>
+          </div>
 
-      </ba-card>
+
+        </ba-card>
       </div>
     </div>
 
@@ -94,3 +101,4 @@
 
   </div>
 
+</ng-template>

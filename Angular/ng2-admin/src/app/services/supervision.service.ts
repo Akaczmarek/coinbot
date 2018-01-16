@@ -14,10 +14,14 @@ export class SupervisionService {
   mockAchatVenteHisto : Array<any> = [];
   mockUserActions : Array<any> = [];
   emitter : BehaviorSubject<any>;
+  emitterCnx : BehaviorSubject<any>;
+
+  connexion : boolean;
 
 
   constructor(private http : Http, private webService : WebService) {
     this.emitter = new BehaviorSubject<number>(1);
+    this.emitterCnx = new BehaviorSubject<number>(2)
 
     this.mockVolume.push(100,200,300);
     this.mockAchatVenteHisto = [
@@ -104,6 +108,10 @@ export class SupervisionService {
       },
 
     ]
+  }
+
+  setCnx (bool : boolean){
+    this.connexion = bool;
   }
 
 
