@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -15,7 +16,7 @@ export class Login {
 
   mockLogs : Array<any> = [];
 
-  constructor(fb:FormBuilder) {
+  constructor(fb:FormBuilder, private router : Router) {
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
@@ -42,9 +43,15 @@ export class Login {
   onSubmit():void {
     this.submitted = true;
     if (this.form.valid) {
+      console.log("form valid");
       for (const mocklog of this.mockLogs) {
-        if (mocklog.email == this.email && mocklog.password == this.password){
-          console.log('ok => ',this.mockLogs[1])
+        console.log('ok => ',mocklog.email, this.email.value,  mocklog.password, this.password.value)
+        if (mocklog.email == this.email.value && mocklog.password == this.password.value){
+          console.log('ok email verifié => ',mocklog.email)
+          this.router.navigate(['pages/supervision'])
+        }
+        else{
+          console.log("mdp incorrect")
         }
         
       }
