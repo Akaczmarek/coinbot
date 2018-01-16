@@ -11,13 +11,14 @@ export class ConfigBotComponent implements OnInit {
  betValue : number;
  secureValue : number;
  daysordersbloqued : number;
- isConnected : boolean;
+ isConnected : boolean = false;
 
   constructor(private supService : SupervisionService) { 
-
+    console.log("supservice connexion dans le CB", this.supService.connexion)
   }
 
   ngOnInit() {
+    this.isConnected = this.supService.connexion;
   }
 
 }

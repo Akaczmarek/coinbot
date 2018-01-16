@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { SupervisionService } from 'app/services/supervision.service';
@@ -14,6 +14,8 @@ export class Login {
   public email:AbstractControl;
   public password:AbstractControl;
   public submitted:boolean = false;
+  connected : boolean;
+  @Output() connectChange = new EventEmitter();
 
   mockLogs : Array<any> = [];
 
@@ -50,7 +52,8 @@ export class Login {
         if (mocklog.email == this.email.value && mocklog.password == this.password.value){
           console.log('ok email verifié => ',mocklog.email)
           this.supService.setCnx(true);
-          this.supService.emitterCnx.next(2)
+          console.log(this.supService.connexion)
+          this.supService.emitterCnx.next(3)
           this.router.navigate(['pages/supervision'])
           return;
         }

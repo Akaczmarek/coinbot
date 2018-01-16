@@ -1,10 +1,8 @@
-<div *ngIf="!connected; else connected">
+<div *ngIf="!isConnected; else connected">
   <h1>Vous devez être connecté pour accèder à cette page !</h1>
 </div>
 
 <ng-template #connected>
-
-
   <div class="row">
     <div class="col-lg-6 col-md-12">
       <ba-card cardTitle="Activation du BOT" baCardClass="with-scroll">

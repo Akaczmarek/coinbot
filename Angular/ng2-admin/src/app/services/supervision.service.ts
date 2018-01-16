@@ -16,10 +16,11 @@ export class SupervisionService {
   emitter : BehaviorSubject<any>;
   emitterCnx : BehaviorSubject<any>;
 
-  connexion : boolean;
+  connexion : boolean = false;
 
 
   constructor(private http : Http, private webService : WebService) {
+    console.log("SupervisionService constructor");
     this.emitter = new BehaviorSubject<number>(1);
     this.emitterCnx = new BehaviorSubject<number>(2)
 

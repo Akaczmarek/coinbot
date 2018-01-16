@@ -53,9 +53,9 @@ export type StoreType = {
     PagesModule,
     routing
   ],
-  providers: [ // expose our Services and Providers into Angular's dependency injection
+  providers:  // expose our Services and Providers into Angular's dependency injection
     APP_PROVIDERS
-  ]
+  
 })
 
 export class AppModule {

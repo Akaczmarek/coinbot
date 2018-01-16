@@ -37,7 +37,7 @@ import{ SupervisionService} from '../../services/supervision.service'
   ],
 
   providers :[
-    PieChartService, TrafficChartService, BasicTablesService,SupervisionService
+    PieChartService, TrafficChartService, BasicTablesService,
   ]
 })
 export class SupervisionModule {}

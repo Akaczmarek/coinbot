@@ -6,22 +6,19 @@ import { SupervisionService } from 'app/services/supervision.service';
   styleUrls: ['./supervision.component.scss'],
   templateUrl: './supervision.component.html',
 })
-export class SupervisionComponent implements OnInit {
+export class SupervisionComponent implements OnInit  {
 
-  isConnected : boolean;
+  isConnected : boolean = false;
 
   constructor(private supService: SupervisionService) {
-    this.isConnected = this.supService.connexion;
 
-  }
-
-  ngOnInit() {
     console.log("supservice connexion dans le supcomp", this.supService.connexion)
   }
 
-  ngAfterViewInit() {
-    console.log("supservice connexion ngAfterViewInit dans le supcomp", this.supService.connexion)
-    
+  ngOnInit() {
+    this.isConnected = this.supService.connexion;
   }
+
+
 
 }

@@ -24,8 +24,8 @@ export class BaPageTop implements OnInit {
   }
 
   ngOnInit() {
-    this.supService.emitterCnx.subscribe(t => {this.connected(); console.log("Conexion ?")});
-    this.connected();
+    this.supService.emitterCnx.subscribe(t => {this.connected(true); console.log("Connexion ISOKOUPA ???")});
+
   }
 
   public toggleMenu() {
@@ -38,9 +38,9 @@ export class BaPageTop implements OnInit {
     this.isScrolled = isScrolled;
   }
 
-  public connected() {
+  public connected(boolean : boolean) {
     if (this.supService.connexion) {
-      this.isConnected = true;
+      this.isConnected = boolean;
       console.log("connexion ok ")
     }
     else {
