@@ -1,56 +1,59 @@
-<div id="configbot" >
+<div id="configbot">
   <div ng-style="width : 300px">
 
 
-  <div class="widgets">
-    <ba-card cardTitle="Activation du BOT" baCardClass="with-scroll">
+    <div class="widgets">
+      <ba-card cardTitle="Activation du BOT" baCardClass="with-scroll">
 
-      <div class="checkbox-demo-row">
-        <div class="input-demo checkbox-demo row">
-          <ba-multi-checkbox [(ngModel)]="checkboxModel" [propertiesMapping]="checkboxPropertiesMapping"></ba-multi-checkbox>
-        </div>
-        <div class="input-demo radio-demo row">
-          <div class="col-md-4">
-            <label class="radio-inline custom-radio nowrap">
-              <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-              <span translate>Activé</span>
-            </label>
+        <div class="checkbox-demo-row">
+          <div class="input-demo checkbox-demo row">
+            <ba-multi-checkbox [(ngModel)]="checkboxModel" [propertiesMapping]="checkboxPropertiesMapping"></ba-multi-checkbox>
           </div>
-          <div class="col-md-4">
-            <label class="radio-inline custom-radio nowrap">
-              <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-              <span>Desactivé</span>
-            </label>
+          <div class="input-demo radio-demo row">
+            <div class="col-md-4">
+              <label class="radio-inline custom-radio nowrap">
+                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <span translate>Activé</span>
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="radio-inline custom-radio nowrap">
+                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <span>Desactivé</span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
 
-    </ba-card>
-  </div>
-
-
-  <div class="widgets">
-    <ba-card cardTitle="Personnalisation du BOT" baCardClass="with-scroll">
-
-
-
-
-      <div class="form-group">
-        <label for="exampleSelect1">Niveau de risque du BOT</label>
-        <select class="form-control" id="exampleSelect1">
-          <option>Sans Risques</option>
-          <option>Risque intermédiaire</option>
-          <option>Risque Elevé</option>
-
-        </select>
-      </div>
-    </ba-card>
-  </div>
-</div>
-
-<div class="widgets">
-    <ba-card cardTitle="Bet Value" baCardClass="with-scroll">
-      
       </ba-card>
+    </div>
+
+
+    <div class="widgets">
+      <ba-card cardTitle="Personnalisation du BOT" baCardClass="with-scroll">
+
+        <div class="form-group">
+          <label for="exampleSelect1">Niveau de risque du BOT</label>
+          <select class="form-control" id="exampleSelect1">
+            <option>Sans Risques</option>
+            <option>Risque intermédiaire</option>
+            <option>Risque Elevé</option>
+
+          </select>
+        </div>
+      </ba-card>
+    </div>
+  </div>
+
+  <div class="widgets">
+    <ba-card cardTitle="Bet Value" baCardClass="with-scroll">
+
+      <div class="slidecontainer">
+        <input type="range" min="1" max="1000" [(ngModel)]="betvalue" class="slider" id="myRange">
+        <p>Valeur à miser :
+          <span [innerHTML]="betvalue"> </span>
+        </p>
       </div>
+    </ba-card>
+  </div>
 </div>

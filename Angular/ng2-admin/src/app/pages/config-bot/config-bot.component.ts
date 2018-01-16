@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigBotComponent implements OnInit {
 
+ betvalue : number;
+
   constructor() { }
 
   ngOnInit() {
